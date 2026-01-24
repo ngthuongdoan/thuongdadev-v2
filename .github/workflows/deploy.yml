@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - main # This workflow runs when changes are pushed to the 'main' branch
+      - master # This workflow runs when changes are pushed to the 'main' branch
 
 jobs:
   deploy:
@@ -29,14 +30,14 @@ jobs:
         env:
           NODE_ENV: production
       - name: "Debug: List files after build"
-          # This step helps verify if the 'dist' directory was created and where.
+        # This step helps verify if the 'dist' directory was created and where.
         run: |
           echo "Current working directory:"
           pwd
           echo "Files in current directory:"
           ls -la
 
-      - name: Deploy 'out' directory to VPS via SSH
+      - name: Deploy 'dist' directory to VPS via SSH
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
