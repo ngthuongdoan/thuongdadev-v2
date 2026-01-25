@@ -22,11 +22,11 @@ jobs:
           node-version: '22.14.0' # Specify your Node.js version
 
       - name: Install dependencies
-        run: npm install -f # Or yarn install, pnpm install, etc.
+        run: yarn install
 
       - name: Build Astro Project
         # This step builds the Astro project to static files in the 'dist' directory
-        run: npm run build
+        run: yarn build
         env:
           NODE_ENV: production
       - name: "Debug: List files after build"
