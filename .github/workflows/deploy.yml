@@ -37,6 +37,11 @@ jobs:
           echo "Files in current directory:"
           ls -la
 
+      - name: Test SSH Connection
+        run: |
+          echo "Testing connection to ${{ secrets.SSH_HOST }}:${{ secrets.SSH_PORT || 22 }}"
+          timeout 10 bash -c "cat < /dev/null > /dev/tcp/${{ secrets.SSH_HOST }}/${{ secrets.SSH_PORT || 22 }}" && echo "Port is open" || echo "Port is closed or unreachable"
+
       - name: Deploy 'dist' directory to VPS via SSH
         uses: appleboy/scp-action@master
         with:
