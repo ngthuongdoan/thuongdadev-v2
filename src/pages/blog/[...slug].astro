@@ -35,7 +35,7 @@ const relatedArticles = allArticles.filter(
 ---
 
 <InfoLayout title={article.data.title} frontmatter={article.data}>
-    <section class="p-4 sm:pt-8 sm:px-12 pb-20 min-h-dvh">
+    <section class="p-4 pb-20 sm:pt-8 sm:px-12 min-h-dvh">
         <Prose>
             <Content />
         </Prose>
@@ -51,7 +51,7 @@ const relatedArticles = allArticles.filter(
         {
             relatedArticles.length > 0 && (
                 <div>
-                    <h2 class="mt-8 sm:mt-12 text-lg text-zinc-400 font-medium">
+                    <h2 class="mt-8 text-lg font-medium sm:mt-12 text-zinc-400">
                         Related Articles
                     </h2>
 
@@ -59,7 +59,7 @@ const relatedArticles = allArticles.filter(
                         {relatedArticles.map((article) => (
                             <li class="group">
                                 <a href={`/blog/${article.data.slug}`}>
-                                    <h3 class="text-xl text-zinc-50 group-hover:text-white underline underline-offset-2 decoration-transparent group-hover:decoration-zinc-500">
+                                    <h3 class="text-xl underline text-zinc-50 group-hover:text-white underline-offset-2 decoration-transparent group-hover:decoration-zinc-500">
                                         {article.data.title}
                                     </h3>
                                     <p class="mt-0.5 text-sm text-zinc-400">
