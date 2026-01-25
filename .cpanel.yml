@@ -2,4 +2,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/thuoston/public_html/
-    - /bin/cp -R .next $DEPLOYPATH
+    - /bin/cp -R dist/* $DEPLOYPATH

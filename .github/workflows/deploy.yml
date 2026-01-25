@@ -53,6 +53,32 @@ jobs:
           target: "/home/${{ secrets.SSH_USERNAME }}/public_html"
           strip_components: 1
       
+      - name: Verify deployment and fix permissions
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          script: |
+            echo "=== Verifying deployment ==="
+            echo "Contents of ~/public_html:"
+            ls -lah ~/public_html/
+            echo ""
+            echo "Checking for index.html:"
+            if [ -f ~/public_html/index.html ]; then
+              echo "✓ index.html found"
+              echo "Last modified: $(stat -c '%y' ~/public_html/index.html 2>/dev/null || stat -f '%Sm' ~/public_html/index.html)"
+              echo "First 3 lines of index.html:"
+              head -n 3 ~/public_html/index.html
+            else
+              echo "✗ index.html NOT found!"
+            fi
+            echo ""
+            echo "Setting correct permissions..."
+            chmod -R 755 ~/public_html
+            echo "Permissions updated."
+      
       - name: Copy backup folder to preserve old routes
         uses: appleboy/ssh-action@master
         with:
@@ -68,6 +94,9 @@ jobs:
             else
               echo "Warning: ~/backup directory not found. Skipping backup copy."
             fi
+            echo ""
+            echo "=== Final directory structure ==="
+            ls -lah ~/public_html/
 
       - name: Post-Deployment Message
         # This step runs on the GitHub Actions runner after the SSH action completes.
