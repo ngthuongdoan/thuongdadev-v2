@@ -42,22 +42,7 @@ jobs:
           echo "Testing connection to ${{ secrets.SSH_HOST }}:${{ secrets.SSH_PORT || 22 }}"
           timeout 10 bash -c "cat < /dev/null > /dev/tcp/${{ secrets.SSH_HOST }}/${{ secrets.SSH_PORT || 22 }}" && echo "Port is open" || echo "Port is closed or unreachable"
 
-      - name: Restore backup immediately (emergency recovery)
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PORT || 22 }}
-          script: |
-            echo "=== EMERGENCY: Restoring from backup ==="
-            if [ -d ~/backup ]; then
-              cp -r ~/backup/* ~/public_html/ 2>/dev/null || true
-              echo "Backup restored to keep site online"
-            fi
-            ls -la ~/public_html/
-      
-      - name: Deploy Astro server app to VPS
+      - name: Deploy Node.js app to VPS
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -69,7 +54,7 @@ jobs:
           strip_components: 0
           overwrite: true
       
-      - name: Setup Node.js app on VPS
+      - name: Setup Node.js application
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -78,11 +63,11 @@ jobs:
           port: ${{ secrets.SSH_PORT || 22 }}
           script: |
             cd ~/thuongda.dev
-            echo "=== Creating app.js entry point ==="
+            
+            echo "=== Creating app.js entry point for cPanel ==="
             cat > app.js << 'EOF'
-            // Start the Astro standalone server
             import('./dist/server/entry.mjs')
-              .then(module => {
+              .then(() => {
                 console.log('Astro server started successfully');
               })
               .catch(err => {
@@ -91,54 +76,19 @@ jobs:
               });
             EOF
             
-            echo "=== App files deployed ==="
-            ls -la dist/
-            echo "App ready to start"
-      
-      - name: Verify deployment and fix permissions
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PORT || 22 }}
-          script: |
-            echo "=== Verifying deployment ==="
-            echo "Contents of ~/public_html:"
-            ls -lah ~/public_html/
+            echo "=== Installing production dependencies ==="
+            export PATH=$PATH:/opt/cpanel/ea-nodejs22/bin
+            npm install --production
+            
+            echo "=== Deployment completed ==="
+            echo "App directory contents:"
+            ls -la
             echo ""
-            echo "Checking for index.html:"
-            if [ -f ~/public_html/index.html ]; then
-              echo "✓ index.html found"
-              echo "Last modified: $(stat -c '%y' ~/public_html/index.html 2>/dev/null || stat -f '%Sm' ~/public_html/index.html)"
-              echo "First 3 lines of index.html:"
-              head -n 3 ~/public_html/index.html
-            else
-              echo "✗ index.html NOT found!"
-            fi
-            echo ""
-            echo "Setting correct permissions..."
-            chmod -R 755 ~/public_html
-            echo "Permissions updated."
-      
-      - name: Copy backup folder to preserve old routes
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PORT || 22 }}
-          script: |
-            if [ -d ~/backup ]; then
-              echo "Copying backup folder to public_html to preserve old routes..."
-              cp -r ~/backup/* ~/public_html/ 2>/dev/null || echo "No files to copy from backup or some files already exist"
-              echo "Backup copy completed."
-            else
-              echo "Warning: ~/backup directory not found. Skipping backup copy."
-            fi
-            echo ""
-            echo "=== Final directory structure ==="
-            ls -lah ~/public_html/
+            echo "IMPORTANT: Configure your Node.js app in cPanel with:"
+            echo "- App Root: /home/\$USER/thuongda.dev"
+            echo "- App URL: thuongda.dev (or your domain)"
+            echo "- Application Startup File: app.js"
+            echo "- Then click 'RESTART' to apply changes"
 
       - name: Post-Deployment Message
         # This step runs on the GitHub Actions runner after the SSH action completes.
