@@ -9,7 +9,7 @@ import AvailableForWork from "../components/available.astro";
 
 <RootLayout>
 	<main>
-		<div class="group relative w-full min-h-dvh flex items-center justify-center">
+		<div class="relative flex items-center justify-center w-full group min-h-dvh">
 			<div class="absolute w-full h-dvh -z-10">
 				<WarpBackground
 					color1="#09090b"
@@ -23,16 +23,16 @@ import AvailableForWork from "../components/available.astro";
 				/>
 			</div>
 
-			<div class="p-4 sm:p-8 absolute w-full h-dvh flex flex-col justify-between z-10">
+			<div class="absolute z-10 flex flex-col justify-between w-full p-4 sm:p-8 h-dvh">
 				<div>
-					<H1 size="large"> Nikola <br /> Tesla </H1>
+					<H1 size="large"> Jasper <br /> Doan </H1>
 				</div>
 
 				<div>
 					<AvailableForWork className="py-4" />
-					<div class="mb-2 sm:mb-4 flex items-center justify-between">
+					<div class="flex items-center justify-between mb-2 sm:mb-4">
 						<div class="flex items-center gap-4">
-							<Link href="#">Book a call</Link>
+							<Link href="/contact">Book a call</Link>
 							<Link href="/projects" variant="secondary">View recent work</Link>
 						</div>
 
