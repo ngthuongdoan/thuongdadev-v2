@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  # Decap CMS OAuth Provider
+  decap-oauth:
+    image: vencax/netlify-cms-github-oauth-provider
+    container_name: decap-oauth
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      ORIGIN: https://thuongda.dev  # Your production domain
+      OAUTH_CLIENT_ID: ${GITHUB_CLIENT_ID}  # Add to .env file
+      OAUTH_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET}  # Add to .env file
+      GIT_HOSTNAME: https://github.com
+      # Optional: Uncomment for GitHub Enterprise
+      # OAUTH_AUTHORIZE_PATH: /login/oauth/authorize
+      # OAUTH_TOKEN_PATH: /login/oauth/access_token
