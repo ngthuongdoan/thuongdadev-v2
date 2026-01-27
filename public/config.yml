@@ -1,0 +1,33 @@
+backend:
+  name: github
+  repo: ngthuongdoan/thuongdadev-v2
+  branch: master
+  base_url: https://thuongda.dev
+  auth_endpoint: /api/oauth/auth
+
+# Uncomment for local testing (run: npx decap-server)
+# local_backend: true
+
+media_folder: "src/assets/images" # Location where files will be stored in the repo
+public_folder: "/src/assets/images" # The src attribute for uploaded media
+
+collections:
+  - name: "articles"
+    label: "Articles"
+    folder: "src/content/articles"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Draft", name: "isDraft", widget: "boolean", default: false }
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Snippet", name: "snippet", widget: "text" }
+      - { label: "Slug", name: "slug", widget: "string" }
+      - { label: "Author", name: "author", widget: "string", default: "Retro Rocket Team" }
+      - { label: "Category", name: "category", widget: "string" }
+      - { label: "Reading Duration (minutes)", name: "readingDuration", widget: "number" }
+      - { label: "Publish Date", name: "pubDate", widget: "datetime" }
+      - { label: "Cover Alt Text", name: "coverAlt", widget: "string" }
+      - { label: "Original Link", name: "originalLink", widget: "string" }
+      - { label: "Cover Image", name: "cover", widget: "image" }
+      - { label: "Updated Date", name: "updatedDate", widget: "datetime", required: false }
+      - { label: "Body", name: "body", widget: "markdown" }
