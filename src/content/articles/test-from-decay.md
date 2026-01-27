@@ -4,7 +4,7 @@ title: Test from DECAY
 snippet: " We're creating more than ever, but it weighs nothing."
 slug: test-from-decay
 author: jasper.doan
-category: test
+category: AI
 readingDuration: 2
 pubDate: 2026-01-27T13:16:00.000+07:00
 coverAlt: Women Holding Things - Maira Kalman, 2022.
