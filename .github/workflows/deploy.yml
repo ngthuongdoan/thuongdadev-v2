@@ -31,6 +31,7 @@ jobs:
           NODE_ENV: production
           GH_CLIENT_ID: ${{ secrets.GH_CLIENT_ID }}
           GH_CLIENT_SECRET: ${{ secrets.GH_CLIENT_SECRET }}
+          ORIGIN: https://thuongda.dev
 
 
       - name: "Debug: List files after build"
@@ -87,8 +88,19 @@ jobs:
           script: |
             cd ~/thuongda.dev
             
+            echo "=== Creating .env file with OAuth credentials ==="
+            cat > .env << EOF
+            GH_CLIENT_ID=${{ secrets.GH_CLIENT_ID }}
+            GH_CLIENT_SECRET=${{ secrets.GH_CLIENT_SECRET }}
+            ORIGIN=https://thuongda.dev
+            EOF
+            
             echo "=== Creating app.js entry point for cPanel ==="
-            cat > app.js << 'EOF'
+            cat > app.js << 'APPJS'
+            // Load environment variables
+            import { config } from 'dotenv';
+            config();
+
             import('./dist/server/entry.mjs')
               .then(() => {
                 console.log('Astro server started successfully');
@@ -97,11 +109,14 @@ jobs:
                 console.error('Failed to start Astro server:', err);
                 process.exit(1);
               });
-            EOF
+            APPJS
             
             echo "=== Installing production dependencies ==="
             export PATH=$PATH:/opt/cpanel/ea-nodejs22/bin
             npm install --production
+            
+            # Install dotenv if not already installed
+            npm list dotenv || npm install dotenv
             
             echo "=== Deployment completed ==="
             echo "App directory contents:"

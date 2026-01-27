@@ -2,8 +2,8 @@ backend:
   name: github
   repo: ngthuongdoan/thuongdadev-v2
   branch: master
-  base_url: https://thuongda.dev  # Your domain
-  auth_endpoint: /oauth/auth  # OAuth provider endpoint
+  base_url: https://thuongda.dev
+  auth_endpoint: /api/oauth/auth
 
 # Uncomment for local testing (run: npx decap-server)
 # local_backend: true
