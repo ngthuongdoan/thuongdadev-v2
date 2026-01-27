@@ -2,7 +2,7 @@ import type { APIRoute } from 'astro';
 
 export const GET: APIRoute = async ({ url }) => {
   const code = url.searchParams.get('code');
-  const state = url.searchParams.get('state');
+  const origin = import.meta.env.ORIGIN || url.origin;
 
   if (!code) {
     return new Response('No code provided', { status: 400 });
@@ -23,7 +23,7 @@ export const GET: APIRoute = async ({ url }) => {
         client_id: clientId,
         client_secret: clientSecret,
         code,
-        redirect_uri: `${url.origin}/api/oauth/callback`,
+        redirect_uri: `${origin}/api/oauth/callback`,
       }),
     });
 
@@ -47,6 +47,9 @@ export const GET: APIRoute = async ({ url }) => {
     <script>
       (function() {
         function receiveMessage(e) {
+          if (e.origin !== ${JSON.stringify(origin)}) {
+            return;
+          }
           console.log("receiveMessage", e);
           window.opener.postMessage(
             'authorization:github:success:' + JSON.stringify({
@@ -59,7 +62,7 @@ export const GET: APIRoute = async ({ url }) => {
         }
         window.addEventListener("message", receiveMessage, false);
         console.log("Sending message to opener");
-        window.opener.postMessage("authorizing:github", "*");
+        window.opener.postMessage("authorizing:github", ${JSON.stringify(origin)});
       })();
     </script>
   </body>

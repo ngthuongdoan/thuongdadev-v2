@@ -5,29 +5,52 @@ backend:
   base_url: https://thuongda.dev
   auth_endpoint: /api/oauth/auth
 
+site_url: https://thuongda.dev
+display_url: https://thuongda.dev
+
+# Enable the full editorial workflow (draft -> review -> publish)
+publish_mode: editorial_workflow
+
 # Uncomment for local testing (run: npx decap-server)
 # local_backend: true
 
-media_folder: "src/assets/images" # Location where files will be stored in the repo
-public_folder: "/src/assets/images" # The src attribute for uploaded media
+# For Astro, uploaded media should live in /public so it is directly accessible at runtime.
+media_folder: "public/uploads" # Location where files will be stored in the repo
+public_folder: "/uploads" # The src attribute for uploaded media
+
+editor:
+  preview: true
 
 collections:
   - name: "articles"
     label: "Articles"
+    label_singular: "Article"
     folder: "src/content/articles"
     create: true
-    slug: "{{slug}}"
+    slug: "{{fields.slug}}"
+    preview_path: "blog/{{fields.slug}}"
+    summary: "{{title}} — {{pubDate}}"
+    sortable_fields: ["pubDate", "title", "isDraft"]
     fields:
       - { label: "Draft", name: "isDraft", widget: "boolean", default: false }
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Snippet", name: "snippet", widget: "text" }
-      - { label: "Slug", name: "slug", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string", pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'Use lowercase letters, numbers, and hyphens (e.g. my-post-title)'] }
       - { label: "Author", name: "author", widget: "string", default: "Retro Rocket Team" }
       - { label: "Category", name: "category", widget: "string" }
-      - { label: "Reading Duration (minutes)", name: "readingDuration", widget: "number" }
+      - { label: "Reading Duration (minutes)", name: "readingDuration", widget: "number", value_type: "int", min: 1 }
       - { label: "Publish Date", name: "pubDate", widget: "datetime" }
       - { label: "Cover Alt Text", name: "coverAlt", widget: "string" }
       - { label: "Original Link", name: "originalLink", widget: "string" }
-      - { label: "Cover Image", name: "cover", widget: "image" }
+      - { label: "Cover Image URL", name: "cover", widget: "string", hint: "Paste an image URL, or upload an image and paste its /uploads/... path." }
       - { label: "Updated Date", name: "updatedDate", widget: "datetime", required: false }
+      - label: "Related Articles"
+        name: "relatedArticles"
+        widget: "relation"
+        required: false
+        collection: "articles"
+        search_fields: ["title", "slug"]
+        value_field: "{{slug}}"
+        display_fields: ["{{title}}"]
+        multiple: true
       - { label: "Body", name: "body", widget: "markdown" }
