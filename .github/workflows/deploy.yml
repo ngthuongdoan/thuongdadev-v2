@@ -103,25 +103,32 @@ jobs:
 
             import { createServer } from 'node:http';
 
-            const { handler } = await import('./dist/server/entry.mjs');
+            (async () => {
+              try {
+                const { handler } = await import('./dist/server/entry.mjs');
 
-            const port = process.env.PORT || 4321;
-            const host = process.env.HOST || '0.0.0.0';
+                const port = process.env.PORT || 4321;
+                const host = process.env.HOST || '0.0.0.0';
 
-            const server = createServer(handler);
+                const server = createServer(handler);
 
-            server.listen(port, host, () => {
-              console.log(`Astro server started successfully on http://${host}:${port}`);
-            });
+                server.listen(port, host, () => {
+                  console.log(`Astro server started successfully on http://${host}:${port}`);
+                });
 
-            // Handle graceful shutdown
-            process.on('SIGTERM', () => {
-              console.log('SIGTERM signal received: closing HTTP server');
-              server.close(() => {
-                console.log('HTTP server closed');
-                process.exit(0);
-              });
-            });
+                // Handle graceful shutdown
+                process.on('SIGTERM', () => {
+                  console.log('SIGTERM signal received: closing HTTP server');
+                  server.close(() => {
+                    console.log('HTTP server closed');
+                    process.exit(0);
+                  });
+                });
+              } catch (err) {
+                console.error('Failed to start Astro server:', err);
+                process.exit(1);
+              }
+            })();
             APPJS
             
             echo "=== Installing production dependencies ==="
