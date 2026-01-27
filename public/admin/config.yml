@@ -39,11 +39,22 @@ collections:
       - { label: "Author", name: "author", widget: "string", default: "Retro Rocket Team" }
       - { label: "Category", name: "category", widget: "string" }
       - { label: "Reading Duration (minutes)", name: "readingDuration", widget: "number", value_type: "int", min: 1 }
-      - { label: "Publish Date", name: "pubDate", widget: "datetime" }
+      - label: "Publish Date"
+        name: "pubDate"
+        widget: "datetime"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+        format: "YYYY-MM-DD"
       - { label: "Cover Alt Text", name: "coverAlt", widget: "string" }
       - { label: "Original Link", name: "originalLink", widget: "string" }
       - { label: "Cover Image URL", name: "cover", widget: "string", hint: "Paste an image URL, or upload an image and paste its /uploads/... path." }
-      - { label: "Updated Date", name: "updatedDate", widget: "datetime", required: false }
+      - label: "Updated Date"
+        name: "updatedDate"
+        widget: "datetime"
+        required: false
+        date_format: "YYYY-MM-DD"
+        time_format: false
+        format: "YYYY-MM-DD"
       - label: "Related Articles"
         name: "relatedArticles"
         widget: "relation"

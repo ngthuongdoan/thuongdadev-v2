@@ -6,6 +6,10 @@ import ACGenerator from "../assets/ac-generator.jpg";
 import FluidPropulsion from "../assets/fluid-propulsion.jpg";
 import ElectricMotor from "../assets/electro-magnetic-motor.jpg";
 
+const pageTitle = "Projects | Jasper Doan - Frontend Developer Portfolio";
+const pageDescription = "Explore Jasper Doan's portfolio of frontend development and software engineering projects. See examples of React, TypeScript, and web development work.";
+
+// TODO: Replace with your real projects
 const projects = [
      {
           title: "AC Generator",
@@ -30,7 +34,7 @@ const mainProjects = projects.filter(p => p.category === "main");
 const sideProjects = projects.filter(p => p.category === "side");
 ---
 
-<InfoLayout>
+<InfoLayout title={pageTitle} description={pageDescription}>
      <div class="p-4 pb-20 sm:pt-8 sm:px-12 min-h-dvh">
           <H1> Projects </H1>
 

@@ -1,35 +1,42 @@
 ---
 import H1 from "../components/h1.astro";
 import InfoLayout from "../layouts/InfoLayout.astro";
+
+// TODO: Update this with your real information
+const pageTitle = "About Jasper Doan | Frontend Developer & Software Engineer";
+const pageDescription = "Learn more about Jasper Doan - a passionate frontend developer and software engineer with expertise in React, TypeScript, and modern web technologies.";
 ---
 
-<InfoLayout>
+<InfoLayout title={pageTitle} description={pageDescription}>
      <div class="flex flex-col justify-between gap-32 p-4 pb-20 sm:pt-8 sm:px-12 min-h-dvh">
           <div class="space-y-4 sm:space-y-12">
-               <H1> Get to know Jasper </H1>
+               <H1> About Jasper Doan </H1>
 
+               <!-- TODO: Replace with your real bio -->
                <p class="text-xl xl:text-2xl text-zinc-500 text-balance">
-                    <a href="https://en.wikipedia.org/wiki/Nikola_Tesla" target="_blank" class="underline underline-offset-4 decoration-zinc-400 hover:text-zinc-50 hover:decoration-zinc-200">
-                         Jasper Doan
-                    </a>
-                    (1856-1943) was a Serbian-American inventor, engineer, and futurist
-                    best known for his pioneering work in electricity and electromagnetism.
-                    His innovations laid the foundation for modern alternating current
-                    (AC) power systems and many technologies still in use today.
+                    Hi, I'm <strong class="text-zinc-300">Jasper Doan</strong>, a frontend developer and software engineer 
+                    passionate about building exceptional digital experiences. I specialize in 
+                    <strong class="text-zinc-300">React</strong>, <strong class="text-zinc-300">TypeScript</strong>, 
+                    and modern web technologies to create fast, accessible, and user-friendly applications.
+               </p>
+               
+               <p class="text-lg xl:text-xl text-zinc-500 text-balance">
+                    With a focus on clean code and best practices, I help businesses and startups 
+                    bring their ideas to life through thoughtful software development.
                </p>
           </div>
 
           <div class="space-y-2 text-base sm:text-lg">
-               <h2 class="px-4 underline text-zinc-400 underline-offset-4 decoration-zinc-500">Achievements</h2>
+               <!-- TODO: Replace with your real skills -->
+               <h2 class="px-4 underline text-zinc-400 underline-offset-4 decoration-zinc-500">Technical Skills</h2>
 
                <ul class="px-4 list-disc list-outside text-zinc-400">
-                    <li>Alternating Current (AC) System</li>
-                    <li>Tesla Coil</li>
-                    <li>Induction Motor</li>
-                    <li>Wireless Transmission</li>
-                    <li>Radio and Remote Control</li>
-                    <li>Hydroelectric Power at Niagara Falls</li>
-                    <li>X-Ray Imaging</li>
+                    <li>Frontend: React, Next.js, TypeScript, JavaScript, HTML, CSS</li>
+                    <li>Styling: Tailwind CSS, CSS-in-JS, Responsive Design</li>
+                    <li>Backend: Node.js, REST APIs, GraphQL</li>
+                    <li>Tools: Git, VS Code, Figma, Astro</li>
+                    <li>Testing: Jest, React Testing Library, Cypress</li>
+                    <li>Other: Performance Optimization, SEO, Accessibility</li>
                </ul>
           </div>
      </div>

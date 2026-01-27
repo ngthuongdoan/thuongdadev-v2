@@ -5,6 +5,9 @@ import H1 from "../../components/h1.astro";
 import { formatDate } from "../../lib/utils";
 import InfoLayout from "../../layouts/InfoLayout.astro";
 
+const pageTitle = "Blog | Jasper Doan - Frontend Development Insights";
+const pageDescription = "Read articles about frontend development, React, TypeScript, web development best practices, and software engineering tips from Jasper Doan.";
+
 const categoriesResult = await Astro.callAction(actions.categories.getCategories, null);
 const categories = categoriesResult?.data?.categories || [];
 
@@ -21,7 +24,7 @@ if (articlesResult?.error) {
 const articles = articlesResult?.data?.articles || [];
 ---
 
-<InfoLayout>
+<InfoLayout title={pageTitle} description={pageDescription}>
     <div class="p-4 sm:pt-8 sm:px-12 pb-20 min-h-dvh">
         <H1> Blog </H1>
 

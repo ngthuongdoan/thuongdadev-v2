@@ -4,14 +4,58 @@ import { Font } from "astro:assets";
 import { ClientRouter } from 'astro:transitions';
 import LoadingIndicator from "astro-loading-indicator/component"
 
-const { title, description } = Astro.props;
+interface Props {
+	title?: string;
+	description?: string;
+	keywords?: string;
+	type?: string;
+	image?: string;
+}
 
-const defaultTitle = "Jasper Doan";
-const defaultDescription = "Jasper Doan is a software developer, designer, and technology enthusiast who is passionate about creating innovative solutions and sharing knowledge with the community.";
+const { title, description, keywords, type = "website", image } = Astro.props;
+
+const defaultTitle = "Jasper Doan | Frontend Developer & Software Engineer";
+const defaultDescription = "Jasper Doan is a frontend developer and software engineer specializing in React, TypeScript, and modern web development. Available for freelance projects and full-time opportunities.";
+const defaultKeywords = "frontend developer hochiminh vietnam, software developer, software engineer, React developer, TypeScript developer, web developer, freelance developer, Jasper Doan, thuongda.dev";
 
 // Get the canonical URL
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const siteUrl = "https://thuongda.dev";
+
+// JSON-LD Structured Data for Person
+const personSchema = {
+	"@context": "https://schema.org",
+	"@type": "Person",
+	"name": "Jasper Doan",
+	"url": siteUrl,
+	"image": `${siteUrl}/social-image.jpg`,
+	"sameAs": [
+		// Add your social profiles here
+		// "https://github.com/yourusername",
+		// "https://linkedin.com/in/yourusername",
+		// "https://twitter.com/yourusername"
+	],
+	"jobTitle": "Frontend Developer & Software Engineer",
+	"worksFor": {
+		"@type": "Organization",
+		"name": "Freelance"
+	},
+	"description": defaultDescription,
+	"knowsAbout": ["Frontend Development", "React", "TypeScript", "JavaScript", "Web Development", "Software Engineering"]
+};
+
+// JSON-LD for Website
+const websiteSchema = {
+	"@context": "https://schema.org",
+	"@type": "WebSite",
+	"name": "Jasper Doan - Frontend Developer",
+	"url": siteUrl,
+	"description": defaultDescription,
+	"author": {
+		"@type": "Person",
+		"name": "Jasper Doan"
+	}
+};
 ---
 
 <!doctype html>
@@ -26,11 +70,19 @@ const siteUrl = "https://thuongda.dev";
 		<title>{title ?? defaultTitle}</title>
 		<meta name="title" content={title ?? defaultTitle} />
 		<meta name="description" content={description ?? defaultDescription} />
+		<meta name="keywords" content={keywords ?? defaultKeywords} />
+		<meta name="author" content="Jasper Doan" />
+		<meta name="robots" content="index, follow" />
 		<link rel="canonical" href={canonicalURL} />
 		
+		<!-- JSON-LD Structured Data -->
+		<script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+		<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+		
 		<!-- Open Graph / Facebook -->
-		<meta property="og:type" content="website" />
+		<meta property="og:type" content={type} />
 		<meta property="og:url" content={canonicalURL} />
+		<meta property="og:locale" content="en_US" />
 		<meta property="og:title" content={title ?? defaultTitle} />
 		<meta property="og:description" content={description ?? defaultDescription} />
 		<meta property="og:image" content={`${siteUrl}/social-image.jpg`} />
