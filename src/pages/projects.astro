@@ -1,37 +1,20 @@
 ---
 import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
 import H1 from "../components/h1.astro";
 import InfoLayout from "../layouts/InfoLayout.astro";
-import ACGenerator from "../assets/ac-generator.jpg";
-import FluidPropulsion from "../assets/fluid-propulsion.jpg";
-import ElectricMotor from "../assets/electro-magnetic-motor.jpg";
 
 const pageTitle = "Projects | Jasper Doan - Frontend Developer Portfolio";
 const pageDescription = "Explore Jasper Doan's portfolio of frontend development and software engineering projects. See examples of React, TypeScript, and web development work.";
 
-// TODO: Replace with your real projects
-const projects = [
-     {
-          title: "AC Generator",
-          description: "Transform mechanical energy into alternating current, powering the modern electric grid",
-          image: ACGenerator,
-          category: "main"
-     },
-     {
-          title: "Fluid Propulsion",
-          description: "Bladeless turbine using fluid dynamics for efficient, low-friction propulsion.",
-          image: FluidPropulsion,
-          category: "main"
-     },
-     {
-          title: "Electro-Magnetic Motor",
-          description: "Harness alternating current to produce smooth, efficient rotary motion.",
-          image: ElectricMotor,
-          category: "side"
-     }];
+// Fetch all projects from CMS
+const allProjects = await getCollection('projects');
 
-const mainProjects = projects.filter(p => p.category === "main");
-const sideProjects = projects.filter(p => p.category === "side");
+// Sort projects by order field (lower numbers first)
+const projects = allProjects.sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
+
+const mainProjects = projects.filter(p => p.data.category === "main");
+const sideProjects = projects.filter(p => p.data.category === "side");
 ---
 
 <InfoLayout title={pageTitle} description={pageDescription}>
@@ -44,10 +27,16 @@ const sideProjects = projects.filter(p => p.category === "side");
                     <ul class="grid grid-cols-1 gap-16 lg:grid-cols-2 xl:grid-cols-3 sm:gap-8">
                          {mainProjects.map((project) => (
                               <li>
-                                   <Image src={project.image} alt={project.title} class="aspect-[1/1.33] object-center object-cover rounded-lg shadow-lg mb-4 sm:mb-0 sm:mr-4" />
+                                   <a href={project.data.link} target="_blank" rel="noopener noreferrer">
+                                        <Image src={project.data.image} alt={project.data.title} class="aspect-[1/1.33] object-center object-cover rounded-lg shadow-lg mb-4 sm:mb-0 sm:mr-4 transition-opacity hover:opacity-80" />
+                                   </a>
                                    <div class="p-1 sm:p-2">
-                                        <h3 class="text-base text-zinc-100">{project.title}</h3>
-                                        <p class="text-sm text-zinc-400 text-balance">{project.description}</p>
+                                        <h3 class="text-base text-zinc-100">
+                                             <a href={project.data.link} target="_blank" rel="noopener noreferrer" class="hover:text-zinc-300">
+                                                  {project.data.title}
+                                             </a>
+                                        </h3>
+                                        <p class="text-sm text-zinc-400 text-balance">{project.data.description}</p>
                                    </div>
                               </li>
                          ))}
@@ -61,10 +50,16 @@ const sideProjects = projects.filter(p => p.category === "side");
                     <ul class="grid grid-cols-1 gap-16 lg:grid-cols-2 xl:grid-cols-3 sm:gap-8">
                          {sideProjects.map((project) => (
                               <li>
-                                   <Image src={project.image} alt={project.title} class="aspect-[1/1.33] object-center object-cover rounded-lg shadow-lg mb-4 sm:mb-0 sm:mr-4" />
+                                   <a href={project.data.link} target="_blank" rel="noopener noreferrer">
+                                        <Image src={project.data.image} alt={project.data.title} class="aspect-[1/1.33] object-center object-cover rounded-lg shadow-lg mb-4 sm:mb-0 sm:mr-4 transition-opacity hover:opacity-80" />
+                                   </a>
                                    <div class="p-1 sm:p-2">
-                                        <h3 class="text-base text-zinc-100">{project.title}</h3>
-                                        <p class="text-sm text-zinc-400 text-balance">{project.description}</p>
+                                        <h3 class="text-base text-zinc-100">
+                                             <a href={project.data.link} target="_blank" rel="noopener noreferrer" class="hover:text-zinc-300">
+                                                  {project.data.title}
+                                             </a>
+                                        </h3>
+                                        <p class="text-sm text-zinc-400 text-balance">{project.data.description}</p>
                                    </div>
                               </li>
                          ))}

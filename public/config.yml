@@ -65,3 +65,23 @@ collections:
         display_fields: ["{{title}}"]
         multiple: true
       - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "projects"
+    label: "Projects"
+    label_singular: "Project"
+    folder: "src/content/projects"
+    create: true
+    slug: "{{fields.title}}"
+    summary: "{{title}} — {{category}}"
+    sortable_fields: ["order", "title", "category"]
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options: ["main", "side"]
+        default: "main"
+      - { label: "Image", name: "image", widget: "image", hint: "Upload project image or paste URL" }
+      - { label: "Link", name: "link", widget: "string", hint: "URL to the live project or repository" }
+      - { label: "Order", name: "order", widget: "number", value_type: "int", default: 0, hint: "Lower numbers appear first" }
