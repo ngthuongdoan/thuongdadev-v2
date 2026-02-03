@@ -10,9 +10,21 @@ interface Props {
 	keywords?: string;
 	type?: string;
 	image?: string;
+	lang?: string;
+	locale?: string;
 }
 
-const { title, description, keywords, type = "website", image } = Astro.props;
+const {
+	title,
+	description,
+	keywords,
+	type = "website",
+	image,
+	lang = "en",
+	locale,
+} = Astro.props;
+
+const resolvedLocale = locale ?? (lang === "vi" ? "vi_VN" : "en_US");
 
 const defaultTitle = "Jasper Doan | Frontend Developer & Software Engineer";
 const defaultDescription = "Jasper Doan is a frontend developer and software engineer specializing in React, TypeScript, and modern web development. Available for freelance projects and full-time opportunities.";
@@ -59,10 +71,11 @@ const websiteSchema = {
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta http-equiv="Content-Language" content={lang} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		
@@ -82,7 +95,7 @@ const websiteSchema = {
 		<!-- Open Graph / Facebook -->
 		<meta property="og:type" content={type} />
 		<meta property="og:url" content={canonicalURL} />
-		<meta property="og:locale" content="en_US" />
+		<meta property="og:locale" content={resolvedLocale} />
 		<meta property="og:title" content={title ?? defaultTitle} />
 		<meta property="og:description" content={description ?? defaultDescription} />
 		<meta property="og:image" content={`${siteUrl}/social-image.jpg`} />
