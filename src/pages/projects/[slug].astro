@@ -1,0 +1,60 @@
+---
+import { Image } from "astro:assets";
+import { getCollection, render } from "astro:content";
+import H1 from "../../components/h1.astro";
+import Prose from "../../components/prose.astro";
+import InfoLayout from "../../layouts/InfoLayout.astro";
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+    const projects = await getCollection("projects");
+
+    return projects.map((project) => ({
+        params: { slug: project.id },
+        props: { project },
+    }));
+}
+
+const { project } = Astro.props;
+
+if (project === undefined) {
+    return new Response("Project not found", { status: 404 });
+}
+
+const { Content } = await render(project);
+const pageTitle = `${project.data.title} | Project Details | Jasper Doan`;
+const pageDescription = project.data.description;
+---
+
+<InfoLayout title={pageTitle} description={pageDescription}>
+    <section class="p-4 pb-20 sm:pt-8 sm:px-12 min-h-dvh">
+        <a href="/projects" class="text-sm text-zinc-400 hover:text-zinc-200">
+            Back to projects
+        </a>
+
+        <div class="mt-4 max-w-3xl">
+            <H1>{project.data.title}</H1>
+            <p class="mt-3 text-zinc-300">{project.data.description}</p>
+
+            <a
+                href={project.data.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-block mt-4 text-zinc-100 underline underline-offset-4 decoration-zinc-500 hover:decoration-zinc-200"
+            >
+                Visit live project
+            </a>
+        </div>
+
+        <div class="mt-8 max-w-3xl">
+            <Image src={project.data.image} alt={project.data.title} class="w-full rounded-lg object-cover" />
+        </div>
+
+        <div class="mt-8 max-w-3xl">
+            <Prose>
+                <Content />
+            </Prose>
+        </div>
+    </section>
+</InfoLayout>

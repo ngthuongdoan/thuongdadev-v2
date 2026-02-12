@@ -1,7 +1,7 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import H1 from "../components/h1.astro";
+import ProjectsSection from "../components/projects-section.astro";
 import InfoLayout from "../layouts/InfoLayout.astro";
 
 const pageTitle = "Projects | Jasper Doan - Frontend Developer Portfolio";
@@ -21,50 +21,7 @@ const sideProjects = projects.filter(p => p.data.category === "side");
      <div class="p-4 pb-20 sm:pt-8 sm:px-12 min-h-dvh">
           <H1> Projects </H1>
 
-          {mainProjects.length > 0 && (
-               <div class="mt-8 sm:mt-12">
-                    <h2 class="mb-6 text-xl font-semibold sm:text-2xl text-zinc-100">Main Projects</h2>
-                    <ul class="grid grid-cols-1 gap-16 lg:grid-cols-2 xl:grid-cols-3 sm:gap-8">
-                         {mainProjects.map((project) => (
-                              <li>
-                                   <a href={project.data.link} target="_blank" rel="noopener noreferrer">
-                                        <Image src={project.data.image} alt={project.data.title} class="aspect-[1/1.33] object-center object-cover rounded-lg shadow-lg mb-4 sm:mb-0 sm:mr-4 transition-opacity hover:opacity-80" />
-                                   </a>
-                                   <div class="p-1 sm:p-2">
-                                        <h3 class="text-base text-zinc-100">
-                                             <a href={project.data.link} target="_blank" rel="noopener noreferrer" class="hover:text-zinc-300">
-                                                  {project.data.title}
-                                             </a>
-                                        </h3>
-                                        <p class="text-sm text-zinc-400 text-balance">{project.data.description}</p>
-                                   </div>
-                              </li>
-                         ))}
-                    </ul>
-               </div>
-          )}
-
-          {sideProjects.length > 0 && (
-               <div class="mt-12 sm:mt-16">
-                    <h2 class="mb-6 text-xl font-semibold sm:text-2xl text-zinc-100">Side Projects</h2>
-                    <ul class="grid grid-cols-1 gap-16 lg:grid-cols-2 xl:grid-cols-3 sm:gap-8">
-                         {sideProjects.map((project) => (
-                              <li>
-                                   <a href={project.data.link} target="_blank" rel="noopener noreferrer">
-                                        <Image src={project.data.image} alt={project.data.title} class="aspect-[1/1.33] object-center object-cover rounded-lg shadow-lg mb-4 sm:mb-0 sm:mr-4 transition-opacity hover:opacity-80" />
-                                   </a>
-                                   <div class="p-1 sm:p-2">
-                                        <h3 class="text-base text-zinc-100">
-                                             <a href={project.data.link} target="_blank" rel="noopener noreferrer" class="hover:text-zinc-300">
-                                                  {project.data.title}
-                                             </a>
-                                        </h3>
-                                        <p class="text-sm text-zinc-400 text-balance">{project.data.description}</p>
-                                   </div>
-                              </li>
-                         ))}
-                    </ul>
-               </div>
-          )}
+          <ProjectsSection title="Main Projects" projects={mainProjects} />
+          <ProjectsSection title="Side Projects" projects={sideProjects} className="mt-12 sm:mt-16" />
      </div>
 </InfoLayout>
