@@ -1,7 +1,6 @@
 ---
 import "../styles/global.css";
 import { Font } from "astro:assets";
-import { ClientRouter } from 'astro:transitions';
 import LoadingIndicator from "astro-loading-indicator/component"
 
 interface Props {
@@ -112,12 +111,7 @@ const websiteSchema = {
 		<!-- Theme Color -->
 		<meta name="theme-color" content="#09090b" />
 		
-		<!-- Preconnect to improve performance -->
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
 		<Font cssVariable="--font-geist" preload />
-		<ClientRouter />
 		<LoadingIndicator color="#f4f4f5" height="2px" />
 
 	</head>
