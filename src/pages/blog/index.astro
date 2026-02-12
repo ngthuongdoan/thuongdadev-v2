@@ -28,9 +28,6 @@ const articles = articlesResult?.data?.articles || [];
     <div class="p-4 sm:pt-8 sm:px-12 pb-20 min-h-dvh">
         <H1> Blog </H1>
         <p class="mt-2 text-sm sm:text-base text-zinc-400">
-            🇻🇳 Blog — Written in Vietnamese
-        </p>
-        <p class="mt-2 text-sm sm:text-base text-zinc-400">
             These articles are written in Vietnamese to support the local developer community.
         </p>
 
@@ -38,8 +35,13 @@ const articles = articlesResult?.data?.articles || [];
             <span class="w-fit px-3 py-1 text-xs sm:text-sm rounded-full bg-zinc-100/20 text-white">
                 Vietnamese
             </span>
-            <span class="w-fit px-3 py-1 text-xs sm:text-sm rounded-full bg-zinc-100/5 text-zinc-500">
-                English (coming soon)
+            <span class="relative inline-flex w-fit">
+                <span class="w-fit px-3 py-1 text-xs sm:text-sm rounded-full bg-zinc-100/5 text-zinc-500 cursor-not-allowed">
+                    English
+                </span>
+                <span class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 bg-zinc-200 text-zinc-900 text-xs font-medium rounded-full px-2 py-0.5 w-max">
+                    Coming soon
+                </span>
             </span>
         </div>
 
