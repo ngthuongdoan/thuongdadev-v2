@@ -1,9 +1,8 @@
 ---
 import H1 from "../components/h1.astro";
 import Link from "../components/link.astro";
-import Navigation from "../components/navigation";
+import Navigation from "../components/navigation.astro";
 import RootLayout from "../layouts/RootLayout.astro";
-import WarpBackground from "../components/warp-background";
 import AvailableForWork from "../components/available.astro";
 
 const pageTitle = "Jasper Doan | Frontend Developer & Software Engineer";
@@ -13,18 +12,7 @@ const pageDescription = "Jasper Doan is a frontend developer and software engine
 <RootLayout title={pageTitle} description={pageDescription}>
 	<main>
 		<div class="relative flex items-center justify-center w-full group min-h-dvh">
-			<div class="absolute w-full h-dvh -z-10">
-				<WarpBackground
-					color1="#09090b"
-					color2="#27272a"
-					color3="#52525b"
-					speed={0.6}
-					swirl={0.5}
-					swirlIterations={10}
-					shapeScale={0.3}
-					client:idle
-				/>
-			</div>
+			<div class="absolute w-full h-dvh -z-10 bg-[radial-gradient(120%_90%_at_80%_10%,#52525b_0%,#27272a_35%,#09090b_72%)]" />
 
 			<div class="absolute z-10 flex flex-col justify-between w-full p-4 sm:p-8 h-dvh">
 				<div>
@@ -39,11 +27,7 @@ const pageDescription = "Jasper Doan is a frontend developer and software engine
 							<Link href="/projects" variant="secondary">View recent work</Link>
 						</div>
 
-						<Navigation client:idle>
-							<Link href="/blog/vi" variant="secondary">Blog</Link>
-							<Link href="/about" variant="secondary">About</Link>
-							<Link href="/contact" variant="secondary">Contact</Link>
-						</Navigation>
+						<Navigation />
 					</div>
 				</div>
 			</div>

@@ -9,6 +9,9 @@ import node from "@astrojs/node";
 export default defineConfig({
   site: 'https://thuongda.dev',
   output: 'server',
+  build: {
+    inlineStylesheets: 'always',
+  },
 
   vite: {
     plugins: [tailwindcss()]
