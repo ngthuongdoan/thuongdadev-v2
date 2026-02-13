@@ -13,6 +13,9 @@ export default defineConfig({
     inlineStylesheets: 'always',
   },
 
+  server: {
+    port: 8080,
+  },
   vite: {
     plugins: [tailwindcss()]
   },

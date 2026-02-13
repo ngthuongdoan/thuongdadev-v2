@@ -159,6 +159,18 @@ jobs:
             echo "- Application Startup File: app.js"
             echo "- Then click 'RESTART' to apply changes"
 
+      - name: Restart Node App (Passenger)
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          script: |
+            mkdir -p /home/${{ secrets.SSH_USERNAME }}/thuongda.dev/tmp
+            touch /home/${{ secrets.SSH_USERNAME }}/thuongda.dev/tmp/restart.txt
+            echo "Passenger restart triggered via tmp/restart.txt"
+
       - name: Notify search engines about sitemap update
         run: |
           set +e

@@ -153,6 +153,7 @@ async function mountShader(element, options, state) {
     return () => {};
   }
 
+  const patternShapeChecks = PatternShapes?.Checks ?? 0;
   const uniforms = {
     u_scale: options.scale,
     u_rotation: options.rotation,
@@ -165,7 +166,7 @@ async function mountShader(element, options, state) {
     u_swirl: options.swirl,
     u_swirlIterations: options.swirlIterations,
     u_shapeScale: options.shapeScale,
-    u_shape: PatternShapes.Checks,
+    u_shape: patternShapeChecks,
   };
 
   const shaderMount = new ShaderMount(

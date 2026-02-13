@@ -15,7 +15,7 @@ export const GET: APIRoute = async ({ site }) => {
 
   // Add blog posts to sitemap
   const blogPages = blogPosts.map(post => ({
-    url: `blog/${post.slug}`,
+    url: `blog/${post.data.slug}`,
     priority: '0.7',
     changefreq: 'monthly'
   }));
@@ -27,7 +27,7 @@ export const GET: APIRoute = async ({ site }) => {
 ${allPages
   .map(
     (page) => `  <url>
-    <loc>${site}${page.url}</loc>
+    <loc>${site}/${page.url}</loc>
     <lastmod>${new Date().toISOString()}</lastmod>
     <changefreq>${page.changefreq}</changefreq>
     <priority>${page.priority}</priority>
