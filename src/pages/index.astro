@@ -4,7 +4,7 @@ import Link from "../components/link.astro";
 import Navigation from "../components/navigation.astro";
 import RootLayout from "../layouts/RootLayout.astro";
 import AvailableForWork from "../components/available.astro";
-import WarpBackground from "../components/warp-background.tsx";
+import ShaderBackground from "../components/ShaderBackground.astro";
 
 const pageTitle = "Jasper Doan | Frontend Developer & Software Engineer";
 const pageDescription = "Jasper Doan is a frontend developer and software engineer specializing in React, TypeScript, and modern web development. Hire a skilled developer for your next project.";
@@ -15,7 +15,7 @@ const pageDescription = "Jasper Doan is a frontend developer and software engine
 		<div class="relative flex items-center justify-center w-full group min-h-dvh">
 			<div class="absolute w-full h-dvh -z-10 bg-[radial-gradient(120%_90%_at_80%_10%,#52525b_0%,#27272a_35%,#09090b_72%)]" />
 				<div class="absolute w-full h-dvh -z-10">
-					<WarpBackground
+					<ShaderBackground
 						color1="#09090b"
 						color2="#27272a"
 						color3="#52525b"
@@ -23,8 +23,7 @@ const pageDescription = "Jasper Doan is a frontend developer and software engine
 						swirl={0.5}
 						swirlIterations={10}
 						shapeScale={0.3}
-						client:idle
-						client:media="(min-width: 1024px)"
+						class="hidden lg:block"
 					/>
 				</div>
 			<div class="absolute z-10 flex flex-col justify-between w-full p-4 sm:p-8 h-dvh">

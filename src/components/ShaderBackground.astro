@@ -1,0 +1,58 @@
+---
+import ShaderBackgroundClient from './shaderInit.js';
+
+interface Props {
+  class?: string;
+  color1?: string;
+  color2?: string;
+  color3?: string;
+  speed?: number;
+  scale?: number;
+  rotation?: number;
+  proportion?: number;
+  softness?: number;
+  distortion?: number;
+  swirl?: number;
+  swirlIterations?: number;
+  shapeScale?: number;
+  fps?: number;
+  pauseWhenOffscreen?: boolean;
+}
+
+const {
+  class: className = '',
+  color1 = '#09090b',
+  color2 = '#27272a',
+  color3 = '#52525b',
+  speed = 0.6,
+  scale = 1,
+  rotation = 0,
+  proportion = 0.35,
+  softness = 1,
+  distortion = 0.25,
+  swirl = 0.8,
+  swirlIterations = 10,
+  shapeScale = 0.3,
+  fps = 30,
+  pauseWhenOffscreen = true,
+} = Astro.props;
+---
+
+<ShaderBackgroundClient
+  className={className}
+  color1={color1}
+  color2={color2}
+  color3={color3}
+  speed={speed}
+  scale={scale}
+  rotation={rotation}
+  proportion={proportion}
+  softness={softness}
+  distortion={distortion}
+  swirl={swirl}
+  swirlIterations={swirlIterations}
+  shapeScale={shapeScale}
+  fps={fps}
+  pauseWhenOffscreen={pauseWhenOffscreen}
+  client:visible
+/>

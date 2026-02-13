@@ -1,7 +1,7 @@
 ---
 import RootLayout from "./RootLayout.astro";
 import Footer from "../components/footer.astro";
-import WarpBackground from "../components/warp-background";
+import ShaderBackground from "../components/ShaderBackground.astro";
 
 const { title, description, lang, locale } = Astro.props;
 
@@ -16,7 +16,7 @@ const pathname = Astro.url.pathname;
 			<div
 				class="w-full h-full max-sm:w-4 md:max-w-2xs xl:max-w-sm fixed -z-10 sm:bottom-4 sm:rounded-b-full overflow-hidden"
 			>
-				<WarpBackground
+				<ShaderBackground
 					color1="#ffffff"
 					color2="#27272a"
 					color3="#52525b"
@@ -24,8 +24,6 @@ const pathname = Astro.url.pathname;
 					swirl={1.5}
 					swirlIterations={10}
 					shapeScale={0.3}
-					client:idle
-					client:media="(min-width: 1024px)"
 				/>
 			</div>
 		</nav>
