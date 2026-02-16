@@ -133,6 +133,34 @@ function createFrameLoop(shaderMount, state, animationSpeed, fps) {
   return () => window.cancelAnimationFrame(rafId);
 }
 
+function getDeclaredUniformNames(fragmentShaderSource) {
+  if (typeof fragmentShaderSource !== 'string') {
+    return new Set();
+  }
+
+  const uniformNamePattern = /\buniform\s+\w+\s+(\w+)\s*;/g;
+  const names = new Set();
+  let match = uniformNamePattern.exec(fragmentShaderSource);
+
+  while (match) {
+    names.add(match[1]);
+    match = uniformNamePattern.exec(fragmentShaderSource);
+  }
+
+  return names;
+}
+
+function filterUniformsForShader(uniforms, fragmentShaderSource) {
+  const declaredNames = getDeclaredUniformNames(fragmentShaderSource);
+  if (declaredNames.size === 0) {
+    return uniforms;
+  }
+
+  return Object.fromEntries(
+    Object.entries(uniforms).filter(([uniformName]) => declaredNames.has(uniformName))
+  );
+}
+
 async function mountShader(element, options, state) {
   // LCP protection: wait for full load + idle before importing/initializing WebGL.
   await waitForWindowLoad();
@@ -168,11 +196,12 @@ async function mountShader(element, options, state) {
     u_shapeScale: options.shapeScale,
     u_shape: patternShapeChecks,
   };
+  const safeUniforms = filterUniformsForShader(uniforms, warpFragmentShader);
 
   const shaderMount = new ShaderMount(
     element,
     warpFragmentShader,
-    uniforms,
+    safeUniforms,
     {
       alpha: true,
       antialias: false,
