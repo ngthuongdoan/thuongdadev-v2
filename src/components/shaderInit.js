@@ -17,6 +17,47 @@ const DEFAULTS = {
   pauseWhenOffscreen: true,
 };
 
+const DEBUG_PREFIX = '[ShaderBackground]';
+
+function debugLog(message, details) {
+  if (typeof console === 'undefined') {
+    return;
+  }
+
+  if (typeof details === 'undefined') {
+    console.log(`${DEBUG_PREFIX} ${message}`);
+    return;
+  }
+
+  console.log(`${DEBUG_PREFIX} ${message}`, details);
+}
+
+function debugWarn(message, details) {
+  if (typeof console === 'undefined') {
+    return;
+  }
+
+  if (typeof details === 'undefined') {
+    console.warn(`${DEBUG_PREFIX} ${message}`);
+    return;
+  }
+
+  console.warn(`${DEBUG_PREFIX} ${message}`, details);
+}
+
+function debugError(message, details) {
+  if (typeof console === 'undefined') {
+    return;
+  }
+
+  if (typeof details === 'undefined') {
+    console.error(`${DEBUG_PREFIX} ${message}`);
+    return;
+  }
+
+  console.error(`${DEBUG_PREFIX} ${message}`, details);
+}
+
 function waitForWindowLoad() {
   if (typeof window === 'undefined' || document.readyState === 'complete') {
     return Promise.resolve();
@@ -56,8 +97,19 @@ function setupVisibilityControls(element, state, pauseWhenOffscreen) {
   const cleanups = [];
 
   const updateFromPageVisibility = () => {
-    state.pageVisible = document.visibilityState !== 'hidden';
-    state.active = state.pageVisible && (!pauseWhenOffscreen || state.inViewport);
+    const nextPageVisible = document.visibilityState !== 'hidden';
+    const nextActive = nextPageVisible && (!pauseWhenOffscreen || state.inViewport);
+
+    if (nextPageVisible !== state.pageVisible || nextActive !== state.active) {
+      debugLog('page visibility updated', {
+        pageVisible: nextPageVisible,
+        inViewport: state.inViewport,
+        active: nextActive,
+      });
+    }
+
+    state.pageVisible = nextPageVisible;
+    state.active = nextActive;
   };
 
   state.inViewport = true;
@@ -74,8 +126,19 @@ function setupVisibilityControls(element, state, pauseWhenOffscreen) {
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver(
       (entries) => {
-        state.inViewport = entries.some((entry) => entry.isIntersecting);
-        state.active = state.pageVisible && state.inViewport;
+        const nextInViewport = entries.some((entry) => entry.isIntersecting);
+        const nextActive = state.pageVisible && nextInViewport;
+
+        if (nextInViewport !== state.inViewport || nextActive !== state.active) {
+          debugLog('viewport intersection updated', {
+            inViewport: nextInViewport,
+            pageVisible: state.pageVisible,
+            active: nextActive,
+          });
+        }
+
+        state.inViewport = nextInViewport;
+        state.active = nextActive;
       },
       { root: null, threshold: 0.01 }
     );
@@ -87,8 +150,19 @@ function setupVisibilityControls(element, state, pauseWhenOffscreen) {
 
   // Fallback when IntersectionObserver is unavailable.
   const updateViewportState = () => {
-    state.inViewport = isElementInViewport(element);
-    state.active = state.pageVisible && state.inViewport;
+    const nextInViewport = isElementInViewport(element);
+    const nextActive = state.pageVisible && nextInViewport;
+
+    if (nextInViewport !== state.inViewport || nextActive !== state.active) {
+      debugLog('viewport fallback updated', {
+        inViewport: nextInViewport,
+        pageVisible: state.pageVisible,
+        active: nextActive,
+      });
+    }
+
+    state.inViewport = nextInViewport;
+    state.active = nextActive;
   };
 
   const onScrollOrResize = () => updateViewportState();
@@ -162,11 +236,19 @@ function filterUniformsForShader(uniforms, fragmentShaderSource) {
 }
 
 async function mountShader(element, options, state) {
+  debugLog('mount started', {
+    width: element.clientWidth,
+    height: element.clientHeight,
+    options,
+  });
+
   // LCP protection: wait for full load + idle before importing/initializing WebGL.
   await waitForWindowLoad();
   await waitForIdle();
+  debugLog('window load + idle complete');
 
   if (state.disposed) {
+    debugWarn('mount aborted because state is already disposed');
     return () => {};
   }
 
@@ -176,8 +258,10 @@ async function mountShader(element, options, state) {
     getShaderColorFromString,
     warpFragmentShader,
   } = await import('@paper-design/shaders');
+  debugLog('shader module imported');
 
   if (state.disposed) {
+    debugWarn('mount aborted after import because state is disposed');
     return () => {};
   }
 
@@ -197,6 +281,11 @@ async function mountShader(element, options, state) {
     u_shape: patternShapeChecks,
   };
   const safeUniforms = filterUniformsForShader(uniforms, warpFragmentShader);
+  debugLog('uniforms prepared', {
+    inputUniformCount: Object.keys(uniforms).length,
+    filteredUniformCount: Object.keys(safeUniforms).length,
+    filteredUniformNames: Object.keys(safeUniforms),
+  });
 
   const shaderMount = new ShaderMount(
     element,
@@ -212,14 +301,18 @@ async function mountShader(element, options, state) {
     },
     0
   );
+  debugLog('ShaderMount initialized successfully');
 
   const cleanupVisibility = setupVisibilityControls(element, state, options.pauseWhenOffscreen);
   const cleanupLoop = createFrameLoop(shaderMount, state, options.speed, options.fps);
+  debugLog('animation loop + visibility controls attached');
 
   return () => {
+    debugLog('teardown started');
     cleanupLoop();
     cleanupVisibility();
     shaderMount.dispose();
+    debugLog('teardown finished');
   };
 }
 
@@ -246,7 +339,20 @@ export default function ShaderBackgroundClient(props) {
   useEffect(() => {
     const host = hostRef.current;
     if (!host || typeof window === 'undefined') {
+      debugWarn('effect skipped because host or window is unavailable');
       return undefined;
+    }
+
+    debugLog('effect started', {
+      className: props.className ?? '',
+      width: host.clientWidth,
+      height: host.clientHeight,
+    });
+    if (host.clientWidth === 0 || host.clientHeight === 0) {
+      debugWarn('host has zero size; shader may not be visible', {
+        width: host.clientWidth,
+        height: host.clientHeight,
+      });
     }
 
     const state = {
@@ -261,11 +367,15 @@ export default function ShaderBackgroundClient(props) {
     mountShader(host, options, state).then((teardown) => {
       cleanup = teardown;
       if (state.disposed) {
+        debugWarn('state disposed before mount completed; running immediate teardown');
         cleanup();
       }
+    }).catch((error) => {
+      debugError('mount failed', error);
     });
 
     return () => {
+      debugLog('effect cleanup triggered');
       state.disposed = true;
       cleanup();
     };
