@@ -1,5 +1,5 @@
 ---
-import ShaderBackgroundClient from './shaderInit.js';
+import WarpBackground from './warp-background';
 
 interface Props {
   class?: string;
@@ -38,7 +38,7 @@ const {
 } = Astro.props;
 ---
 
-<ShaderBackgroundClient
+<WarpBackground
   className={className}
   color1={color1}
   color2={color2}
@@ -54,5 +54,5 @@ const {
   shapeScale={shapeScale}
   fps={fps}
   pauseWhenOffscreen={pauseWhenOffscreen}
-  client:visible
+  client:load
 />
