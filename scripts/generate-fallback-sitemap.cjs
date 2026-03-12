@@ -21,6 +21,11 @@ function walk(dir) {
 for (const file of walk(articlesDir)) {
   const content = fs.readFileSync(file, "utf8");
   const frontmatter = content.match(/^---\s*\n([\s\S]*?)\n---/);
+  const isDraftMatch = frontmatter?.[1]?.match(/(?:^|\n)isDraft:\s*(true|false)\s*$/im);
+  const isDraft = isDraftMatch?.[1]?.toLowerCase() === "true";
+  if (isDraft) {
+    continue;
+  }
   const slugMatch = frontmatter?.[1]?.match(/(?:^|\n)slug:\s*["']?([^\n"']+)["']?/);
   if (slugMatch?.[1]) {
     routes.add(`/blog/vi/${slugMatch[1].trim()}`);

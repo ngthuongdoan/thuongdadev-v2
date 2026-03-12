@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 
 export const GET: APIRoute = async ({ site }) => {
   // Get all blog posts
-  const blogPosts = await getCollection('articles');
+  const blogPosts = await getCollection('articles', ({ data }) => !data.isDraft);
   
   const staticPages = [
     { url: '', priority: '1.0', changefreq: 'weekly' },

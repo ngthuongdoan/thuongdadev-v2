@@ -6,7 +6,7 @@ export const categories = {
     getCategories: defineAction({
         input: z.null(),
         handler: async () => {
-            const allArticles = await getCollection("articles");
+            const allArticles = await getCollection("articles", ({ data }) => !data.isDraft);
 
             const categories = [
                 ...new Set(allArticles.map((article) => article.data.category)),
@@ -23,7 +23,7 @@ export const categories = {
 
             const articles = []
 
-            const allArticles = await getCollection("articles");
+            const allArticles = await getCollection("articles", ({ data }) => !data.isDraft);
             
             if (category === "all") {
                 articles.push(...allArticles);

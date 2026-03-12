@@ -23,6 +23,7 @@ Add these secrets to your GitHub repository (Settings → Secrets and variables 
 
 - `GH_CLIENT_ID` - Your GitHub OAuth Client ID
 - `GH_CLIENT_SECRET` - Your GitHub OAuth Client Secret
+- `GH_ALLOWED_USERS` - Comma-separated GitHub usernames allowed to access `/admin` (example: `ngthuongdoan`)
 
 ### 3. Deploy
 
