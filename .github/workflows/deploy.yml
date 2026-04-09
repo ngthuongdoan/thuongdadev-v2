@@ -21,12 +21,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22.14.0'
+          cache: 'pnpm'
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.0.0
 
       - name: Install dependencies
-        run: yarn install
+        run: pnpm install --frozen-lockfile
 
       - name: Build Astro Project
-        run: yarn build
+        run: pnpm build
         env:
           NODE_ENV: production
           GH_CLIENT_ID: ${{ secrets.GH_CLIENT_ID }}
@@ -60,6 +66,7 @@ jobs:
           path: |
             dist/
             package.json
+            pnpm-lock.yaml
           retention-days: 1
 
   deploy:
@@ -145,12 +152,14 @@ jobs:
             })();
             APPJS
             
-            echo "=== Installing production dependencies ==="
+            echo "=== Installing production dependencies with pnpm ==="
             export PATH=$PATH:/opt/cpanel/ea-nodejs22/bin
-            npm install --production
+            corepack enable
+            corepack prepare pnpm@10.0.0 --activate
+            pnpm install --prod --frozen-lockfile
             
             # Install dotenv if not already installed
-            npm list dotenv || npm install dotenv
+            pnpm list dotenv || pnpm add dotenv
             
             echo "=== Deployment completed ==="
             echo "App directory contents:"
