@@ -26,7 +26,7 @@ const projects = defineCollection({
         title: z.string(),
         description: z.string(),
         category: z.enum(['main', 'side']),
-        image: image(),
+        image: z.string().startsWith("/uploads/"),
         link: z.string().url(),
         order: z.number().optional(),
     }),

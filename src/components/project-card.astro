@@ -1,5 +1,4 @@
 ---
-import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 
 interface Props {
@@ -12,7 +11,7 @@ const detailsHref = `/projects/${project.id}`;
 
 <li>
     <a href={detailsHref}>
-        <Image
+        <img
             src={project.data.image}
             alt={project.data.title}
             class="aspect-[1/1.33] object-center object-cover rounded-lg shadow-lg mb-4 sm:mb-0 sm:mr-4 transition-opacity hover:opacity-80"

@@ -1,5 +1,4 @@
 ---
-import { Image } from "astro:assets";
 import { getCollection, render } from "astro:content";
 import H1 from "../../components/h1.astro";
 import Prose from "../../components/prose.astro";
@@ -48,7 +47,7 @@ const pageDescription = project.data.description;
         </div>
 
         <div class="mt-8 max-w-3xl">
-            <Image src={project.data.image} alt={project.data.title} class="w-full rounded-lg object-cover" />
+            <img src={project.data.image} alt={project.data.title} class="w-full rounded-lg object-cover" />
         </div>
 
         <div class="mt-8 max-w-3xl">
