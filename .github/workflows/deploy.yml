@@ -20,7 +20,7 @@ jobs:
       - name: Set up pnpm
         uses: pnpm/action-setup@v6
         with:
-          version: 10.0.0
+          version: 10.32.1
 
       - name: Set up Node.js
         uses: actions/setup-node@v6
@@ -155,7 +155,7 @@ jobs:
             echo "=== Installing production dependencies with pnpm ==="
             export PATH=$PATH:/opt/cpanel/ea-nodejs22/bin
             corepack enable
-            corepack prepare pnpm@10.0.0 --activate
+            corepack prepare pnpm@10.32.1 --activate
             pnpm install --prod --frozen-lockfile
             
             # Install dotenv if not already installed
