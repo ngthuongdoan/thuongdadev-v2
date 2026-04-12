@@ -38,7 +38,11 @@
   "pnpm": {
     "overrides": {
       "csso>css-tree": "2.2.1"
-    }
+    },
+    "ignoredBuiltDependencies": [
+      "esbuild",
+      "sharp"
+    ]
   },
   "packageManager": "pnpm@10.32.1"
 }
