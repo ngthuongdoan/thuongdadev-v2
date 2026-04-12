@@ -14,6 +14,14 @@ Install Dependencies
 pnpm install
 ```
 
+Docker
+```sh
+cp .env.example .env
+docker compose up --build
+```
+
+The Compose setup runs Astro in development mode with a bind-mounted workspace, so changes under `src/`, `public/`, and other repo files should hot reload inside the container. On Docker Desktop for Windows, file watching can be unreliable without polling, so the Compose file enables polling for you.
+
 Development
 ```sh
 pnpm run dev
@@ -28,6 +36,14 @@ Preview
 ```sh
 pnpm run preview
 ```
+
+Run Production Build In Docker
+```sh
+docker build -t thuongdadev .
+docker run --rm -p 8080:8080 --env-file .env thuongdadev
+```
+
+The container runs the Astro Node standalone server on port `8080`. Set `GH_CLIENT_ID`, `GH_CLIENT_SECRET`, `GH_ALLOWED_USERS`, and `ORIGIN` in `.env` if you need the `/admin` OAuth flow.
 
 ## Project Structure
 

@@ -1,0 +1,10 @@
+.git
+.github
+.vscode
+.astro
+dist
+node_modules
+.pnpm-store
+.env
+npm-debug.log*
+pnpm-debug.log*

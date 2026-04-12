@@ -29,6 +29,7 @@ const projects = defineCollection({
         image: z.string().startsWith("/uploads/"),
         link: z.string().url(),
         order: z.number().optional(),
+        thumbnail: z.string().startsWith("/uploads/thumbnails/"),
     }),
 });
 

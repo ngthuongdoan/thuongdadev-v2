@@ -9,7 +9,7 @@ site_url: https://thuongda.dev
 display_url: https://thuongda.dev
 
 # Enable the full editorial workflow (draft -> review -> publish)
-publish_mode: editorial_workflow
+# publish_mode: editorial_workflow
 
 # Uncomment for local testing (run: npx decap-server)
 # local_backend: true
@@ -82,6 +82,8 @@ collections:
         widget: "select"
         options: ["main", "side"]
         default: "main"
+      - { label: "Thumbnail", name: "thumbnail", widget: "image", hint: "Upload project thumbnail or paste URL" }
       - { label: "Image", name: "image", widget: "image", hint: "Upload project image or paste URL" }
       - { label: "Link", name: "link", widget: "string", hint: "URL to the live project or repository" }
       - { label: "Order", name: "order", widget: "number", value_type: "int", default: 0, hint: "Lower numbers appear first" }
+      - { label: "Body", name: "body", widget: "markdown" }
