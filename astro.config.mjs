@@ -17,7 +17,10 @@ export default defineConfig({
     port: 8080,
   },
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
+    build: {
+      cssMinify: "lightningcss",
+    },
   },
 
   integrations: [react()],

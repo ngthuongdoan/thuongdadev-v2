@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  csso>css-tree: 2.2.1
+
 importers:
 
   .:

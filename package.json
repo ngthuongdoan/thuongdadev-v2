@@ -35,5 +35,10 @@
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.16"
   },
+  "pnpm": {
+    "overrides": {
+      "csso>css-tree": "2.2.1"
+    }
+  },
   "packageManager": "pnpm@10.0.0"
 }
