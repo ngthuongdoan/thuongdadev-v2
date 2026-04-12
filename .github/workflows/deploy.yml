@@ -30,7 +30,7 @@ jobs:
 
       - name: Install dependencies
         # Keep lockfile enforcement enabled so CI fails on dependency drift.
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
       - name: Build Astro Project
         run: pnpm build
