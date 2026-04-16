@@ -25,9 +25,9 @@ const {
 
 const resolvedLocale = locale ?? (lang === "vi" ? "vi_VN" : "en_US");
 
-const defaultTitle = "Jasper Doan | Senior Software Developer";
-const defaultDescription = "Jasper Doan is a senior software developer in Ho Chi Minh City building React, TypeScript, and Astro products with strong frontend architecture, content systems, and production-ready delivery workflows.";
-const defaultKeywords = "senior software developer vietnam, senior frontend engineer, React TypeScript developer, Astro developer, software engineer ho chi minh city, portfolio website, Jasper Doan, thuongda.dev";
+const defaultTitle = "Jasper Doan | AI Engineer";
+const defaultDescription = "Jasper Doan is an AI Engineer in Ho Chi Minh City designing AI-augmented engineering workflows, autonomous delivery systems, and production-grade software with strong architectural control.";
+const defaultKeywords = "AI engineer vietnam, autonomous delivery engineer, AI-augmented software engineer, Codex Devin Copilot engineer, software engineer ho chi minh city, Jasper Doan, thuongda.dev";
 
 // Get the canonical URL
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -44,7 +44,7 @@ const personSchema = {
 		"https://github.com/ngthuongdoan",
 		"https://www.linkedin.com/in/ngthuongdoan/"
 	],
-	"jobTitle": "Senior Software Developer",
+	"jobTitle": "AI Engineer",
 	"worksFor": {
 		"@type": "Organization",
 		"name": "Independent"
@@ -52,14 +52,15 @@ const personSchema = {
 	"description": defaultDescription,
 	"knowsAbout": [
 		"Frontend Architecture",
+		"AI-Augmented Engineering",
+		"Autonomous Delivery",
+		"Prompt Engineering",
+		"Multi-Agent Workflows",
 		"React",
 		"TypeScript",
-		"Astro",
-		"Content Platforms",
 		"Software Engineering",
-		"Design Systems",
-		"Performance Optimization",
-		"Developer Experience"
+		"System Design",
+		"Developer Productivity"
 	]
 };
 
@@ -67,7 +68,7 @@ const personSchema = {
 const websiteSchema = {
 	"@context": "https://schema.org",
 	"@type": "WebSite",
-	"name": "Jasper Doan - Senior Software Developer",
+	"name": "Jasper Doan - AI Engineer",
 	"url": siteUrl,
 	"description": defaultDescription,
 	"author": {

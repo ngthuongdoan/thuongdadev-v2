@@ -4,8 +4,8 @@ import H1 from "../components/h1.astro";
 import ProjectsSection from "../components/projects-section.astro";
 import InfoLayout from "../layouts/InfoLayout.astro";
 
-const pageTitle = "Projects | Jasper Doan - Senior Software Developer";
-const pageDescription = "Selected work by Jasper Doan, including featured product builds, open-source portfolio infrastructure, and the next flagship systems planned for deeper full-stack case studies.";
+const pageTitle = "Projects | Jasper Doan - AI Engineer";
+const pageDescription = "AI-augmented engineering case studies by Jasper Doan, covering autonomous delivery workflows, production architecture, and projects shipped with AI agents in the loop.";
 
 // Fetch all projects from CMS
 const allProjects = await getCollection('projects');
@@ -19,19 +19,19 @@ const openSourceProjects = projects.filter(p => p.data.category === "opensource"
 
 const plannedProjects = [
 	{
-		title: "Multi-tenant SaaS Control Center",
-		description: "A production-grade full-stack build focused on role-based access, operational workflows, and infrastructure-level decision making.",
-		focus: "Auth, tenancy boundaries, dashboards, delivery pipelines",
+		title: "AI Code Review Assistant",
+		description: "A PR analysis workflow that summarizes change risk, highlights refactor opportunities, and generates structured review output before human approval.",
+		focus: "PR analysis, risk detection, refactor guidance, review automation",
 	},
 	{
-		title: "Observability Playground",
-		description: "A hands-on case study for tracing, metrics, and incident-oriented debugging across a small distributed system.",
-		focus: "OpenTelemetry, logs, alerts, performance diagnostics",
+		title: "Autonomous Delivery Dashboard",
+		description: "A system for tracking agent-assisted feature delivery, code review status, testing progress, and deployment readiness across one delivery pipeline.",
+		focus: "AI orchestration, delivery visibility, CI gating, execution control",
 	},
 	{
-		title: "AI Research Workflow",
-		description: "A productized workflow for turning long-form research into publishable artifacts with clean summaries, metadata, and reusable content blocks.",
-		focus: "Content systems, automation, documentation UX",
+		title: "Observability for AI Workflows",
+		description: "A case study around tracing prompt flows, task execution, and human-in-the-loop approval inside an AI-native engineering stack.",
+		focus: "Prompt tracing, logs, QA checkpoints, workflow reliability",
 	},
 ];
 ---
@@ -41,8 +41,8 @@ const plannedProjects = [
 		<div class="max-w-4xl space-y-5">
 			<H1> Projects </H1>
 			<p class="max-w-3xl text-lg leading-8 text-zinc-300 text-balance">
-				These projects are chosen to show range and execution quality: realtime collaboration, portfolio infrastructure,
-				and the systems I am shaping next to better represent senior-level ownership.
+				Each project is framed as an AI-augmented engineering case study: architecture, delivery workflow,
+				execution layers handled by agents, and the control points where engineering judgment still matters.
 			</p>
 		</div>
 
@@ -52,10 +52,10 @@ const plannedProjects = [
 
 		<section class="mt-12 space-y-6 border-t border-zinc-800 pt-12 sm:mt-16 sm:pt-16">
 			<div class="max-w-3xl">
-				<h2 class="text-xl font-semibold text-zinc-100 sm:text-2xl">Planned Flagship Builds</h2>
+				<h2 class="text-xl font-semibold text-zinc-100 sm:text-2xl">Next AI-Native Builds</h2>
 				<p class="mt-3 text-base leading-7 text-zinc-400">
-					Instead of pretending unfinished work is done, I keep the next ambitious builds visible. These are the systems I want to
-					turn into deeper case studies next.
+					Instead of hiding unfinished work, I keep the next AI-native systems visible. These are the builds I want to turn
+					into deeper case studies around autonomous delivery and engineering leverage.
 				</p>
 			</div>
 

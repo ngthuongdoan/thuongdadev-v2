@@ -8,6 +8,8 @@
     "start": "node dist/server/entry.mjs",
     "preview": "astro preview",
     "astro": "astro",
+    "check": "astro check",
+    "test": "node -e \"console.log('No automated tests configured yet')\"",
     "oauth": "node oauth-server.js",
     "cms:server": "npx decap-server"
   },

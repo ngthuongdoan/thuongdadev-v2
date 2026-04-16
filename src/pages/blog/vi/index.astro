@@ -5,8 +5,8 @@ import H1 from "../../../components/h1.astro";
 import { formatDate } from "../../../lib/utils";
 import InfoLayout from "../../../layouts/InfoLayout.astro";
 
-const pageTitle = "Blog Tiếng Việt | Jasper Doan - Frontend Development Insights";
-const pageDescription = "Read articles in Vietnamese about frontend development, React, TypeScript, web development best practices, and software engineering tips from Jasper Doan.";
+const pageTitle = "AI Engineering Notes | Jasper Doan";
+const pageDescription = "Vietnamese engineering notes and selected readings curated by Jasper Doan, focused on AI-augmented delivery, software quality, and modern product engineering.";
 
 const categoriesResult = await Astro.callAction(actions.categories.getCategories, null);
 const categories = categoriesResult?.data?.categories || [];
@@ -27,9 +27,16 @@ const articles = articlesResult?.data?.articles || [];
 <InfoLayout title={pageTitle} description={pageDescription} lang="vi">
     <div class="p-4 sm:pt-8 sm:px-12 pb-20 min-h-dvh">
         <H1> Blog </H1>
-        <p class="mt-2 text-sm sm:text-base text-zinc-400">
-            These articles are written in Vietnamese to support the local developer community.
-        </p>
+        <div class="mt-2 max-w-3xl space-y-2 text-sm sm:text-base text-zinc-400">
+            <p>
+                Đây là nơi tôi lưu engineering notes và selected readings về AI engineering,
+                delivery workflows, software quality, và những hệ thống giúp team ship nhanh hơn.
+            </p>
+            <p>
+                Một số bài là ghi chú của tôi, một số là excerpt hoặc reading notes từ tác giả khác
+                mà tôi muốn giữ lại như tài liệu tham chiếu.
+            </p>
+        </div>
 
         <div class="mt-4 flex flex-wrap items-center gap-2">
             <span class="w-fit px-3 py-1 text-xs sm:text-sm rounded-full bg-zinc-100/20 text-white">
@@ -79,7 +86,7 @@ const articles = articlesResult?.data?.articles || [];
                             href={`/blog/vi/${article.data.slug}`}
                         >
                             <span class="inline-flex items-center w-fit px-2.5 py-0.5 text-xs rounded-full bg-zinc-100/10 text-zinc-300">
-                                🇻🇳 Vietnamese
+                                🇻🇳 Vietnamese note
                             </span>
                             <h2 class="text-xl xl:text-2xl text-zinc-300 group-hover:text-white text-balance font-medium underline group-hover:underline-offset-2 decoration-transparent group-hover:decoration-zinc-500">
                                 {article.data.title}

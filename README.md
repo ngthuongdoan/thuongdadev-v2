@@ -1,10 +1,10 @@
 # thuongdadev-v2
 
-Portfolio website for Jasper Doan, positioned as a senior software developer rather than a generic frontend template. The site is built with Astro SSR, React, TypeScript, Tailwind CSS 4, a GitHub-backed Decap CMS workflow, and Docker for local or production-style delivery.
+Jasper Doan is an AI Engineer. This portfolio represents an AI-augmented approach to modern software engineering: autonomous implementation, structured system design, and high-velocity delivery with human-in-the-loop quality control.
 
 ## What this repo is for
 
-- Present selected work with clearer project context, stack details, and technical signals
+- Present AI-augmented engineering work with clearer project context, architecture, and delivery signals
 - Publish articles and project entries through a lightweight editorial workflow
 - Keep SEO, structured metadata, and deployment concerns inside the same codebase
 - Treat the portfolio itself as a product artifact, not just a static landing page

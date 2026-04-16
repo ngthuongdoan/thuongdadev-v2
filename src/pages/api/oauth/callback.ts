@@ -6,7 +6,7 @@ export const GET: APIRoute = async ({ url }) => {
   const allowedUsersRaw = import.meta.env.GH_ALLOWED_USERS || 'ngthuongdoan';
   const allowedUsers = allowedUsersRaw
     .split(',')
-    .map((user) => user.trim().toLowerCase())
+    .map((user: string) => user.trim().toLowerCase())
     .filter(Boolean);
 
   if (!code) {

@@ -2,46 +2,43 @@
 import H1 from "../components/h1.astro";
 import InfoLayout from "../layouts/InfoLayout.astro";
 
-const pageTitle = "About Jasper Doan | Senior Software Developer";
-const pageDescription = "Learn more about Jasper Doan, a senior software developer focused on React, TypeScript, Astro, content systems, and production-ready delivery.";
+const pageTitle = "About Jasper Doan | AI Engineer";
+const pageDescription = "Learn more about Jasper Doan, an AI Engineer focused on AI-augmented delivery, autonomous implementation workflows, and production-grade software systems.";
 
 const strengths = [
 	{
-		title: "Deep Focus",
-		items: ["React and TypeScript application architecture", "Astro content platforms and editorial workflows", "Performance, accessibility, and maintainable UI systems"],
+		title: "Engineering",
+		items: ["Distributed systems and production-grade architecture", "Scalable backend and frontend delivery", "CI/CD, observability, and maintainable systems"],
 	},
 	{
-		title: "Strong Working Set",
-		items: ["Node.js and API integration", "Docker-based local and deployment workflows", "SEO foundations, metadata strategy, and content publishing"],
+		title: "AI-Augmented Development",
+		items: ["Prompt engineering for structured delivery", "Task decomposition for AI agents", "Multi-agent workflow design and human-in-the-loop validation"],
 	},
 	{
-		title: "Comfortable In",
-		items: ["Realtime collaboration patterns", "Developer experience and component-driven delivery", "Project framing, documentation, and technical storytelling"],
+		title: "Tools",
+		items: ["Codex, Devin, and Copilot", "OpenAI APIs and prompt systems", "GitHub Actions, Docker, and delivery automation"],
 	},
 ];
 
-const trajectory = [
-	{
-		period: "Current focus",
-		title: "Senior software development through public proof of work",
-		description: "Turning this portfolio into a stronger engineering artifact with structured content, clearer positioning, and projects that explain technical decisions instead of just listing tools.",
-	},
-	{
-		period: "Recent work",
-		title: "Frontend systems and product-facing delivery",
-		description: "Shipping interfaces built with React, TypeScript, and Astro while tightening the layer underneath: metadata, CMS workflows, deployment readiness, and long-term maintainability.",
-	},
-	{
-		period: "Ongoing direction",
-		title: "From polished UI to system ownership",
-		description: "Building toward projects that show architecture, collaboration, and execution quality together: realtime features, production workflows, and clearer engineering trade-offs.",
-	},
+const workflow = [
+	"System design and architecture definition",
+	"Task decomposition optimized for AI agents",
+	"Parallelized implementation using Codex and Devin",
+	"Human-in-the-loop review and refinement",
+	"Automated testing and CI validation",
+];
+
+const aiApproach = [
+	"Codex for implementation, refactoring, and structured code changes",
+	"Devin for broader multi-file feature delivery and execution support",
+	"Copilot for inline acceleration and local iteration speed",
+	"Custom prompts for orchestration, documentation, and repeatable delivery flows",
 ];
 
 const credentials = [
-	"GitHub: public repos used as case studies, not just code dumps",
-	"LinkedIn: active professional profile for full-time and freelance opportunities",
-	"Based in Ho Chi Minh City, available for remote collaboration and product-focused work",
+	"Title in-company: AI Engineer",
+	"GitHub: public repos used as engineering case studies, not just code dumps",
+	"Based in Ho Chi Minh City, available for remote collaboration and high-velocity product delivery",
 ];
 ---
 
@@ -51,13 +48,12 @@ const credentials = [
 			<H1> About Jasper Doan </H1>
 
 			<p class="text-xl leading-9 xl:text-2xl text-zinc-300 text-balance">
-				I am a senior software developer focused on building products that stay sharp beyond the first demo:
-				clear interfaces, durable frontend architecture, and delivery workflows that keep content and code easy to evolve.
+				I am an AI Engineer specializing in AI-augmented software delivery.
 			</p>
 
 			<p class="max-w-3xl text-lg leading-8 text-zinc-400 text-balance">
-				My strongest work sits at the intersection of product experience and engineering discipline. I enjoy turning
-				rough ideas into systems that are easier to publish, easier to maintain, and easier for teams to keep improving.
+				Instead of using AI as a helper on the side, I design workflows around AI agents to architect,
+				implement, and ship production systems with high velocity and controlled quality.
 			</p>
 		</section>
 
@@ -65,18 +61,18 @@ const credentials = [
 			<div class="space-y-4">
 				<h2 class="text-sm uppercase tracking-[0.28em] text-zinc-500">How I Work</h2>
 				<ul class="space-y-3 text-base leading-7 text-zinc-300">
-					<li>I treat portfolio work like product work: positioning, architecture, publishing flow, and maintainability all need to line up.</li>
-					<li>I prefer deliberate systems over flashy demos, especially when performance, accessibility, and handoff quality matter.</li>
-					<li>I use public-facing projects to show technical judgment, not just tool familiarity.</li>
+					{workflow.map((item) => <li>{item}</li>)}
 				</ul>
 			</div>
 
 			<div class="rounded-3xl border border-zinc-800 bg-zinc-950/40 p-6">
-				<h2 class="text-sm uppercase tracking-[0.28em] text-zinc-500">Current Focus</h2>
+				<h2 class="text-sm uppercase tracking-[0.28em] text-zinc-500">What I Focus On</h2>
 				<ul class="mt-4 space-y-3 text-sm leading-7 text-zinc-300">
-					<li>React and TypeScript interfaces with production-grade UX standards</li>
-					<li>Astro-based content platforms with stronger editorial and SEO foundations</li>
-					<li>Project case studies that explain trade-offs, scope, and implementation quality</li>
+					<li>AI-assisted engineering workflows</li>
+					<li>High-velocity product development</li>
+					<li>Production-grade architectures</li>
+					<li>Automation and CI/CD</li>
+					<li>Developer productivity systems</li>
 				</ul>
 			</div>
 		</section>
@@ -96,17 +92,19 @@ const credentials = [
 		</section>
 
 		<section class="space-y-6">
-			<h2 class="text-sm uppercase tracking-[0.28em] text-zinc-500">Experience Trajectory</h2>
-			<div class="space-y-5">
-				{trajectory.map((item) => (
-					<div class="grid gap-3 border-t border-zinc-800 pt-5 md:grid-cols-[180px_minmax(0,1fr)]">
-						<p class="text-sm uppercase tracking-[0.2em] text-zinc-500">{item.period}</p>
-						<div>
-							<h3 class="text-lg text-zinc-100">{item.title}</h3>
-							<p class="mt-2 max-w-3xl text-base leading-7 text-zinc-400">{item.description}</p>
-						</div>
-					</div>
-				))}
+			<h2 class="text-sm uppercase tracking-[0.28em] text-zinc-500">AI Engineering Approach</h2>
+			<div class="grid gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+				<div class="rounded-3xl border border-zinc-800 bg-zinc-950/35 p-6">
+					<p class="text-base leading-7 text-zinc-300">
+						I treat AI agents as execution layers. My role shifts away from typing every line and toward
+						designing systems, validating architecture, ensuring quality, and making strategic technical decisions.
+					</p>
+				</div>
+				<div class="rounded-3xl border border-zinc-800 bg-zinc-950/35 p-6">
+					<ul class="space-y-3 text-sm leading-7 text-zinc-300">
+						{aiApproach.map((item) => <li>{item}</li>)}
+					</ul>
+				</div>
 			</div>
 		</section>
 

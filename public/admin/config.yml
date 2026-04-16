@@ -80,11 +80,39 @@ collections:
       - label: "Category"
         name: "category"
         widget: "select"
-        options: ["main", "side"]
+        options: ["main", "side", "opensource"]
         default: "main"
-      - { label: "Thumbnail", name: "thumbnail", widget: "image", hint: "Upload project thumbnail or paste URL" }
-      - { label: "Image", name: "image", widget: "image", hint: "Upload a project image or choose one from /public/uploads." }
-      - { label: "Link", name: "link", widget: "string", hint: "URL to the live project or repository" }
+      - label: "Status"
+        name: "status"
+        widget: "select"
+        options: ["live", "case-study", "in-progress"]
+        default: "live"
+      - { label: "Role", name: "role", widget: "string", hint: "Your role on the project or case study" }
+      - { label: "Period", name: "period", widget: "string", hint: "Example: 2025 - Present" }
+      - { label: "Thumbnail", name: "thumbnail", widget: "image", hint: "Upload to /public/uploads/thumbnails so cards match the content schema." }
+      - { label: "Image", name: "image", widget: "image", hint: "Upload the project hero image under /public/uploads." }
+      - label: "Links"
+        name: "links"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "Label", name: "label", widget: "string" }
+          - { label: "URL", name: "url", widget: "string", hint: "Absolute URL to the live project, repo, or demo" }
+      - label: "Stack"
+        name: "stack"
+        widget: "list"
+        required: false
+        field: { label: "Technology", name: "technology", widget: "string" }
+      - label: "Metrics"
+        name: "metrics"
+        widget: "list"
+        required: false
+        field: { label: "Metric", name: "metric", widget: "string" }
+      - label: "Highlights"
+        name: "highlights"
+        widget: "list"
+        required: false
+        field: { label: "Highlight", name: "highlight", widget: "string" }
       - { label: "Order", name: "order", widget: "number", value_type: "int", default: 0, hint: "Lower numbers appear first" }
       - { label: "Body", name: "body", widget: "markdown" }
 

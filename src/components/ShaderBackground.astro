@@ -15,8 +15,6 @@ interface Props {
   swirl?: number;
   swirlIterations?: number;
   shapeScale?: number;
-  fps?: number;
-  pauseWhenOffscreen?: boolean;
 }
 
 const {
@@ -33,8 +31,6 @@ const {
   swirl = 0.8,
   swirlIterations = 10,
   shapeScale = 0.3,
-  fps = 30,
-  pauseWhenOffscreen = true,
 } = Astro.props;
 ---
 
@@ -52,7 +48,5 @@ const {
   swirl={swirl}
   swirlIterations={swirlIterations}
   shapeScale={shapeScale}
-  fps={fps}
-  pauseWhenOffscreen={pauseWhenOffscreen}
   client:load
 />
