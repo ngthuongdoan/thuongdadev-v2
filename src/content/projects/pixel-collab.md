@@ -5,7 +5,7 @@ description: PixelCollab is a multiplayer whiteboard built for fast visual
   together on a live synced canvas with presence indicators, chat, color tools,
   and a clean focus-first workspace.
 category: side
-thumbnail: /uploads/chatgpt-image-apr-12-2026-01_26_33-pm.png
+thumbnail: /uploads/thumbnails/chatgpt-image-apr-12-2026-01_26_33-pm.png
 image: /uploads/chatgpt-image-apr-9-2026-10_23_28-pm.png
 link: https://whiteboard-dun-ten.vercel.app/
 order: 1
