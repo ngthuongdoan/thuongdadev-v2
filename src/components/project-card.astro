@@ -9,29 +9,63 @@ const { project } = Astro.props;
 const detailsHref = `/projects/${project.id}`;
 ---
 
-<li>
+<li class="group">
     <a href={detailsHref}>
         <img
             src={project.data.thumbnail || project.data.image}
             alt={project.data.title}
-            class="aspect-[1/1.33] object-center object-cover rounded-lg shadow-lg mb-4 sm:mb-0 sm:mr-4 transition-opacity hover:opacity-80"
+            class="aspect-[1/1.15] object-center object-cover rounded-3xl shadow-lg mb-5 transition-opacity hover:opacity-85"
         />
     </a>
 
-    <div class="p-1 sm:p-2">
-        <h3 class="text-base text-zinc-100">
+    <div class="space-y-4 p-1">
+        <div class="flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.24em] text-zinc-500">
+            <span>{project.data.category === "opensource" ? "Open source" : project.data.category === "main" ? "Featured build" : "Side experiment"}</span>
+            <span class="text-zinc-700">/</span>
+            <span>{project.data.status.replace("-", " ")}</span>
+        </div>
+
+        <div>
+            <h3 class="text-xl text-zinc-100">
             <a href={detailsHref} class="hover:text-zinc-300">
                 {project.data.title}
             </a>
         </h3>
-        <p class="text-sm text-zinc-400 text-balance">{project.data.description}</p>
-        <div class="mt-2 flex items-center gap-4 text-sm">
+            <p class="mt-2 text-sm leading-7 text-zinc-400 text-balance">{project.data.description}</p>
+        </div>
+
+        <p class="text-sm text-zinc-300">{project.data.role}</p>
+
+        {
+            project.data.stack.length > 0 && (
+                <ul class="flex flex-wrap gap-2 text-xs text-zinc-300">
+                    {project.data.stack.map((item) => (
+                        <li class="rounded-full border border-zinc-700 px-3 py-1">{item}</li>
+                    ))}
+                </ul>
+            )
+        }
+
+        {
+            project.data.metrics.length > 0 && (
+                <ul class="space-y-2 text-sm leading-6 text-zinc-400">
+                    {project.data.metrics.slice(0, 2).map((metric) => (
+                        <li>{metric}</li>
+                    ))}
+                </ul>
+            )
+        }
+
+        <div class="flex flex-wrap items-center gap-4 text-sm">
             <a href={detailsHref} class="text-zinc-200 hover:text-white underline underline-offset-4 decoration-zinc-600">
                 View details
             </a>
-            <a href={project.data.link} target="_blank" rel="noopener noreferrer" class="text-zinc-400 hover:text-zinc-200">
-                Visit project
-            </a>
+
+            {project.data.links.map((link) => (
+                <a href={link.url} target="_blank" rel="noopener noreferrer" class="text-zinc-400 hover:text-zinc-200">
+                    {link.label}
+                </a>
+            ))}
         </div>
     </div>
 </li>

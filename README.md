@@ -1,90 +1,123 @@
-# Nikola Tesla Portfolio
-Nikola Tesla Portfolio is an Astro template built with of course Astro 5.7, React 19 and TailwindCSS 4
+# thuongdadev-v2
 
-![Nikola Tesla Astro Portfolio](/public/social-image.jpg "Nikola Tesla Portfolio")
+Portfolio website for Jasper Doan, positioned as a senior software developer rather than a generic frontend template. The site is built with Astro SSR, React, TypeScript, Tailwind CSS 4, a GitHub-backed Decap CMS workflow, and Docker for local or production-style delivery.
 
-## Getting Started
-Clone Repository
+## What this repo is for
+
+- Present selected work with clearer project context, stack details, and technical signals
+- Publish articles and project entries through a lightweight editorial workflow
+- Keep SEO, structured metadata, and deployment concerns inside the same codebase
+- Treat the portfolio itself as a product artifact, not just a static landing page
+
+## Stack
+
+- Astro 6
+- React 18
+- TypeScript 5
+- Tailwind CSS 4
+- Decap CMS with GitHub OAuth
+- Docker multi-stage builds
+
+## Architecture Notes
+
+- `src/pages` contains the public routes for home, about, projects, contact, and blog
+- `src/content` stores markdown-driven article and project entries
+- `src/layouts/RootLayout.astro` centralizes metadata, structured data, and social sharing tags
+- `public/admin` contains the Decap CMS configuration and admin shell
+- `src/pages/api/oauth/*` handles the GitHub OAuth flow for the CMS
+
+## Local Development
+
+Clone the repository:
+
 ```sh
-git clone https://github.com/iann-mathaiya/nikola-tesla.git
+git clone git@github.com:ngthuongdoan/thuongdadev-v2.git
+cd thuongdadev-v2
 ```
 
-Install Dependencies
+Install dependencies:
+
 ```sh
 pnpm install
 ```
 
-Docker
+Start the development server:
+
+```sh
+pnpm run dev
+```
+
+Create a production build:
+
+```sh
+pnpm run build
+```
+
+Preview the production build locally:
+
+```sh
+pnpm run preview
+```
+
+## Docker
+
+Start the containerized development workflow:
+
 ```sh
 cp .env.example .env
 docker compose up --build
 ```
 
-The Compose setup runs Astro in development mode with a bind-mounted workspace, so changes under `src/`, `public/`, and other repo files should hot reload inside the container. On Docker Desktop for Windows, file watching can be unreliable without polling, so the Compose file enables polling for you.
+The compose setup runs Astro in development mode with a bind-mounted workspace, so edits under `src/`, `public/`, and other repo files hot reload inside the container. Polling is enabled for Docker Desktop environments where file watching is less reliable.
 
-Development
-```sh
-pnpm run dev
-```
+Build and run the production image:
 
-Build
-```sh
-pnpm run build
-```
-
-Preview
-```sh
-pnpm run preview
-```
-
-Run Production Build In Docker
 ```sh
 docker build -t thuongdadev .
 docker run --rm -p 8080:8080 --env-file .env thuongdadev
 ```
 
-The container runs the Astro Node standalone server on port `8080`. Set `GH_CLIENT_ID`, `GH_CLIENT_SECRET`, `GH_ALLOWED_USERS`, and `ORIGIN` in `.env` if you need the `/admin` OAuth flow.
+The standalone Node server listens on port `8080`.
+
+## CMS and Environment Variables
+
+If you want to use `/admin`, set the following values in `.env`:
+
+- `GH_CLIENT_ID`
+- `GH_CLIENT_SECRET`
+- `GH_ALLOWED_USERS`
+- `ORIGIN`
+
+The CMS is configured for a GitHub editorial workflow, so access should stay limited to approved GitHub users.
 
 ## Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
 
 ```text
 /
 ├── public/
+│   ├── admin/
+│   ├── uploads/
 │   └── favicon.svg
-│   └── social-image.svg
 ├── src/
 │   ├── actions/
-│   │   └── # Astro server actions
-│   ├── assets/
-│   │   └── # Images that are transformed, optimized and bundled by Astro 
 │   ├── components/
-│   │   └── # Astro and React components
+│   ├── content/
+│   │   ├── articles/
+│   │   └── projects/
 │   ├── layouts/
-│   │   └── RootLayout.astro
-│   └── pages/
-│   │   └── blog/
-│   │   │   └── index.astro
-│   │   │   └── [...slug].astro
-│   │   └── about.astro
-│   │   └── contact.astro
-│   │   └── index.astro
-│   │   └── projects.astro
+│   ├── pages/
 │   └── styles/
-│   │   └── global.css
-└── .gitignore
-└── astro.config.mjs
-└── package.json
+├── astro.config.mjs
+├── Dockerfile
+├── docker-compose.yml
+├── package.json
 └── tsconfig.json
 ```
 
 ## Deployment
-The site is configured for deployment on Vercel, but with slight modifications it can be deployed to any hosting service.
+
+The site is configured for Astro's Node adapter, so it can be deployed anywhere that supports a Node server. The current setup is friendly to Vercel, Dockerized environments, or custom Node hosting.
 
 ## License
-This project is licensed under the MIT License - see the LICENSE file for details.
 
-## ⛔️ Changes
-The template also uses [React Paper Shaders](https://github.com/paper-design/shaders). 
-The Paper Team will be publishing [breaking changes](https://github.com/paper-design/shaders?tab=readme-ov-file#getting-started) to the Shaders library under 0.0.x versioning so check back to get updates when they release Paper Shaders v1.
+This project is licensed under the MIT License. See [LICENSE](LICENSE).

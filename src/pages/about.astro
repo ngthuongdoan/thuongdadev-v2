@@ -2,42 +2,119 @@
 import H1 from "../components/h1.astro";
 import InfoLayout from "../layouts/InfoLayout.astro";
 
-// TODO: Update this with your real information
-const pageTitle = "About Jasper Doan | Frontend Developer & Software Engineer";
-const pageDescription = "Learn more about Jasper Doan - a passionate frontend developer and software engineer with expertise in React, TypeScript, and modern web technologies.";
+const pageTitle = "About Jasper Doan | Senior Software Developer";
+const pageDescription = "Learn more about Jasper Doan, a senior software developer focused on React, TypeScript, Astro, content systems, and production-ready delivery.";
+
+const strengths = [
+	{
+		title: "Deep Focus",
+		items: ["React and TypeScript application architecture", "Astro content platforms and editorial workflows", "Performance, accessibility, and maintainable UI systems"],
+	},
+	{
+		title: "Strong Working Set",
+		items: ["Node.js and API integration", "Docker-based local and deployment workflows", "SEO foundations, metadata strategy, and content publishing"],
+	},
+	{
+		title: "Comfortable In",
+		items: ["Realtime collaboration patterns", "Developer experience and component-driven delivery", "Project framing, documentation, and technical storytelling"],
+	},
+];
+
+const trajectory = [
+	{
+		period: "Current focus",
+		title: "Senior software development through public proof of work",
+		description: "Turning this portfolio into a stronger engineering artifact with structured content, clearer positioning, and projects that explain technical decisions instead of just listing tools.",
+	},
+	{
+		period: "Recent work",
+		title: "Frontend systems and product-facing delivery",
+		description: "Shipping interfaces built with React, TypeScript, and Astro while tightening the layer underneath: metadata, CMS workflows, deployment readiness, and long-term maintainability.",
+	},
+	{
+		period: "Ongoing direction",
+		title: "From polished UI to system ownership",
+		description: "Building toward projects that show architecture, collaboration, and execution quality together: realtime features, production workflows, and clearer engineering trade-offs.",
+	},
+];
+
+const credentials = [
+	"GitHub: public repos used as case studies, not just code dumps",
+	"LinkedIn: active professional profile for full-time and freelance opportunities",
+	"Based in Ho Chi Minh City, available for remote collaboration and product-focused work",
+];
 ---
 
 <InfoLayout title={pageTitle} description={pageDescription}>
-     <div class="flex flex-col justify-between gap-32 p-4 pb-20 sm:pt-8 sm:px-12 min-h-dvh">
-          <div class="space-y-4 sm:space-y-12">
-               <H1> About Jasper Doan </H1>
+	<div class="flex flex-col gap-16 p-4 pb-20 sm:px-12 sm:pt-8">
+		<section class="max-w-4xl space-y-6">
+			<H1> About Jasper Doan </H1>
 
-               <!-- TODO: Replace with your real bio -->
-               <p class="text-xl xl:text-2xl text-zinc-500 text-balance">
-                    Hi, I'm <strong class="text-zinc-300">Jasper Doan</strong>, a frontend developer and software engineer 
-                    passionate about building exceptional digital experiences. I specialize in 
-                    <strong class="text-zinc-300">React</strong>, <strong class="text-zinc-300">TypeScript</strong>, 
-                    and modern web technologies to create fast, accessible, and user-friendly applications.
-               </p>
-               
-               <p class="text-lg xl:text-xl text-zinc-500 text-balance">
-                    With a focus on clean code and best practices, I help businesses and startups 
-                    bring their ideas to life through thoughtful software development.
-               </p>
-          </div>
+			<p class="text-xl leading-9 xl:text-2xl text-zinc-300 text-balance">
+				I am a senior software developer focused on building products that stay sharp beyond the first demo:
+				clear interfaces, durable frontend architecture, and delivery workflows that keep content and code easy to evolve.
+			</p>
 
-          <div class="space-y-2 text-base sm:text-lg">
-               <!-- TODO: Replace with your real skills -->
-               <h2 class="px-4 underline text-zinc-400 underline-offset-4 decoration-zinc-500">Technical Skills</h2>
+			<p class="max-w-3xl text-lg leading-8 text-zinc-400 text-balance">
+				My strongest work sits at the intersection of product experience and engineering discipline. I enjoy turning
+				rough ideas into systems that are easier to publish, easier to maintain, and easier for teams to keep improving.
+			</p>
+		</section>
 
-               <ul class="px-4 list-disc list-outside text-zinc-400">
-                    <li>Frontend: React, Next.js, TypeScript, JavaScript, HTML, CSS</li>
-                    <li>Styling: Tailwind CSS, CSS-in-JS, Responsive Design</li>
-                    <li>Backend: Node.js, REST APIs, GraphQL</li>
-                    <li>Tools: Git, VS Code, Figma, Astro</li>
-                    <li>Testing: Jest, React Testing Library, Cypress</li>
-                    <li>Other: Performance Optimization, SEO, Accessibility</li>
-               </ul>
-          </div>
-     </div>
+		<section class="grid gap-6 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
+			<div class="space-y-4">
+				<h2 class="text-sm uppercase tracking-[0.28em] text-zinc-500">How I Work</h2>
+				<ul class="space-y-3 text-base leading-7 text-zinc-300">
+					<li>I treat portfolio work like product work: positioning, architecture, publishing flow, and maintainability all need to line up.</li>
+					<li>I prefer deliberate systems over flashy demos, especially when performance, accessibility, and handoff quality matter.</li>
+					<li>I use public-facing projects to show technical judgment, not just tool familiarity.</li>
+				</ul>
+			</div>
+
+			<div class="rounded-3xl border border-zinc-800 bg-zinc-950/40 p-6">
+				<h2 class="text-sm uppercase tracking-[0.28em] text-zinc-500">Current Focus</h2>
+				<ul class="mt-4 space-y-3 text-sm leading-7 text-zinc-300">
+					<li>React and TypeScript interfaces with production-grade UX standards</li>
+					<li>Astro-based content platforms with stronger editorial and SEO foundations</li>
+					<li>Project case studies that explain trade-offs, scope, and implementation quality</li>
+				</ul>
+			</div>
+		</section>
+
+		<section class="space-y-6">
+			<h2 class="text-sm uppercase tracking-[0.28em] text-zinc-500">Skills and Tools</h2>
+			<div class="grid gap-6 lg:grid-cols-3">
+				{strengths.map((group) => (
+					<div class="rounded-3xl border border-zinc-800 bg-zinc-950/35 p-6">
+						<h3 class="text-lg text-zinc-100">{group.title}</h3>
+						<ul class="mt-4 space-y-3 text-sm leading-7 text-zinc-400">
+							{group.items.map((item) => <li>{item}</li>)}
+						</ul>
+					</div>
+				))}
+			</div>
+		</section>
+
+		<section class="space-y-6">
+			<h2 class="text-sm uppercase tracking-[0.28em] text-zinc-500">Experience Trajectory</h2>
+			<div class="space-y-5">
+				{trajectory.map((item) => (
+					<div class="grid gap-3 border-t border-zinc-800 pt-5 md:grid-cols-[180px_minmax(0,1fr)]">
+						<p class="text-sm uppercase tracking-[0.2em] text-zinc-500">{item.period}</p>
+						<div>
+							<h3 class="text-lg text-zinc-100">{item.title}</h3>
+							<p class="mt-2 max-w-3xl text-base leading-7 text-zinc-400">{item.description}</p>
+						</div>
+					</div>
+				))}
+			</div>
+		</section>
+
+		<section class="space-y-5">
+			<h2 class="text-sm uppercase tracking-[0.28em] text-zinc-500">Presence and Credentials</h2>
+			<ul class="space-y-3 text-base leading-7 text-zinc-300">
+				{credentials.map((item) => <li>{item}</li>)}
+			</ul>
+		</section>
+	</div>
 </InfoLayout>

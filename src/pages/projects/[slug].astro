@@ -40,14 +40,18 @@ const pageDescription = project.data.description;
                         {project.data.description}
                     </p>
 
-                    <a
-                        href={project.data.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="inline-block mt-4 text-zinc-100 underline underline-offset-4 decoration-zinc-500 hover:decoration-zinc-200"
-                    >
-                        Visit live project
-                    </a>
+                    <div class="mt-5 flex flex-wrap gap-3 text-sm">
+                        {project.data.links.map((link) => (
+                            <a
+                                href={link.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="inline-flex items-center rounded-full border border-zinc-700 px-4 py-2 text-zinc-100 transition-colors hover:border-zinc-500 hover:bg-zinc-900"
+                            >
+                                {link.label}
+                            </a>
+                        ))}
+                    </div>
                 </div>
 
                 <div class="mt-8 max-w-3xl lg:pb-12">
@@ -62,8 +66,64 @@ const pageDescription = project.data.description;
                     <img
                         src={project.data.image}
                         alt={project.data.title}
-                        class="w-full rounded-lg object-cover lg:max-h-[calc(100dvh-4rem)]"
+                        class="w-full rounded-3xl object-cover lg:max-h-[40dvh]"
                     />
+
+                    <div class="mt-6 rounded-3xl border border-zinc-800 bg-zinc-950/40 p-6">
+                        <dl class="space-y-4 text-sm">
+                            <div>
+                                <dt class="uppercase tracking-[0.22em] text-zinc-500">Role</dt>
+                                <dd class="mt-1 text-zinc-200">{project.data.role}</dd>
+                            </div>
+                            <div>
+                                <dt class="uppercase tracking-[0.22em] text-zinc-500">Period</dt>
+                                <dd class="mt-1 text-zinc-200">{project.data.period}</dd>
+                            </div>
+                            <div>
+                                <dt class="uppercase tracking-[0.22em] text-zinc-500">Status</dt>
+                                <dd class="mt-1 text-zinc-200">{project.data.status.replace("-", " ")}</dd>
+                            </div>
+                        </dl>
+
+                        {
+                            project.data.stack.length > 0 && (
+                                <div class="mt-6">
+                                    <h2 class="text-sm uppercase tracking-[0.22em] text-zinc-500">Stack</h2>
+                                    <ul class="mt-3 flex flex-wrap gap-2">
+                                        {project.data.stack.map((item) => (
+                                            <li class="rounded-full border border-zinc-700 px-3 py-1 text-sm text-zinc-300">{item}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )
+                        }
+
+                        {
+                            project.data.metrics.length > 0 && (
+                                <div class="mt-6">
+                                    <h2 class="text-sm uppercase tracking-[0.22em] text-zinc-500">Signals</h2>
+                                    <ul class="mt-3 space-y-2 text-sm leading-6 text-zinc-300">
+                                        {project.data.metrics.map((metric) => (
+                                            <li>{metric}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )
+                        }
+
+                        {
+                            project.data.highlights.length > 0 && (
+                                <div class="mt-6">
+                                    <h2 class="text-sm uppercase tracking-[0.22em] text-zinc-500">Highlights</h2>
+                                    <ul class="mt-3 space-y-2 text-sm leading-6 text-zinc-300">
+                                        {project.data.highlights.map((item) => (
+                                            <li>{item}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )
+                        }
+                    </div>
                 </div>
             </div>
         </div>

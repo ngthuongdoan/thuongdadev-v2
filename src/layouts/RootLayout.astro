@@ -25,9 +25,9 @@ const {
 
 const resolvedLocale = locale ?? (lang === "vi" ? "vi_VN" : "en_US");
 
-const defaultTitle = "Jasper Doan | Frontend Developer & Software Engineer";
-const defaultDescription = "Jasper Doan is a frontend developer and software engineer specializing in React, TypeScript, and modern web development. Available for freelance projects and full-time opportunities.";
-const defaultKeywords = "frontend developer hochiminh vietnam, software developer, software engineer, React developer, TypeScript developer, web developer, freelance developer, Jasper Doan, thuongda.dev";
+const defaultTitle = "Jasper Doan | Senior Software Developer";
+const defaultDescription = "Jasper Doan is a senior software developer in Ho Chi Minh City building React, TypeScript, and Astro products with strong frontend architecture, content systems, and production-ready delivery workflows.";
+const defaultKeywords = "senior software developer vietnam, senior frontend engineer, React TypeScript developer, Astro developer, software engineer ho chi minh city, portfolio website, Jasper Doan, thuongda.dev";
 
 // Get the canonical URL
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -41,25 +41,33 @@ const personSchema = {
 	"url": siteUrl,
 	"image": `${siteUrl}/social-image.jpg`,
 	"sameAs": [
-		// Add your social profiles here
-		// "https://github.com/yourusername",
-		// "https://linkedin.com/in/yourusername",
-		// "https://twitter.com/yourusername"
+		"https://github.com/ngthuongdoan",
+		"https://www.linkedin.com/in/ngthuongdoan/"
 	],
-	"jobTitle": "Frontend Developer & Software Engineer",
+	"jobTitle": "Senior Software Developer",
 	"worksFor": {
 		"@type": "Organization",
-		"name": "Freelance"
+		"name": "Independent"
 	},
 	"description": defaultDescription,
-	"knowsAbout": ["Frontend Development", "React", "TypeScript", "JavaScript", "Web Development", "Software Engineering"]
+	"knowsAbout": [
+		"Frontend Architecture",
+		"React",
+		"TypeScript",
+		"Astro",
+		"Content Platforms",
+		"Software Engineering",
+		"Design Systems",
+		"Performance Optimization",
+		"Developer Experience"
+	]
 };
 
 // JSON-LD for Website
 const websiteSchema = {
 	"@context": "https://schema.org",
 	"@type": "WebSite",
-	"name": "Jasper Doan - Frontend Developer",
+	"name": "Jasper Doan - Senior Software Developer",
 	"url": siteUrl,
 	"description": defaultDescription,
 	"author": {

@@ -4,8 +4,8 @@ import H1 from "../components/h1.astro";
 import ProjectsSection from "../components/projects-section.astro";
 import InfoLayout from "../layouts/InfoLayout.astro";
 
-const pageTitle = "Projects | Jasper Doan - Frontend Developer Portfolio";
-const pageDescription = "Explore Jasper Doan's portfolio of frontend development and software engineering projects. See examples of React, TypeScript, and web development work.";
+const pageTitle = "Projects | Jasper Doan - Senior Software Developer";
+const pageDescription = "Selected work by Jasper Doan, including featured product builds, open-source portfolio infrastructure, and the next flagship systems planned for deeper full-stack case studies.";
 
 // Fetch all projects from CMS
 const allProjects = await getCollection('projects');
@@ -15,13 +15,60 @@ const projects = allProjects.sort((a, b) => (a.data.order || 0) - (b.data.order 
 
 const mainProjects = projects.filter(p => p.data.category === "main");
 const sideProjects = projects.filter(p => p.data.category === "side");
+const openSourceProjects = projects.filter(p => p.data.category === "opensource");
+
+const plannedProjects = [
+	{
+		title: "Multi-tenant SaaS Control Center",
+		description: "A production-grade full-stack build focused on role-based access, operational workflows, and infrastructure-level decision making.",
+		focus: "Auth, tenancy boundaries, dashboards, delivery pipelines",
+	},
+	{
+		title: "Observability Playground",
+		description: "A hands-on case study for tracing, metrics, and incident-oriented debugging across a small distributed system.",
+		focus: "OpenTelemetry, logs, alerts, performance diagnostics",
+	},
+	{
+		title: "AI Research Workflow",
+		description: "A productized workflow for turning long-form research into publishable artifacts with clean summaries, metadata, and reusable content blocks.",
+		focus: "Content systems, automation, documentation UX",
+	},
+];
 ---
 
 <InfoLayout title={pageTitle} description={pageDescription}>
-     <div class="p-4 pb-20 sm:pt-8 sm:px-12 min-h-dvh">
-          <H1> Projects </H1>
+	<div class="p-4 pb-20 sm:px-12 sm:pt-8">
+		<div class="max-w-4xl space-y-5">
+			<H1> Projects </H1>
+			<p class="max-w-3xl text-lg leading-8 text-zinc-300 text-balance">
+				These projects are chosen to show range and execution quality: realtime collaboration, portfolio infrastructure,
+				and the systems I am shaping next to better represent senior-level ownership.
+			</p>
+		</div>
 
-          <ProjectsSection title="Main Projects" projects={mainProjects} />
-          <ProjectsSection title="Side Projects" projects={sideProjects} className="mt-12 sm:mt-16" />
-     </div>
+		<ProjectsSection title="Featured Projects" projects={mainProjects} />
+		<ProjectsSection title="Open-source and Infrastructure" projects={openSourceProjects} className="mt-12 sm:mt-16" />
+		<ProjectsSection title="Side Experiments" projects={sideProjects} className="mt-12 sm:mt-16" />
+
+		<section class="mt-12 space-y-6 border-t border-zinc-800 pt-12 sm:mt-16 sm:pt-16">
+			<div class="max-w-3xl">
+				<h2 class="text-xl font-semibold text-zinc-100 sm:text-2xl">Planned Flagship Builds</h2>
+				<p class="mt-3 text-base leading-7 text-zinc-400">
+					Instead of pretending unfinished work is done, I keep the next ambitious builds visible. These are the systems I want to
+					turn into deeper case studies next.
+				</p>
+			</div>
+
+			<div class="grid gap-6 xl:grid-cols-3">
+				{plannedProjects.map((project) => (
+					<article class="rounded-3xl border border-zinc-800 bg-zinc-950/35 p-6">
+						<p class="text-xs uppercase tracking-[0.24em] text-zinc-500">Roadmap</p>
+						<h3 class="mt-3 text-xl text-zinc-100">{project.title}</h3>
+						<p class="mt-3 text-sm leading-7 text-zinc-400">{project.description}</p>
+						<p class="mt-4 text-sm text-zinc-300">{project.focus}</p>
+					</article>
+				))}
+			</div>
+		</section>
+	</div>
 </InfoLayout>
