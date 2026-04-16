@@ -4,7 +4,7 @@ import Link from "../components/link.astro";
 import Navigation from "../components/navigation.astro";
 import RootLayout from "../layouts/RootLayout.astro";
 import AvailableForWork from "../components/available.astro";
-import ShaderBackground from "../components/ShaderBackground.astro";
+import WarpBackground from "../components/warp-background.tsx";
 
 const pageTitle = "Jasper Doan | AI Engineer";
 const pageDescription = "AI Engineer building and shipping production systems with AI agents, structured delivery workflows, and human-in-the-loop quality control.";
@@ -21,7 +21,7 @@ const proofPoints = [
 		<div class="relative flex items-center justify-center w-full group min-h-dvh">
 			<div class="absolute w-full h-dvh -z-10 bg-[radial-gradient(120%_90%_at_80%_10%,#52525b_0%,#27272a_35%,#09090b_72%)]" />
 				<div class="absolute w-full h-dvh -z-10">
-					<ShaderBackground
+					<WarpBackground
 						color1="#09090b"
 						color2="#27272a"
 						color3="#52525b"
