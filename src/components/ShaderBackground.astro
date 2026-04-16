@@ -1,5 +1,5 @@
 ---
-import WarpBackground from './warp-background';
+import ShaderBackgroundClient from './shaderInit.js';
 
 interface Props {
   class?: string;
@@ -15,6 +15,8 @@ interface Props {
   swirl?: number;
   swirlIterations?: number;
   shapeScale?: number;
+  fps?: number;
+  pauseWhenOffscreen?: boolean;
 }
 
 const {
@@ -31,10 +33,12 @@ const {
   swirl = 0.8,
   swirlIterations = 10,
   shapeScale = 0.3,
+  fps = 30,
+  pauseWhenOffscreen = true,
 } = Astro.props;
 ---
 
-<WarpBackground
+<ShaderBackgroundClient
   className={className}
   color1={color1}
   color2={color2}
@@ -48,5 +52,7 @@ const {
   swirl={swirl}
   swirlIterations={swirlIterations}
   shapeScale={shapeScale}
-  client:load
+  fps={fps}
+  pauseWhenOffscreen={pauseWhenOffscreen}
+  client:visible
 />
