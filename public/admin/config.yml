@@ -82,6 +82,9 @@ collections:
         widget: "select"
         options: ["main", "side"]
         default: "main"
+      - { label: "Thumbnail", name: "thumbnail", widget: "image", hint: "Upload project thumbnail or paste URL" }
       - { label: "Image", name: "image", widget: "image", hint: "Upload a project image or choose one from /public/uploads." }
       - { label: "Link", name: "link", widget: "string", hint: "URL to the live project or repository" }
       - { label: "Order", name: "order", widget: "number", value_type: "int", default: 0, hint: "Lower numbers appear first" }
+      - { label: "Body", name: "body", widget: "markdown" }
+
