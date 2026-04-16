@@ -15,13 +15,15 @@ const DEFAULT_PROPS: Partial<WarpProps> = {
 const DEFAULT_STYLE = { width: '100%', height: '100%' };
 
 export default function WarpBackground(props: WarpProps) {
-  const [isDomReady, setIsDomReady] = useState(() => {
-    if (typeof document === 'undefined') return false;
-    return document.readyState !== 'loading';
-  });
+  const [isDomReady, setIsDomReady] = useState(false);
 
   useEffect(() => {
-    if (isDomReady || typeof window === 'undefined') return;
+    if (typeof window === 'undefined') return;
+
+    if (document.readyState !== 'loading') {
+      window.requestAnimationFrame(() => setIsDomReady(true));
+      return;
+    }
 
     const onDomReady = () => {
       window.requestAnimationFrame(() => setIsDomReady(true));
