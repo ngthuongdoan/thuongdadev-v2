@@ -36,7 +36,7 @@ const proofPoints = [
                         </div>
                         <div class="absolute z-10 flex flex-col justify-between w-full p-4 sm:p-8 h-dvh">
                                 <div>
-                                        <p class="mb-4 text-sm uppercase tracking-[0.3em] text-zinc-400">AI Engineer</p>
+                                        <p class="mb-4 text-sm tracking-[0.3em] text-zinc-400">AI Engineer <b>|</b> Senior Software Engineer <b>|</b> Vibe Coder</p>
                                         <H1 size="large">
                                                 Jasper <br /> Doan
                                         </H1>
@@ -54,15 +54,7 @@ const proofPoints = [
                                 </div>
 
                                 <div class="space-y-6">
-                                        <ul class="grid max-w-4xl gap-3 text-sm sm:grid-cols-3 sm:text-base">
-                                                {proofPoints.map((item) => (
-                                                        <li class="border rounded-full border-zinc-700/70 bg-zinc-900/35 px-4 py-3 text-zinc-200 backdrop-blur-sm">
-                                                                {item}
-                                                        </li>
-                                                ))}
-                                        </ul>
-
-                                        <AvailableForWork className="py-4" />
+                                        <AvailableForWork className="py-4 mb-0" />
                                         <div class="flex items-center justify-between mb-2 sm:mb-4">
                                                 <div class="flex items-center gap-4">
                                                         <Link href="/contact">Book a call</Link>
