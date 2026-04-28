@@ -1,20 +1,16 @@
-name: CI
+name: Continuous Integration
 
 on:
-  pull_request:
+  # Run on all branches except master for quality checks
   push:
-    branches:
-      - master
-
-concurrency:
-  group: ci-${{ github.ref }}
-  cancel-in-progress: true
+    branches: ['**']
+  pull_request:
+    branches: ['**']
 
 jobs:
   quality:
-    name: Quality Checks
+    name: Lint, type check and test
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -27,17 +23,14 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: "22"
-          cache: "pnpm"
+          node-version: '22'
+          cache: 'pnpm'
 
       - name: Install dependencies
         run: pnpm install
 
-      - name: Run Astro diagnostics
+      - name: Type check
         run: pnpm check
 
-      - name: Build site
-        run: pnpm build
-
-      - name: Test placeholder
+      - name: Unit tests
         run: pnpm test

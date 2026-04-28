@@ -22,7 +22,7 @@ export const GET: APIRoute = async ({ url }) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
+        Accept: 'application/json',
       },
       body: JSON.stringify({
         client_id: clientId,
@@ -43,8 +43,8 @@ export const GET: APIRoute = async ({ url }) => {
     // Restrict CMS access to explicit GitHub usernames only.
     const userResponse = await fetch('https://api.github.com/user', {
       headers: {
-        'Accept': 'application/vnd.github+json',
-        'Authorization': `Bearer ${token}`,
+        Accept: 'application/vnd.github+json',
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -81,7 +81,7 @@ export const GET: APIRoute = async ({ url }) => {
           headers: {
             'Content-Type': 'text/html',
           },
-        }
+        },
       );
     }
 
@@ -104,9 +104,9 @@ export const GET: APIRoute = async ({ url }) => {
           window.opener.postMessage(
             'authorization:github:success:' + JSON.stringify({
               token: "${token}",
-              provider: "github"
+              provider: "github",
             }),
-            e.origin
+            e.origin,
           );
           window.removeEventListener("message", receiveMessage, false);
         }
@@ -122,13 +122,13 @@ export const GET: APIRoute = async ({ url }) => {
         headers: {
           'Content-Type': 'text/html',
         },
-      }
+      },
     );
   } catch (error) {
     console.error('OAuth Error:', error);
     return new Response(
       `Authentication failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
-      { status: 500 }
+      { status: 500 },
     );
   }
 };

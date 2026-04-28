@@ -2,117 +2,133 @@
 import H1 from "../components/h1.astro";
 import InfoLayout from "../layouts/InfoLayout.astro";
 
-const pageTitle = "About Jasper Doan | AI Engineer";
-const pageDescription = "Learn more about Jasper Doan, an AI Engineer focused on AI-augmented delivery, autonomous implementation workflows, and production-grade software systems.";
+const pageTitle = "About Jasper Doan | AI‑Augmented Engineering";
+const pageDescription =
+        "Learn more about Jasper Doan’s approach to AI‑augmented delivery, multi‑agent workflows and production‑grade system design.";
 
+// Group skills into broader themes with an emphasis on AI‑augmented engineering.
 const strengths = [
-	{
-		title: "Engineering",
-		items: ["Distributed systems and production-grade architecture", "Scalable backend and frontend delivery", "CI/CD, observability, and maintainable systems"],
-	},
-	{
-		title: "AI-Augmented Development",
-		items: ["Prompt engineering for structured delivery", "Task decomposition for AI agents", "Multi-agent workflow design and human-in-the-loop validation"],
-	},
-	{
-		title: "Tools",
-		items: ["Codex, Devin, and Copilot", "OpenAI APIs and prompt systems", "GitHub Actions, Docker, and delivery automation"],
-	},
+        {
+                title: "Systems & Architecture",
+                items: [
+                        "Distributed systems and production‑grade architecture",
+                        "Scalable backend and frontend delivery",
+                        "CI/CD, observability and maintainable systems",
+                ],
+        },
+        {
+                title: "AI‑Augmented Delivery",
+                items: [
+                        "Prompt engineering and task decomposition for multi‑agent workflows",
+                        "Human‑in‑the‑loop validation and system orchestration",
+                        "High‑velocity implementation using Codex and Devin",
+                ],
+        },
+        {
+                title: "Tools & Execution",
+                items: [
+                        "Codex, Devin, Copilot and custom prompt chains",
+                        "GitHub Actions, Docker and delivery automation",
+                        "Observability, testing and quality assurance",
+                ],
+        },
 ];
 
 const workflow = [
-	"System design and architecture definition",
-	"Task decomposition optimized for AI agents",
-	"Parallelized implementation using Codex and Devin",
-	"Human-in-the-loop review and refinement",
-	"Automated testing and CI validation",
+        "System design and architecture definition",
+        "Task decomposition optimised for multi‑agent workflows",
+        "Parallelised implementation using Codex and Devin",
+        "Human‑in‑the‑loop review and refinement",
+        "Automated testing and CI validation",
 ];
 
 const aiApproach = [
-	"Codex for implementation, refactoring, and structured code changes",
-	"Devin for broader multi-file feature delivery and execution support",
-	"Copilot for inline acceleration and local iteration speed",
-	"Custom prompts for orchestration, documentation, and repeatable delivery flows",
+        "Codex for implementation, refactoring and structured code changes",
+        "Devin for broader multi‑file feature delivery and execution support",
+        "Copilot for inline acceleration and local iteration speed",
+        "Custom prompts for orchestration, documentation and repeatable delivery flows",
 ];
 
 const credentials = [
-	"Title in-company: AI Engineer",
-	"GitHub: public repos used as engineering case studies, not just code dumps",
-	"Based in Ho Chi Minh City, available for remote collaboration and high-velocity product delivery",
+        "Title in company: AI Engineer",
+        "GitHub: public repos used as engineering case studies, not just code dumps",
+        "Based in Ho Chi Minh City, available for remote collaboration and high‑velocity product delivery",
 ];
 ---
 
 <InfoLayout title={pageTitle} description={pageDescription}>
-	<div class="flex flex-col gap-16 p-4 pb-20 sm:px-12 sm:pt-8">
-		<section class="max-w-4xl space-y-6">
-			<H1> About Jasper Doan </H1>
+        <div class="flex flex-col gap-16 p-4 pb-20 sm:px-12 sm:pt-8">
+                <section class="max-w-4xl space-y-6">
+                        <H1> About Jasper Doan </H1>
 
-			<p class="text-xl leading-9 xl:text-2xl text-zinc-300 text-balance">
-				I am an AI Engineer specializing in AI-augmented software delivery.
-			</p>
+                        <p class="text-xl leading-9 xl:text-2xl text-zinc-300 text-balance">
+                                I am an AI engineer specialising in AI‑augmented software delivery.
+                        </p>
 
-			<p class="max-w-3xl text-lg leading-8 text-zinc-400 text-balance">
-				Instead of using AI as a helper on the side, I design workflows around AI agents to architect,
-				implement, and ship production systems with high velocity and controlled quality.
-			</p>
-		</section>
+                        <p class="max-w-3xl text-lg leading-8 text-zinc-400 text-balance">
+                                My career began with full‑stack web development and evolved into building distributed systems.
+                                Today I focus on designing workflows around multi‑agent AI to architect, implement and ship
+                                production systems with high velocity and controlled quality.  Instead of using AI as a helper
+                                on the side, I orchestrate agents as execution layers while retaining architectural control.
+                        </p>
+                </section>
 
-		<section class="grid gap-6 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
-			<div class="space-y-4">
-				<h2 class="text-sm uppercase tracking-[0.28em] text-zinc-500">How I Work</h2>
-				<ul class="space-y-3 text-base leading-7 text-zinc-300">
-					{workflow.map((item) => <li>{item}</li>)}
-				</ul>
-			</div>
+                <section class="grid gap-6 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
+                        <div class="space-y-4">
+                                <h2 class="text-sm uppercase tracking-[0.28em] text-zinc-500">How I Work</h2>
+                                <ul class="space-y-3 text-base leading-7 text-zinc-300">
+                                        {workflow.map((item) => <li>{item}</li>)}
+                                </ul>
+                        </div>
 
-			<div class="rounded-3xl border border-zinc-800 bg-zinc-950/40 p-6">
-				<h2 class="text-sm uppercase tracking-[0.28em] text-zinc-500">What I Focus On</h2>
-				<ul class="mt-4 space-y-3 text-sm leading-7 text-zinc-300">
-					<li>AI-assisted engineering workflows</li>
-					<li>High-velocity product development</li>
-					<li>Production-grade architectures</li>
-					<li>Automation and CI/CD</li>
-					<li>Developer productivity systems</li>
-				</ul>
-			</div>
-		</section>
+                        <div class="rounded-3xl border border-zinc-800 bg-zinc-950/40 p-6">
+                                <h2 class="text-sm uppercase tracking-[0.28em] text-zinc-500">What I Focus On</h2>
+                                <ul class="mt-4 space-y-3 text-sm leading-7 text-zinc-300">
+                                        <li>AI‑assisted engineering workflows</li>
+                                        <li>High‑velocity product development</li>
+                                        <li>Production‑grade architectures</li>
+                                        <li>Automation and CI/CD</li>
+                                        <li>Developer productivity systems</li>
+                                </ul>
+                        </div>
+                </section>
 
-		<section class="space-y-6">
-			<h2 class="text-sm uppercase tracking-[0.28em] text-zinc-500">Skills and Tools</h2>
-			<div class="grid gap-6 lg:grid-cols-3">
-				{strengths.map((group) => (
-					<div class="rounded-3xl border border-zinc-800 bg-zinc-950/35 p-6">
-						<h3 class="text-lg text-zinc-100">{group.title}</h3>
-						<ul class="mt-4 space-y-3 text-sm leading-7 text-zinc-400">
-							{group.items.map((item) => <li>{item}</li>)}
-						</ul>
-					</div>
-				))}
-			</div>
-		</section>
+                <section class="space-y-6">
+                        <h2 class="text-sm uppercase tracking-[0.28em] text-zinc-500">Skills and Tools</h2>
+                        <div class="grid gap-6 lg:grid-cols-3">
+                                {strengths.map((group) => (
+                                        <div class="rounded-3xl border border-zinc-800 bg-zinc-950/35 p-6">
+                                                <h3 class="text-lg text-zinc-100">{group.title}</h3>
+                                                <ul class="mt-4 space-y-3 text-sm leading-7 text-zinc-400">
+                                                        {group.items.map((item) => <li>{item}</li>)}
+                                                </ul>
+                                        </div>
+                                ))}
+                        </div>
+                </section>
 
-		<section class="space-y-6">
-			<h2 class="text-sm uppercase tracking-[0.28em] text-zinc-500">AI Engineering Approach</h2>
-			<div class="grid gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-				<div class="rounded-3xl border border-zinc-800 bg-zinc-950/35 p-6">
-					<p class="text-base leading-7 text-zinc-300">
-						I treat AI agents as execution layers. My role shifts away from typing every line and toward
-						designing systems, validating architecture, ensuring quality, and making strategic technical decisions.
-					</p>
-				</div>
-				<div class="rounded-3xl border border-zinc-800 bg-zinc-950/35 p-6">
-					<ul class="space-y-3 text-sm leading-7 text-zinc-300">
-						{aiApproach.map((item) => <li>{item}</li>)}
-					</ul>
-				</div>
-			</div>
-		</section>
+                <section class="space-y-6">
+                        <h2 class="text-sm uppercase tracking-[0.28em] text-zinc-500">AI Engineering Approach</h2>
+                        <div class="grid gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+                                <div class="rounded-3xl border border-zinc-800 bg-zinc-950/35 p-6">
+                                        <p class="text-base leading-7 text-zinc-300">
+                                                I treat AI agents as execution layers.  My role shifts away from typing every line and toward
+                                                designing systems, validating architecture, ensuring quality and making strategic technical decisions.
+                                        </p>
+                                </div>
+                                <div class="rounded-3xl border border-zinc-800 bg-zinc-950/35 p-6">
+                                        <ul class="space-y-3 text-sm leading-7 text-zinc-300">
+                                                {aiApproach.map((item) => <li>{item}</li>)}
+                                        </ul>
+                                </div>
+                        </div>
+                </section>
 
-		<section class="space-y-5">
-			<h2 class="text-sm uppercase tracking-[0.28em] text-zinc-500">Presence and Credentials</h2>
-			<ul class="space-y-3 text-base leading-7 text-zinc-300">
-				{credentials.map((item) => <li>{item}</li>)}
-			</ul>
-		</section>
-	</div>
+                <section class="space-y-5">
+                        <h2 class="text-sm uppercase tracking-[0.28em] text-zinc-500">Presence and Credentials</h2>
+                        <ul class="space-y-3 text-base leading-7 text-zinc-300">
+                                {credentials.map((item) => <li>{item}</li>)}
+                        </ul>
+                </section>
+        </div>
 </InfoLayout>

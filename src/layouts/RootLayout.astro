@@ -1,139 +1,140 @@
 ---
 import "../styles/global.css";
 import { Font } from "astro:assets";
-import LoadingIndicator from "astro-loading-indicator/component"
+import LoadingIndicator from "astro-loading-indicator/component";
 
 interface Props {
-	title?: string;
-	description?: string;
-	keywords?: string;
-	type?: string;
-	image?: string;
-	lang?: string;
-	locale?: string;
+        title?: string;
+        description?: string;
+        keywords?: string;
+        type?: string;
+        image?: string;
+        lang?: string;
+        locale?: string;
 }
 
 const {
-	title,
-	description,
-	keywords,
-	type = "website",
-	image,
-	lang = "en",
-	locale,
+        title,
+        description,
+        keywords,
+        type = "website",
+        image,
+        lang = "en",
+        locale,
 } = Astro.props;
 
 const resolvedLocale = locale ?? (lang === "vi" ? "vi_VN" : "en_US");
 
-const defaultTitle = "Jasper Doan | AI Engineer";
-const defaultDescription = "Jasper Doan is an AI Engineer in Ho Chi Minh City designing AI-augmented engineering workflows, autonomous delivery systems, and production-grade software with strong architectural control.";
-const defaultKeywords = "AI engineer vietnam, autonomous delivery engineer, AI-augmented software engineer, Codex Devin Copilot engineer, software engineer ho chi minh city, Jasper Doan, thuongda.dev";
+// Default SEO strings emphasise AI‑augmented engineering and multi‑agent workflows.
+const defaultTitle = "Jasper Doan | AI‑Augmented Engineering";
+const defaultDescription =
+        "Jasper Doan is an AI engineer building multi‑agent workflows, autonomous delivery systems and production‑grade software with human‑in‑the‑loop quality control.";
+const defaultKeywords =
+        "AI engineer, multi‑agent workflows, autonomous software delivery, prompt engineering, AI‑augmented engineering, human‑in‑the‑loop";
 
 // Get the canonical URL
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const siteUrl = "https://thuongda.dev";
 
-// JSON-LD Structured Data for Person
+// JSON‑LD Structured Data for Person
 const personSchema = {
-	"@context": "https://schema.org",
-	"@type": "Person",
-	"name": "Jasper Doan",
-	"url": siteUrl,
-	"image": `${siteUrl}/social-image.jpg`,
-	"sameAs": [
-		"https://github.com/ngthuongdoan",
-		"https://www.linkedin.com/in/ngthuongdoan/"
-	],
-	"jobTitle": "AI Engineer",
-	"worksFor": {
-		"@type": "Organization",
-		"name": "Independent"
-	},
-	"description": defaultDescription,
-	"knowsAbout": [
-		"Frontend Architecture",
-		"AI-Augmented Engineering",
-		"Autonomous Delivery",
-		"Prompt Engineering",
-		"Multi-Agent Workflows",
-		"React",
-		"TypeScript",
-		"Software Engineering",
-		"System Design",
-		"Developer Productivity"
-	]
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Jasper Doan",
+        "url": siteUrl,
+        "image": `${siteUrl}/social-image.jpg`,
+        "sameAs": [
+                "https://github.com/ngthuongdoan",
+                "https://www.linkedin.com/in/ngthuongdoan/",
+        ],
+        "jobTitle": "AI Engineer",
+        "worksFor": {
+                "@type": "Organization",
+                "name": "Independent",
+        },
+        "description": defaultDescription,
+        // Focus the knowsAbout array on AI engineering and multi‑agent systems rather than frontend specifics.
+        "knowsAbout": [
+                "AI Engineering",
+                "Autonomous Software Delivery",
+                "Multi‑Agent Systems",
+                "Prompt Engineering",
+                "Human‑In‑The‑Loop Workflows",
+                "System Design",
+                "Developer Productivity",
+        ],
 };
 
-// JSON-LD for Website
+// JSON‑LD for Website
 const websiteSchema = {
-	"@context": "https://schema.org",
-	"@type": "WebSite",
-	"name": "Jasper Doan - AI Engineer",
-	"url": siteUrl,
-	"description": defaultDescription,
-	"author": {
-		"@type": "Person",
-		"name": "Jasper Doan"
-	}
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Jasper Doan – AI‑Augmented Engineering",
+        "url": siteUrl,
+        "description": defaultDescription,
+        "author": {
+                "@type": "Person",
+                "name": "Jasper Doan",
+        },
 };
 ---
 
 <!doctype html>
 <html lang={lang}>
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta http-equiv="Content-Language" content={lang} />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		
-		<!-- Primary Meta Tags -->
-		<title>{title ?? defaultTitle}</title>
-		<meta name="title" content={title ?? defaultTitle} />
-		<meta name="description" content={description ?? defaultDescription} />
-		<meta name="keywords" content={keywords ?? defaultKeywords} />
-		<meta name="author" content="Jasper Doan" />
-		<meta name="robots" content="index, follow" />
-		<link rel="canonical" href={canonicalURL} />
-		
-		<!-- JSON-LD Structured Data -->
-		<script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
-		<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
-		
-		<!-- Open Graph / Facebook -->
-		<meta property="og:type" content={type} />
-		<meta property="og:url" content={canonicalURL} />
-		<meta property="og:locale" content={resolvedLocale} />
-		<meta property="og:title" content={title ?? defaultTitle} />
-		<meta property="og:description" content={description ?? defaultDescription} />
-		<meta property="og:image" content={`${siteUrl}/social-image.jpg`} />
-		<meta property="og:site_name" content="Jasper Doan" />
+        <head>
+                <meta charset="UTF-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <meta http-equiv="Content-Language" content={lang} />
+                <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+                <meta name="generator" content={Astro.generator} />
 
-		<!-- Twitter Meta Tags -->
-		<meta name="twitter:card" content="summary_large_image" />
-		<meta property="twitter:domain" content="thuongda.dev" />
-		<meta property="twitter:url" content={canonicalURL} />
-		<meta name="twitter:title" content={title ?? defaultTitle} />
-		<meta name="twitter:description" content={description ?? defaultDescription} />
-		<meta name="twitter:image" content={`${siteUrl}/social-image.jpg`} />
-		
-		<!-- Theme Color -->
-		<meta name="theme-color" content="#09090b" />
-		
-		<Font cssVariable="--font-geist" preload />
-		<LoadingIndicator color="#f4f4f5" height="2px" />
+                <!-- Primary Meta Tags -->
+                <title>{title ?? defaultTitle}</title>
+                <meta name="title" content={title ?? defaultTitle} />
+                <meta name="description" content={description ?? defaultDescription} />
+                <meta name="keywords" content={keywords ?? defaultKeywords} />
+                <meta name="author" content="Jasper Doan" />
+                <meta name="robots" content="index, follow" />
+                <link rel="canonical" href={canonicalURL} />
 
-	</head>
-	<body class="min-h-screen font-sans bg-zinc-900">
-		<slot />
-	</body>
+                <!-- JSON‑LD Structured Data -->
+                <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+                <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+
+                <!-- Open Graph / Facebook -->
+                <meta property="og:type" content={type} />
+                <meta property="og:url" content={canonicalURL} />
+                <meta property="og:locale" content={resolvedLocale} />
+                <meta property="og:title" content={title ?? defaultTitle} />
+                <meta property="og:description" content={description ?? defaultDescription} />
+                <meta property="og:image" content={`${siteUrl}/social-image.jpg`} />
+                <meta property="og:site_name" content="Jasper Doan" />
+
+                <!-- Twitter Meta Tags -->
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta property="twitter:domain" content="thuongda.dev" />
+                <meta property="twitter:url" content={canonicalURL} />
+                <meta name="twitter:title" content={title ?? defaultTitle} />
+                <meta name="twitter:description" content={description ?? defaultDescription} />
+                <meta name="twitter:image" content={`${siteUrl}/social-image.jpg`} />
+
+                <!-- Theme Color -->
+                <meta name="theme-color" content="#09090b" />
+
+                <Font cssVariable="--font-geist" preload />
+                <LoadingIndicator color="#f4f4f5" height="2px" />
+
+        </head>
+        <body class="min-h-screen font-sans bg-zinc-900">
+                <slot />
+        </body>
 </html>
 
 <style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+        html,
+        body {
+                margin: 0;
+                width: 100%;
+                height: 100%;
+        }
 </style>

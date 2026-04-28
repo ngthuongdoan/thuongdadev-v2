@@ -2,37 +2,44 @@ import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 
 export const GET: APIRoute = async ({ site }) => {
-  // Get all blog posts
+  // Collect all non‑draft blog posts
   const blogPosts = await getCollection('articles', ({ data }) => !data.isDraft);
-  
+
+  // Define static pages with realistic last modified dates (build time)
+  const nowIso = new Date().toISOString();
   const staticPages = [
-    { url: '', priority: '1.0', changefreq: 'weekly' },
-    { url: 'about', priority: '0.9', changefreq: 'monthly' },
-    { url: 'contact', priority: '0.8', changefreq: 'monthly' },
-    { url: 'projects', priority: '0.9', changefreq: 'weekly' },
-    { url: 'blog', priority: '0.9', changefreq: 'daily' },
+    { url: '', priority: '1.0', changefreq: 'weekly', lastmod: nowIso },
+    { url: 'about', priority: '0.9', changefreq: 'monthly', lastmod: nowIso },
+    { url: 'contact', priority: '0.8', changefreq: 'monthly', lastmod: nowIso },
+    { url: 'projects', priority: '0.9', changefreq: 'weekly', lastmod: nowIso },
+    { url: 'blog/vi', priority: '0.9', changefreq: 'daily', lastmod: nowIso },
   ];
 
-  // Add blog posts to sitemap
-  const blogPages = blogPosts.map(post => ({
-    url: `blog/${post.data.slug}`,
-    priority: '0.7',
-    changefreq: 'monthly'
-  }));
+  // Map blog posts to sitemap entries.  Use updatedDate if present, otherwise pubDate.
+  const blogPages = blogPosts.map((post) => {
+    const lastmod = post.data.updatedDate ?? post.data.pubDate;
+    return {
+      url: `blog/vi/${post.data.slug}`,
+      priority: '0.7',
+      changefreq: 'monthly',
+      lastmod,
+    };
+  });
 
   const allPages = [...staticPages, ...blogPages];
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${allPages
-  .map(
-    (page) => `  <url>
+  .map((page) => {
+    const iso = new Date(page.lastmod).toISOString();
+    return `  <url>
     <loc>${site}/${page.url}</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
+    <lastmod>${iso}</lastmod>
     <changefreq>${page.changefreq}</changefreq>
     <priority>${page.priority}</priority>
-  </url>`
-  )
+  </url>`;
+  })
   .join('\n')}
 </urlset>`;
 
