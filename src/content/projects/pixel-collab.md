@@ -8,7 +8,7 @@ category: main
 status: live
 role: Frontend product design, realtime collaboration UX, and interaction polish
 period: "2026"
-thumbnail: /uploads/thumbnails/chatgpt-image-apr-12-2026-01_26_33-pm.png
+thumbnail: /uploads/thumbnails/chatgpt-image-apr-12-2026-01_26_33-pm.webp
 image: /uploads/chatgpt-image-apr-9-2026-10_23_28-pm.png
 links:
   - label: Live demo

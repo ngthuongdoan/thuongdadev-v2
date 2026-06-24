@@ -1,0 +1,63 @@
+
+> jasper-doan@0.0.1 dev C:\Users\ASUS\Rocket\thuongdadev-v2
+> astro dev "--host" "127.0.0.1" "--port" "4321"
+
+[2m19:57:58[22m [34m[@astrojs/node][39m Enabling sessions with filesystem storage
+[vite] connected.
+[2m19:58:00[22m [34m[types][39m Generated [2m2ms[22m
+[vite] connected.
+[2m19:58:00[22m [34m[content][39m Syncing content
+[2m19:58:00[22m [34m[content][39m Astro config changed
+[2m19:58:00[22m [34m[content][39m Clearing content store
+[2m19:58:01[22m [34m[content][39m Synced content
+
+[43m[30m update [39m[49m [33m▶ New version of Astro available: 6.4.8[39m
+  Run [36mpnpm dlx @astrojs/upgrade[39m to update
+
+[42m[1m astro [22m[49m [32mv6.1.7[39m [2mready in[22m 4184 [2mms[22m
+[2m┃[22m Local    [36mhttp://127.0.0.1:4321/[39m
+[2m19:58:01[22m [32mwatching for file changes...[39m
+[2m19:58:16[22m [34m[200][39m / [2m120ms[22m
+[2m19:58:43[22m [34m[200][39m / [2m24ms[22m
+[2m19:58:44[22m [34m[vite][39m [32m✨ new dependencies optimized: [33mastro/runtime/client/dev-toolbar/entrypoint.js[32m[39m
+[2m19:58:44[22m [34m[vite][39m [32m✨ optimized dependencies changed. reloading[39m
+[2m19:58:45[22m [34m[200][39m / [2m23ms[22m
+[2m19:59:11[22m [34m[200][39m / [2m4ms[22m
+[2m19:59:38[22m [34m[200][39m / [2m40ms[22m
+[2m19:59:42[22m [34m[200][39m /projects [2m367ms[22m
+[2m19:59:45[22m [34m[200][39m / [2m17ms[22m
+[2m19:59:46[22m [34m[vite][39m [32m✨ new dependencies optimized: [33mreact/jsx-dev-runtime, react, @paper-design/shaders-react[32m[39m
+[2m19:59:46[22m [34m[vite][39m [32m✨ optimized dependencies changed. reloading[39m
+[2m19:59:46[22m [34m[200][39m / [2m15ms[22m
+[2m19:59:46[22m [34m[200][39m /projects [2m15ms[22m
+[2m19:59:46[22m [34m[200][39m / [2m14ms[22m
+[2m19:59:47[22m [34m[200][39m / [2m5ms[22m
+[2m20:01:09[22m [34m[watch][39m /src/styles/global.css
+[2m20:01:09[22m [34m[watch][39m /src/components/home/HomeBackground.astro?astro&type=style&index=0&lang.css
+[2m20:01:09[22m [34m[watch][39m src/components/home/HomeBackground.astro
+[vite] program reload
+[2m20:01:11[22m [34m[200][39m / [2m580ms[22m
+[2m20:01:11[22m [34m[200][39m / [2m580ms[22m
+[2m20:01:20[22m [34m[watch][39m /src/styles/global.css
+[2m20:01:21[22m [34m[200][39m / [2m155ms[22m
+[2m20:01:21[22m [34m[200][39m / [2m151ms[22m
+[2m20:01:39[22m [34m[200][39m / [2m430ms[22m
+[2m20:01:39[22m [34m[200][39m / [2m277ms[22m
+[2m20:02:30[22m [34m[200][39m / [2m16ms[22m
+[2m20:02:32[22m [34m[200][39m / [2m15ms[22m
+[2m20:03:02[22m [34m[watch][39m /src/styles/global.css
+[2m20:03:02[22m [34m[watch][39m /src/components/home/HomeBackground.astro?astro&type=style&index=0&lang.css
+[2m20:03:02[22m [34m[watch][39m src/components/home/HomeBackground.astro
+[vite] program reload
+[2m20:03:03[22m [34m[200][39m / [2m120ms[22m
+[2m20:03:03[22m [34m[200][39m / [2m7ms[22m
+[2m20:04:00[22m [34m[200][39m / [2m8ms[22m
+[2m20:04:02[22m [34m[200][39m / [2m6ms[22m
+[2m20:04:22[22m [34m[watch][39m /src/components/home/HomeBackground.astro?astro&type=style&index=0&lang.css
+[2m20:04:22[22m [34m[watch][39m src/components/home/HomeBackground.astro
+[vite] program reload
+[2m20:04:40[22m [34m[200][39m / [2m112ms[22m
+[2m20:04:42[22m [34m[200][39m / [2m17ms[22m
+[2m20:05:02[22m [34m[200][39m /projects/thuongdadev-platform [2m140ms[22m
+[2m20:05:16[22m [34m[200][39m /projects [2m111ms[22m
+ ELIFECYCLE  Command failed with exit code 4294967295.

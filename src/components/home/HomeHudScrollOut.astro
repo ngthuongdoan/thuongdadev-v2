@@ -1,48 +1,76 @@
 <script>
-	import gsap from "gsap";
-	import { ScrollTrigger } from "gsap/ScrollTrigger";
-
 	const setupHomeHudScrollOut = () => {
 		const windowWithHud = window as Window & {
-			homeHudScrollContext?: ReturnType<typeof gsap.context>;
+			homeHudScrollCleanup?: () => void;
 		};
-		const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 		const hero = document.querySelector<HTMLElement>("[data-home-hero]");
 		const hudHeader = document.querySelector<HTMLElement>("[data-hud-header]");
 		const hudStatus = document.querySelector<HTMLElement>("[data-hud-status]");
 		const hudFooter = document.querySelector<HTMLElement>("[data-hud-footer]");
+		const hudElements = [hudHeader, hudStatus, hudFooter].filter(
+			(element): element is HTMLElement => element instanceof HTMLElement,
+		);
+		const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+		let frame = 0;
 
-		windowWithHud.homeHudScrollContext?.revert();
+		windowWithHud.homeHudScrollCleanup?.();
+		windowWithHud.homeHudScrollCleanup = undefined;
+
+		const clearHudStyles = () => {
+			hudElements.forEach((element) => {
+				element.style.removeProperty("opacity");
+				element.style.removeProperty("transform");
+				element.style.removeProperty("will-change");
+			});
+		};
 
 		if (prefersReducedMotion || !hero || !hudHeader || !hudStatus || !hudFooter) {
-			gsap.set([hudHeader, hudStatus, hudFooter].filter(Boolean), {
-				clearProps: "all",
-			});
+			clearHudStyles();
 			return;
 		}
 
-		gsap.registerPlugin(ScrollTrigger);
-
-		windowWithHud.homeHudScrollContext = gsap.context(() => {
-			gsap.set([hudHeader, hudStatus, hudFooter], {
-				force3D: true,
-				willChange: "transform, opacity",
-			});
-
-			gsap.timeline({
-				defaults: { ease: "none" },
-				scrollTrigger: {
-					trigger: hero,
-					start: "top top",
-					end: "bottom top",
-					scrub: 0.75,
-					invalidateOnRefresh: true,
-				},
-			})
-				.to(hudHeader, { yPercent: -120, opacity: 0 }, 0)
-				.to(hudStatus, { x: () => Math.min(window.innerWidth * 0.14, 220), opacity: 0 }, 0)
-				.to(hudFooter, { yPercent: 120, opacity: 0 }, 0);
+		hudElements.forEach((element) => {
+			element.style.willChange = "transform, opacity";
 		});
+
+		const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
+
+		const update = () => {
+			frame = 0;
+			const heroRect = hero.getBoundingClientRect();
+			const heroHeight = Math.max(heroRect.height, 1);
+			const progress = clamp(-heroRect.top / heroHeight, 0, 1);
+			const easedProgress = progress < 0.08 ? 0 : clamp((progress - 0.08) / 0.72, 0, 1);
+			const opacity = String(1 - easedProgress);
+			const statusOffset = Math.min(window.innerWidth * 0.14, 220) * easedProgress;
+
+			hudHeader.style.opacity = opacity;
+			hudHeader.style.transform = `translate3d(0, ${-120 * easedProgress}%, 0)`;
+			hudStatus.style.opacity = opacity;
+			hudStatus.style.transform = `translate3d(${statusOffset}px, -50%, 0)`;
+			hudFooter.style.opacity = opacity;
+			hudFooter.style.transform = `translate3d(0, ${120 * easedProgress}%, 0)`;
+		};
+
+		const requestUpdate = () => {
+			if (frame !== 0) {
+				return;
+			}
+
+			frame = window.requestAnimationFrame(update);
+		};
+
+		window.addEventListener("scroll", requestUpdate, { passive: true });
+		window.addEventListener("resize", requestUpdate);
+		windowWithHud.homeHudScrollCleanup = () => {
+			window.removeEventListener("scroll", requestUpdate);
+			window.removeEventListener("resize", requestUpdate);
+			if (frame !== 0) {
+				window.cancelAnimationFrame(frame);
+			}
+			clearHudStyles();
+		};
+		update();
 	};
 
 	setupHomeHudScrollOut();

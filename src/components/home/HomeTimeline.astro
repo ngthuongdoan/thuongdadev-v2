@@ -172,11 +172,13 @@ const entries = [
 
 	.timeline-track span {
 		display: block;
-		width: var(--timeline-progress, 0%);
+		width: 100%;
 		height: 100%;
 		background: linear-gradient(90deg, #8b5cf6, #d0bcff);
 		box-shadow: 0 0 26px rgb(208 188 255 / 0.7);
-		transition: width 120ms ease-out;
+		transform: scaleX(var(--timeline-progress, 0));
+		transform-origin: left center;
+		transition: transform 120ms ease-out;
 	}
 
 	.timeline-node {
@@ -478,56 +480,65 @@ const entries = [
 		}
 
 		const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
+		let frame = 0;
+		let maxScroll = 0;
+		let viewportWidth = 0;
+		let shipHalfWidth = 0;
+		let shipHalfHeight = 0;
+		let cardMetrics: Array<{
+			card: HTMLElement;
+			centerX: number;
+			nodeX: number;
+			nodeY: number;
+		}> = [];
 
-		const getMaxScroll = () => Math.max(timeline.scrollWidth - timeline.clientWidth, 0);
+		const measureTimeline = () => {
+			maxScroll = Math.max(timeline.scrollWidth - timeline.clientWidth, 0);
+			viewportWidth = timeline.clientWidth;
+			shipHalfWidth = ship.offsetWidth / 2;
+			shipHalfHeight = ship.offsetHeight / 2;
+			cardMetrics = cards.map((card) => {
+				const anchor = card.querySelector("[data-timeline-anchor]");
+				const anchorElement = anchor instanceof HTMLElement ? anchor : null;
 
-		const getCardScrollTarget = (card: HTMLElement) => {
-			const target = card.offsetLeft + card.offsetWidth / 2 - timeline.clientWidth / 2;
-			return clamp(target, 0, getMaxScroll());
+				return {
+					card,
+					centerX: card.offsetLeft + card.offsetWidth / 2,
+					nodeX: card.offsetLeft + (anchorElement?.offsetLeft ?? 0) + (anchorElement?.offsetWidth ?? 0) / 2,
+					nodeY: card.offsetTop + (anchorElement?.offsetTop ?? 0) + (anchorElement?.offsetHeight ?? 0) / 2,
+				};
+			});
 		};
 
-		const getNodeCenter = (card: HTMLElement) => {
-			const anchor = card.querySelector("[data-timeline-anchor]");
-			const viewportRect = viewport?.getBoundingClientRect();
-			const anchorRect = anchor?.getBoundingClientRect();
-
-			if (!viewportRect || !anchorRect) {
-				return null;
-			}
-
-			return {
-				x: anchorRect.left - viewportRect.left + anchorRect.width / 2,
-				y: anchorRect.top - viewportRect.top + anchorRect.height / 2,
-			};
+		const getCardScrollTarget = (card: HTMLElement) => {
+			const metric = cardMetrics.find((item) => item.card === card);
+			const target = (metric?.centerX ?? card.offsetLeft + card.offsetWidth / 2) - viewportWidth / 2;
+			return clamp(target, 0, maxScroll);
 		};
 
 		const getActiveCard = () => {
-			if (cards.length === 0) {
+			if (cardMetrics.length === 0) {
 				return null;
 			}
 
-			const viewportCenter = timeline.getBoundingClientRect().left + timeline.clientWidth / 2;
+			const viewportCenter = timeline.scrollLeft + viewportWidth / 2;
 
-			return cards.reduce((closest, card) => {
-				const cardCenter = card.getBoundingClientRect().left + card.offsetWidth / 2;
-				const closestCenter = closest.getBoundingClientRect().left + closest.offsetWidth / 2;
-
-				return Math.abs(cardCenter - viewportCenter) < Math.abs(closestCenter - viewportCenter) ? card : closest;
-			}, cards[0]);
+			return cardMetrics.reduce((closest, metric) => (
+				Math.abs(metric.centerX - viewportCenter) < Math.abs(closest.centerX - viewportCenter) ? metric : closest
+			), cardMetrics[0]);
 		};
 
 		const updateTimeline = () => {
-			const maxScroll = getMaxScroll();
+			frame = 0;
 			const progress = maxScroll > 0 ? timeline.scrollLeft / maxScroll : 0;
-			const activeCard = getActiveCard();
-			const nodeCenter = activeCard ? getNodeCenter(activeCard) : null;
+			const activeMetric = getActiveCard();
 
-			if (!nodeCenter) {
+			if (!activeMetric) {
 				return;
 			}
 
-			const x = nodeCenter.x - ship.offsetWidth / 2;
-			const y = nodeCenter.y - ship.offsetHeight / 2;
+			const x = activeMetric.nodeX - timeline.scrollLeft - shipHalfWidth;
+			const y = activeMetric.nodeY - shipHalfHeight;
 			const tilt = -10 + progress * 20;
 			const rotation = progress * 540;
 
@@ -535,13 +546,26 @@ const entries = [
 			ship.style.setProperty("--station-y", `${y}px`);
 			ship.style.setProperty("--station-tilt", `${tilt}deg`);
 			ship.style.setProperty("--station-rotation", `${rotation}deg`);
-			progressBar.style.width = `${progress * 100}%`;
+			progressBar.style.setProperty("--timeline-progress", String(progress));
 
-			const activeIndex = activeCard ? cards.indexOf(activeCard) : 0;
+			const activeIndex = cards.indexOf(activeMetric.card);
 
 			dots.forEach((dot, index) => {
 				dot.setAttribute("aria-current", index === activeIndex ? "true" : "false");
 			});
+		};
+
+		const requestTimelineUpdate = () => {
+			if (frame !== 0) {
+				return;
+			}
+
+			frame = window.requestAnimationFrame(updateTimeline);
+		};
+
+		const refreshTimeline = () => {
+			measureTimeline();
+			requestTimelineUpdate();
 		};
 
 		timeline.addEventListener(
@@ -571,7 +595,7 @@ const entries = [
 
 				timeline.scrollTo({ left: getCardScrollTarget(card), behavior: "smooth" });
 				history.replaceState(null, "", anchor.hash);
-				window.setTimeout(updateTimeline, 240);
+				window.setTimeout(requestTimelineUpdate, 240);
 			});
 		});
 
@@ -586,12 +610,12 @@ const entries = [
 
 				timeline.scrollTo({ left: getCardScrollTarget(card), behavior: "smooth" });
 				history.replaceState(null, "", `#${card.id}`);
-				window.setTimeout(updateTimeline, 240);
+				window.setTimeout(requestTimelineUpdate, 240);
 			});
 		});
 
-		timeline.addEventListener("scroll", updateTimeline, { passive: true });
-		window.addEventListener("resize", updateTimeline);
-		updateTimeline();
+		timeline.addEventListener("scroll", requestTimelineUpdate, { passive: true });
+		window.addEventListener("resize", refreshTimeline);
+		refreshTimeline();
 	});
 </script>
