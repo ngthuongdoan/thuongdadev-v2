@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import HomeIcon from "./HomeIcon.astro";
 import HudFrame from "./HudFrame.astro";
 
 interface Props {
@@ -12,7 +13,7 @@ const featuredProjects = projects.slice(0, 2);
 
 <section class="section-projects mx-auto mb-48 w-full max-w-6xl">
 	<div class="mb-12 flex items-center justify-center gap-4 text-label-caps font-semibold uppercase tracking-[0.2em] text-secondary/70">
-		<span class="material-symbols-outlined" aria-hidden="true">dashboard</span>
+		<HomeIcon name="dashboard" />
 		<span>PROJECT_PREVIEW</span>
 		<div class="ml-4 hidden h-px flex-1 bg-white/10 md:block"></div>
 	</div>
@@ -48,7 +49,7 @@ const featuredProjects = projects.slice(0, 2);
 			href="/projects"
 		>
 			ACCESS ALL PROJECTS
-			<span class="material-symbols-outlined relative z-10 ml-3 text-[16px] transition-transform group-hover:translate-x-1" aria-hidden="true">arrow_forward</span>
+			<HomeIcon name="arrow-forward" class="relative z-10 ml-3 text-[16px] transition-transform group-hover:translate-x-1" />
 		</a>
 	</div>
 </section>

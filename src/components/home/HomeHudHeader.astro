@@ -1,9 +1,11 @@
 ---
+import HomeIcon from "./HomeIcon.astro";
+
 const navItems = [
-	{ href: "#mission", icon: "rocket_launch", label: "MISSION" },
+	{ href: "#mission", icon: "rocket-launch", label: "MISSION" },
 	{ href: "/blog", icon: "terminal", label: "LOGS" },
 	{ href: "https://github.com/ngthuongdoan", icon: "code", label: "GITHUB" },
-];
+] as const;
 ---
 
 <header data-hud-header class="pointer-events-none fixed left-0 top-0 z-40 flex w-full items-start justify-between p-5 md:p-16">
@@ -22,7 +24,7 @@ const navItems = [
 				target={item.href.startsWith("http") ? "_blank" : undefined}
 				rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
 			>
-				<span class="material-symbols-outlined text-[16px]" aria-hidden="true">{item.icon}</span>
+				<HomeIcon name={item.icon} class="text-[16px]" />
 				<span>{item.label}</span>
 			</a>
 		))}
