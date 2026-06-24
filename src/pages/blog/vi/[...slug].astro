@@ -3,6 +3,7 @@ import { formatDate } from "../../../lib/utils";
 import Prose from "../../../components/prose.astro";
 import { getCollection, render } from "astro:content";
 import HudArchiveLayout from "../../../components/HudArchiveLayout.astro";
+import HomeIcon from "../../../components/home/HomeIcon.astro";
 
 export const prerender = true;
 
@@ -53,7 +54,7 @@ const publishedDate = formatDate(article.data.pubDate);
     <article class="grid gap-8 xl:grid-cols-[minmax(0,1fr)_22rem]">
         <div class="min-w-0">
             <a href="/blog/vi" class="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-on-surface-variant transition-colors hover:text-primary">
-                <span class="material-symbols-outlined text-[16px]">keyboard_backspace</span>
+                <HomeIcon name="keyboard-backspace" class="text-[16px]" />
                 Back to logs
             </a>
 
@@ -108,7 +109,7 @@ const publishedDate = formatDate(article.data.pubDate);
                     class="mt-6 inline-flex w-full items-center justify-center gap-2 border border-primary/40 bg-primary/10 px-4 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-primary transition-colors hover:border-primary hover:bg-primary/15"
                 >
                     Source Signal
-                    <span class="material-symbols-outlined text-[16px]">open_in_new</span>
+                    <HomeIcon name="open-in-new" class="text-[16px]" />
                 </a>
             </div>
 

@@ -1,10 +1,11 @@
 ---
 import RootLayout from "../layouts/RootLayout.astro";
+import HomeIcon from "./home/HomeIcon.astro";
 
 interface NavItem {
 	label: string;
 	href: string;
-	icon: string;
+	icon: "rocket-launch" | "folder-special" | "terminal";
 	active?: boolean;
 }
 
@@ -33,8 +34,8 @@ const {
 } = Astro.props;
 
 const navItems: NavItem[] = [
-	{ label: "Mission Control", href: "/projects#all-projects", icon: "rocket_launch", active: activeSection === "home" },
-	{ label: "Project Archives", href: "/projects", icon: "folder_special", active: activeSection === "projects" },
+	{ label: "Mission Control", href: "/projects#all-projects", icon: "rocket-launch", active: activeSection === "home" },
+	{ label: "Project Archives", href: "/projects", icon: "folder-special", active: activeSection === "projects" },
 	{ label: "System Logs", href: "/blog/vi", icon: "terminal", active: activeSection === "blog" },
 ];
 ---
@@ -60,7 +61,7 @@ const navItems: NavItem[] = [
 					]}
 					aria-current={item.active ? "page" : undefined}
 				>
-					<span class="material-symbols-outlined text-[16px] transition-all group-hover:text-primary">{item.icon}</span>
+					<HomeIcon name={item.icon} class="text-[16px] transition-all group-hover:text-primary" />
 					<span class="hidden sm:inline">{item.label}</span>
 				</a>
 			))}

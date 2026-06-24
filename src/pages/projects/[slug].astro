@@ -2,6 +2,7 @@
 import { getCollection, render } from "astro:content";
 import Prose from "../../components/prose.astro";
 import HudArchiveLayout from "../../components/HudArchiveLayout.astro";
+import HomeIcon from "../../components/home/HomeIcon.astro";
 
 export const prerender = true;
 
@@ -38,7 +39,7 @@ const statusLabel = project.data.status.replace("-", " ");
     <article class="grid gap-8 xl:grid-cols-[minmax(0,1fr)_24rem]">
         <div class="min-w-0">
             <a href="/projects" class="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-on-surface-variant transition-colors hover:text-primary">
-                <span class="material-symbols-outlined text-[16px]">keyboard_backspace</span>
+                <HomeIcon name="keyboard-backspace" class="text-[16px]" />
                 Back to project archives
             </a>
 
@@ -63,7 +64,7 @@ const statusLabel = project.data.status.replace("-", " ");
                                 class="inline-flex items-center gap-2 border border-primary/40 bg-primary/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-primary transition-colors hover:border-primary hover:bg-primary/15"
                             >
                                 {link.label}
-                                <span class="material-symbols-outlined text-[15px]">open_in_new</span>
+                                <HomeIcon name="open-in-new" class="text-[15px]" />
                             </a>
                         ))}
                     </div>
