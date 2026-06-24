@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>System Logs - Blog</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Sora:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration (Provided) -->
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "on-secondary-fixed-variant": "#4f319c",
+                "inverse-on-surface": "#313031",
+                "on-background": "#e5e2e3",
+                "secondary-container": "#4f319c",
+                "error": "#ffb4ab",
+                "on-primary-container": "#340080",
+                "secondary": "#cebdff",
+                "on-surface-variant": "#cbc3d7",
+                "primary-container": "#a078ff",
+                "surface-container": "#201f20",
+                "surface": "#131314",
+                "primary-fixed-dim": "#d0bcff",
+                "inverse-primary": "#6d3bd7",
+                "on-secondary-container": "#bea8ff",
+                "surface-variant": "#353436",
+                "surface-tint": "#d0bcff",
+                "secondary-fixed": "#e8ddff",
+                "surface-dim": "#131314",
+                "inverse-surface": "#e5e2e3",
+                "on-tertiary-container": "#282932",
+                "surface-container-low": "#1c1b1c",
+                "surface-container-lowest": "#0e0e0f",
+                "outline": "#958ea0",
+                "primary-fixed": "#e9ddff",
+                "on-tertiary-fixed": "#1a1b23",
+                "outline-variant": "#494454",
+                "on-primary": "#3c0091",
+                "primary": "#d0bcff",
+                "tertiary-fixed": "#e3e1ed",
+                "tertiary-fixed-dim": "#c7c5d1",
+                "error-container": "#93000a",
+                "on-error-container": "#ffdad6",
+                "tertiary-container": "#90909a",
+                "surface-bright": "#3a393a",
+                "on-secondary": "#381385",
+                "secondary-fixed-dim": "#cebdff",
+                "background": "#131314",
+                "tertiary": "#c7c5d1",
+                "on-error": "#690005",
+                "on-tertiary-fixed-variant": "#46464f",
+                "on-tertiary": "#2f3039",
+                "surface-container-high": "#2a2a2b",
+                "surface-container-highest": "#353436",
+                "on-surface": "#e5e2e3",
+                "on-primary-fixed": "#23005c",
+                "on-primary-fixed-variant": "#5516be",
+                "on-secondary-fixed": "#21005e"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+        },
+        "spacing": {
+                "base": "8px",
+                "container-max": "1440px",
+                "gutter": "24px",
+                "margin-desktop": "64px",
+                "margin-mobile": "20px"
+        },
+        "fontFamily": {
+                "display-lg": [
+                        "Sora"
+                ],
+                "label-caps": [
+                        "JetBrains Mono"
+                ],
+                "body-md": [
+                        "Sora"
+                ],
+                "headline-md": [
+                        "Sora"
+                ],
+                "headline-lg": [
+                        "Sora"
+                ],
+                "headline-lg-mobile": [
+                        "Sora"
+                ],
+                "body-lg": [
+                        "Sora"
+                ]
+        },
+        "fontSize": {
+                "display-lg": [
+                        "72px",
+                        {
+                                "lineHeight": "1.1",
+                                "letterSpacing": "-0.04em",
+                                "fontWeight": "800"
+                        }
+                ],
+                "label-caps": [
+                        "12px",
+                        {
+                                "lineHeight": "1",
+                                "letterSpacing": "0.1em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "1.6",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-md": [
+                        "32px",
+                        {
+                                "lineHeight": "1.3",
+                                "fontWeight": "600"
+                        }
+                ],
+                "headline-lg": [
+                        "48px",
+                        {
+                                "lineHeight": "1.2",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "headline-lg-mobile": [
+                        "32px",
+                        {
+                                "lineHeight": "1.2",
+                                "fontWeight": "700"
+                        }
+                ],
+                "body-lg": [
+                        "18px",
+                        {
+                                "lineHeight": "1.6",
+                                "fontWeight": "400"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+        /* Custom Luminous Depth Utilities */
+        .glass-panel {
+            background-color: rgba(19, 19, 20, 0.6); /* surface with opacity */
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .glow-primary {
+            box-shadow: 0 0 15px rgba(208, 188, 255, 0.2);
+        }
+        
+        .glow-secondary {
+            box-shadow: 0 0 15px rgba(206, 189, 255, 0.2);
+        }
+
+        .terminal-cursor {
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Fixed grid layout background pattern */
+        body {
+            background-image: 
+                radial-gradient(circle at center, rgba(160, 120, 255, 0.05) 0%, transparent 70%),
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 100% 100%, 64px 64px, 64px 64px;
+            background-attachment: fixed;
+        }
+        
+        /* Corner brackets for technical feel */
+        .tech-bracket-tl {
+            position: relative;
+        }
+        .tech-bracket-tl::before {
+            content: '';
+            position: absolute;
+            top: -1px; left: -1px;
+            width: 8px; height: 8px;
+            border-top: 1px solid theme('colors.primary');
+            border-left: 1px solid theme('colors.primary');
+        }
+        
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 10px rgba(208, 188, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen overflow-x-hidden selection:bg-primary/30 selection:text-primary">
+<!-- Spaceship HUD Navigation -->
+<nav class="fixed top-0 w-full z-50 glass-panel border-b border-primary/20 bg-surface/80 backdrop-blur-xl px-margin-mobile md:px-margin-desktop py-4 flex flex-col md:flex-row items-center justify-between shadow-[0_0_20px_rgba(208,188,255,0.15)]">
+<!-- Branding -->
+<div class="flex flex-col items-center md:items-start mb-4 md:mb-0 w-full md:w-auto">
+<div class="font-display-lg text-headline-md text-primary tracking-tighter glow-text">Jasper Doan</div>
+<div class="font-label-caps text-[10px] text-secondary tracking-widest mt-1">SR_FRONTEND_ENGINEER</div>
+</div>
+<!-- Nav Links -->
+<div class="flex flex-wrap justify-center md:justify-end gap-6 font-label-caps text-[12px] w-full md:w-auto">
+<a class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-2 group" href="#">
+<span class="material-symbols-outlined text-[16px] group-hover:glow-primary transition-all">rocket_launch</span>
+            MISSION CONTROL
+        </a>
+<a class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-2 group" href="#">
+<span class="material-symbols-outlined text-[16px] group-hover:glow-primary transition-all">folder_special</span>
+            PROJECT ARCHIVES
+        </a>
+<a class="text-primary border-b-2 border-primary pb-1 flex items-center gap-2 glow-text" href="#">
+<span class="material-symbols-outlined text-[16px]">terminal</span>
+            SYSTEM LOGS
+        </a>
+<div class="hidden md:flex gap-4 ml-4 pl-4 border-l border-white/10">
+<a class="text-on-surface-variant hover:text-secondary transition-colors" href="#"><span class="material-symbols-outlined text-[18px]">code</span></a>
+<a class="text-on-surface-variant hover:text-secondary transition-colors" href="#"><span class="material-symbols-outlined text-[18px]">share</span></a>
+</div>
+</div>
+</nav>
+<!-- Desktop Layout Container -->
+<div class="flex min-h-screen pt-32 md:pt-24">
+<!-- Main Content Area -->
+<main class="flex-1 px-margin-mobile md:px-margin-desktop py-8 md:py-12 flex flex-col relative max-w-container-max mx-auto w-full">
+<!-- HUD Overlays (Decorative) -->
+<div class="fixed top-28 right-margin-desktop hidden xl:block font-label-caps text-label-caps text-on-surface-variant/50 text-right pointer-events-none z-10">
+<div>SYS.STATUS: <span class="text-secondary">ONLINE</span></div>
+<div>MEM_USAGE: 42%</div>
+<div>NET_LATENCY: 12ms</div>
+</div>
+<!-- Page Header -->
+<header class="mb-12 border-b border-white/10 pb-6 relative">
+<!-- Connector Line -->
+<div class="absolute left-0 bottom-0 w-px h-8 bg-white/15"></div>
+<div class="absolute left-0 bottom-0 h-px w-8 bg-white/15"></div>
+<h1 class="font-display-lg text-headline-lg-mobile md:text-headline-lg text-primary tracking-tighter mb-2 glow-text">/var/log/engineer_thoughts</h1>
+<p class="font-label-caps text-label-caps text-secondary">TRANSMISSION LISTING: SYSTEM LOGS &amp; ARCHITECTURAL MUSINGS</p>
+</header>
+<!-- Blog List Content (Terminal Interface Style) -->
+<div class="flex-1 w-full space-y-6 mb-24 z-10 font-label-caps">
+<!-- Log Entry 1 -->
+<article class="glass-panel p-6 tech-bracket-tl group hover:border-primary/50 transition-colors duration-300 relative border border-outline-variant rounded-none">
+<div class="absolute top-2 right-2 text-on-surface-variant/40">LOG-042</div>
+<div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-6 mb-4">
+<div class="text-tertiary w-32 shrink-0">[2024.11.14]</div>
+<h2 class="text-lg text-on-surface group-hover:text-primary transition-colors cursor-pointer w-full font-bold">
+                            &gt; Optimizing the Light-Speed Bundle
+                        </h2>
+</div>
+<div class="md:ml-36 border-l border-white/10 pl-4 space-y-4">
+<p class="text-on-surface-variant/80 text-sm leading-relaxed font-body-md">
+                            Analyzing the critical path rendering sequence. Bundle size reduced by 40% after implementing aggressive tree-shaking and module federation. Initial telemetry suggests a sub-200ms TTI on slower orbital relays.
+                        </p>
+<div class="flex gap-2">
+<span class="border border-secondary-container bg-secondary-container/10 text-secondary px-2 py-0.5 text-[10px]">WEBPACK</span>
+<span class="border border-secondary-container bg-secondary-container/10 text-secondary px-2 py-0.5 text-[10px]">PERFORMANCE</span>
+</div>
+</div>
+</article>
+<!-- Log Entry 2 -->
+<article class="glass-panel p-6 tech-bracket-tl group hover:border-primary/50 transition-colors duration-300 relative border border-outline-variant rounded-none">
+<div class="absolute top-2 right-2 text-on-surface-variant/40">LOG-041</div>
+<div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-6 mb-4">
+<div class="text-tertiary w-32 shrink-0">[2024.10.28]</div>
+<h2 class="text-lg text-on-surface group-hover:text-primary transition-colors cursor-pointer w-full font-bold">
+                            &gt; The Architecture of a Dyson Sphere App
+                        </h2>
+</div>
+<div class="md:ml-36 border-l border-white/10 pl-4 space-y-4">
+<p class="text-on-surface-variant/80 text-sm leading-relaxed font-body-md">
+                            Scaling micro-frontends to theoretical limits. How we built a resilient, distributed UI shell capable of rendering thousands of real-time data nodes without frame drops, utilizing WebGL and off-main-thread processing.
+                        </p>
+<div class="flex gap-2">
+<span class="border border-secondary-container bg-secondary-container/10 text-secondary px-2 py-0.5 text-[10px]">ARCHITECTURE</span>
+<span class="border border-secondary-container bg-secondary-container/10 text-secondary px-2 py-0.5 text-[10px]">WEBGL</span>
+<span class="border border-secondary-container bg-secondary-container/10 text-secondary px-2 py-0.5 text-[10px]">SYSTEM_DESIGN</span>
+</div>
+</div>
+</article>
+<!-- Log Entry 3 -->
+<article class="glass-panel p-6 tech-bracket-tl group hover:border-primary/50 transition-colors duration-300 relative border border-outline-variant rounded-none">
+<div class="absolute top-2 right-2 text-on-surface-variant/40">LOG-040</div>
+<div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-6 mb-4">
+<div class="text-tertiary w-32 shrink-0">[2024.09.15]</div>
+<h2 class="text-lg text-on-surface group-hover:text-primary transition-colors cursor-pointer w-full font-bold">
+                            &gt; CSS Grid in Zero Gravity
+                        </h2>
+</div>
+<div class="md:ml-36 border-l border-white/10 pl-4 space-y-4">
+<p class="text-on-surface-variant/80 text-sm leading-relaxed font-body-md">
+                            Deconstructing rigid layouts. Implementing fluid, multi-directional grid systems that adapt to non-standard viewport orientations. A study in creating resilient, math-driven layout algorithms for complex HUDs.
+                        </p>
+<div class="flex gap-2">
+<span class="border border-secondary-container bg-secondary-container/10 text-secondary px-2 py-0.5 text-[10px]">CSS_GRID</span>
+<span class="border border-secondary-container bg-secondary-container/10 text-secondary px-2 py-0.5 text-[10px]">LAYOUT</span>
+</div>
+</div>
+</article>
+</div>
+<!-- Interactive Command Line (Bottom Fixed) -->
+<div class="fixed bottom-0 right-0 left-0 glass-panel border-t border-white/20 p-4 z-50 flex items-center bg-surface-container-highest/90 backdrop-blur-xl">
+<div class="font-label-caps text-label-caps text-primary mr-3 flex-shrink-0 font-bold">sys_eng@core:~$</div>
+<input autofocus="" class="bg-transparent border-none outline-none text-on-surface font-label-caps text-label-caps w-full focus:ring-0 placeholder:text-on-surface-variant/50" placeholder="enter command (e.g., 'cat log-042', 'search architecture')..." type="text"/>
+<div class="w-3 h-5 bg-primary terminal-cursor ml-1 flex-shrink-0"></div>
+</div>
+</main>
+</div>
+<!-- Background Atmospheric Effect -->
+<div class="fixed top-1/4 -right-1/4 w-[800px] h-[800px] bg-secondary-container/10 rounded-full blur-[120px] pointer-events-none z-0"></div>
+<div class="fixed -bottom-1/4 -left-1/4 w-[600px] h-[600px] bg-primary-container/5 rounded-full blur-[100px] pointer-events-none z-0"></div>
+<script>
+        // Simple script to handle command line visual effect
+        const cliInput = document.querySelector('input[type="text"]');
+        const cursor = document.querySelector('.terminal-cursor');
+        
+        cliInput.addEventListener('focus', () => {
+            cursor.style.opacity = '1';
+            cursor.style.animation = 'none'; // Stop blinking when typing
+        });
+        
+        cliInput.addEventListener('blur', () => {
+            cursor.style.animation = 'blink 1s step-end infinite';
+        });
+
+        cliInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && cliInput.value.trim() !== '') {
+                const command = cliInput.value;
+                cliInput.value = '';
+                // In a real app, this would execute the search or command
+                console.log(`Executing: ${command}`);
+                
+                // Visual feedback flicker
+                cliInput.parentElement.classList.add('glow-primary');
+                setTimeout(() => {
+                    cliInput.parentElement.classList.remove('glow-primary');
+                }, 200);
+            }
+        });
+    </script>
+</body></html>

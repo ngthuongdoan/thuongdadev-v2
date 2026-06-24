@@ -1,0 +1,30 @@
+---
+const navItems = [
+	{ href: "#mission", icon: "rocket_launch", label: "MISSION" },
+	{ href: "/blog", icon: "terminal", label: "LOGS" },
+	{ href: "https://github.com/ngthuongdoan", icon: "code", label: "GITHUB" },
+];
+---
+
+<header data-hud-header class="pointer-events-none fixed left-0 top-0 z-40 flex w-full items-start justify-between p-5 md:p-16">
+	<a href="/" class="pointer-events-auto block">
+		<div class="mb-2 text-[1.65rem] font-extrabold uppercase leading-tight tracking-[0.18em] text-primary md:text-[2rem]">
+			JASPER DOAN
+		</div>
+		<div class="text-label-caps uppercase tracking-[0.2em] text-secondary/80">AI_ENGINEER_AT_VINCERE</div>
+	</a>
+
+	<nav class="pointer-events-auto hidden gap-8 text-label-caps font-semibold uppercase tracking-[0.14em] md:flex" aria-label="Homepage navigation">
+		{navItems.map((item) => (
+			<a
+				class="inline-flex items-center gap-2 text-on-surface-variant transition-colors hover:text-primary"
+				href={item.href}
+				target={item.href.startsWith("http") ? "_blank" : undefined}
+				rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
+			>
+				<span class="material-symbols-outlined text-[16px]" aria-hidden="true">{item.icon}</span>
+				<span>{item.label}</span>
+			</a>
+		))}
+	</nav>
+</header>

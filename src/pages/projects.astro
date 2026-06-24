@@ -1,74 +1,120 @@
 ---
-import { getCollection } from 'astro:content';
-import H1 from "../components/h1.astro";
-import ProjectsSection from "../components/projects-section.astro";
-import InfoLayout from "../layouts/InfoLayout.astro";
+import { getCollection } from "astro:content";
+import HudArchiveEntry from "../components/HudArchiveEntry.astro";
+import HudArchiveLayout from "../components/HudArchiveLayout.astro";
 
-const pageTitle = "Projects | Jasper Doan - AI Engineer";
-const pageDescription = "AI-augmented engineering case studies by Jasper Doan, covering autonomous delivery workflows, production architecture, and projects shipped with AI agents in the loop.";
+const pageTitle = "Projects | Ngọc Thưởng Đoàn - AI Engineer";
+const pageDescription =
+	"Selected engineering case studies by Ngọc Thưởng Đoàn, covering AI-assisted delivery, frontend systems, production architecture, and projects shipped with strong technical context.";
 
-// Fetch all projects from CMS
-const allProjects = await getCollection('projects');
-
-// Sort projects by order field (lower numbers first)
+const allProjects = await getCollection("projects");
 const projects = allProjects.sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
 
-const mainProjects = projects.filter(p => p.data.category === "main");
-const sideProjects = projects.filter(p => p.data.category === "side");
-const openSourceProjects = projects.filter(p => p.data.category === "opensource");
+const sectionLabels = {
+	main: "Featured Missions",
+	opensource: "Open-source and Infrastructure",
+	side: "Side Experiments",
+};
+
+const categoryLabels = {
+	main: "Featured build",
+	opensource: "Open source",
+	side: "Side experiment",
+};
 
 const plannedProjects = [
 	{
 		title: "AI Code Review Assistant",
-		description: "A PR analysis workflow that summarizes change risk, highlights refactor opportunities, and generates structured review output before human approval.",
+		description:
+			"A PR analysis workflow that summarizes change risk, highlights refactor opportunities, and generates structured review output before human approval.",
 		focus: "PR analysis, risk detection, refactor guidance, review automation",
 	},
 	{
 		title: "Autonomous Delivery Dashboard",
-		description: "A system for tracking agent-assisted feature delivery, code review status, testing progress, and deployment readiness across one delivery pipeline.",
+		description:
+			"A system for tracking agent-assisted feature delivery, code review status, testing progress, and deployment readiness across one delivery pipeline.",
 		focus: "AI orchestration, delivery visibility, CI gating, execution control",
 	},
 	{
 		title: "Observability for AI Workflows",
-		description: "A case study around tracing prompt flows, task execution, and human-in-the-loop approval inside an AI-native engineering stack.",
+		description:
+			"A case study around tracing prompt flows, task execution, and review checkpoints inside an AI-assisted engineering stack.",
 		focus: "Prompt tracing, logs, QA checkpoints, workflow reliability",
 	},
 ];
+
+const groups = (["main", "opensource", "side"] as const)
+	.map((category) => ({
+		category,
+		projects: projects.filter((project) => project.data.category === category),
+	}))
+	.filter((group) => group.projects.length > 0);
 ---
 
-<InfoLayout title={pageTitle} description={pageDescription}>
-	<div class="p-4 pb-20 sm:px-12 sm:pt-8">
-		<div class="max-w-4xl space-y-5">
-			<H1> Projects </H1>
-			<p class="max-w-3xl text-lg leading-8 text-zinc-300 text-balance">
-				Each project is framed as an AI-augmented engineering case study: architecture, delivery workflow,
-				execution layers handled by agents, and the control points where engineering judgment still matters.
-			</p>
-		</div>
+<HudArchiveLayout
+	title="/mission/archive/projects"
+	kicker="Project access points: case studies, systems, and AI-native builds"
+	commandPrompt="mission_ctl@core:~$"
+	commandPlaceholder="enter command (e.g. open featured, scan ai)"
+	activeSection="projects"
+	pageTitle={pageTitle}
+	pageDescription={pageDescription}
+>
+	<div class="mb-10 max-w-3xl text-sm leading-7 text-on-surface-variant/80 sm:text-base">
+		Each project is framed as an AI-augmented engineering case study: architecture, delivery workflow,
+		execution layers handled by agents, and the control points where engineering judgment still matters.
+	</div>
 
-		<ProjectsSection title="Featured Projects" projects={mainProjects} />
-		<ProjectsSection title="Open-source and Infrastructure" projects={openSourceProjects} className="mt-12 sm:mt-16" />
-		<ProjectsSection title="Side Experiments" projects={sideProjects} className="mt-12 sm:mt-16" />
+	<div id="all-projects" class="scroll-mt-40 space-y-12">
+		{groups.map((group) => (
+			<section>
+				<div class="mb-5 flex items-end justify-between gap-4 border-b border-white/10 pb-3">
+					<h2 class="text-sm font-semibold uppercase tracking-[0.2em] text-secondary">{sectionLabels[group.category]}</h2>
+					<span class="hidden text-[11px] font-semibold uppercase tracking-[0.18em] text-on-surface-variant/50 sm:block">
+						{String(group.projects.length).padStart(2, "0")} dossiers
+					</span>
+				</div>
 
-		<section class="mt-12 space-y-6 border-t border-zinc-800 pt-12 sm:mt-16 sm:pt-16">
-			<div class="max-w-3xl">
-				<h2 class="text-xl font-semibold text-zinc-100 sm:text-2xl">Next AI-Native Builds</h2>
-				<p class="mt-3 text-base leading-7 text-zinc-400">
-					Instead of hiding unfinished work, I keep the next AI-native systems visible. These are the builds I want to turn
-					into deeper case studies around autonomous delivery and engineering leverage.
+				<div class="space-y-6">
+					{group.projects.map((project, index) => (
+						<HudArchiveEntry
+							href={`/projects/${project.id}`}
+							logId={`DOS-${String(index + 1).padStart(3, "0")}`}
+							dateLabel={project.data.period}
+							title={project.data.title}
+							description={project.data.description}
+							meta={`${project.data.role} / ${project.data.status.replace("-", " ")}`}
+							tags={[
+								{ label: categoryLabels[project.data.category] },
+								...project.data.stack.slice(0, 3).map((item) => ({ label: item })),
+							]}
+							image={project.data.thumbnail || project.data.image}
+							imageAlt={project.data.title}
+						/>
+					))}
+				</div>
+			</section>
+		))}
+
+		<section class="border-t border-white/10 pt-10">
+			<div class="mb-5 max-w-3xl">
+				<h2 class="text-sm font-semibold uppercase tracking-[0.2em] text-secondary">Next AI-Native Builds</h2>
+				<p class="mt-3 text-sm leading-7 text-on-surface-variant/80">
+					Instead of hiding unfinished work, I keep the next AI-native systems visible. These are the builds I want
+					to turn into deeper case studies around AI-assisted delivery and engineering leverage.
 				</p>
 			</div>
 
-			<div class="grid gap-6 xl:grid-cols-3">
-				{plannedProjects.map((project) => (
-					<article class="rounded-3xl border border-zinc-800 bg-zinc-950/35 p-6">
-						<p class="text-xs uppercase tracking-[0.24em] text-zinc-500">Roadmap</p>
-						<h3 class="mt-3 text-xl text-zinc-100">{project.title}</h3>
-						<p class="mt-3 text-sm leading-7 text-zinc-400">{project.description}</p>
-						<p class="mt-4 text-sm text-zinc-300">{project.focus}</p>
+			<div class="grid gap-4 xl:grid-cols-3">
+				{plannedProjects.map((project, index) => (
+					<article class="hud-tech-bracket border border-outline-variant bg-surface/50 p-5 backdrop-blur-xl transition-colors hover:border-primary/50">
+						<p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-tertiary">QUEUE-{String(index + 1).padStart(3, "0")}</p>
+						<h3 class="mt-3 text-lg font-bold text-on-surface">&gt; {project.title}</h3>
+						<p class="mt-3 text-sm leading-7 text-on-surface-variant/80">{project.description}</p>
+						<p class="mt-4 border-l border-white/10 pl-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-secondary">{project.focus}</p>
 					</article>
 				))}
 			</div>
 		</section>
 	</div>
-</InfoLayout>
+</HudArchiveLayout>

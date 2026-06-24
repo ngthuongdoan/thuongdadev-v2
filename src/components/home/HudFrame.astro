@@ -1,0 +1,53 @@
+---
+interface Props {
+	class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+---
+
+<div class={`hud-frame relative ${className}`}>
+	<span class="hud-corner hud-tl" aria-hidden="true"></span>
+	<span class="hud-corner hud-tr" aria-hidden="true"></span>
+	<span class="hud-corner hud-bl" aria-hidden="true"></span>
+	<span class="hud-corner hud-br" aria-hidden="true"></span>
+	<slot />
+</div>
+
+<style>
+	.hud-corner {
+		position: absolute;
+		width: 16px;
+		height: 16px;
+		border-color: rgb(208 188 255 / 0.32);
+		pointer-events: none;
+	}
+
+	.hud-tl {
+		top: 0;
+		left: 0;
+		border-top: 1px solid;
+		border-left: 1px solid;
+	}
+
+	.hud-tr {
+		top: 0;
+		right: 0;
+		border-top: 1px solid;
+		border-right: 1px solid;
+	}
+
+	.hud-bl {
+		bottom: 0;
+		left: 0;
+		border-bottom: 1px solid;
+		border-left: 1px solid;
+	}
+
+	.hud-br {
+		right: 0;
+		bottom: 0;
+		border-right: 1px solid;
+		border-bottom: 1px solid;
+	}
+</style>

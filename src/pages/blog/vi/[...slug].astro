@@ -2,7 +2,7 @@
 import { formatDate } from "../../../lib/utils";
 import Prose from "../../../components/prose.astro";
 import { getCollection, render } from "astro:content";
-import InfoLayout from "../../../layouts/InfoLayout.astro";
+import HudArchiveLayout from "../../../components/HudArchiveLayout.astro";
 
 export const prerender = true;
 
@@ -34,49 +34,99 @@ const relatedArticles = allArticles.filter(
 );
 
 // Generate SEO-friendly description from article
-const pageTitle = `${article.data.title} | AI Engineering Notes | Jasper Doan`;
-const pageDescription = article.data.snippet || `Selected reading and engineering note by Jasper Doan: ${article.data.title}.`;
+const pageTitle = `${article.data.title} | AI Engineering Notes | Ngọc Thưởng Đoàn`;
+const pageDescription = article.data.snippet || `Selected reading and engineering note by Ngọc Thưởng Đoàn: ${article.data.title}.`;
+const publishedDate = formatDate(article.data.pubDate);
 ---
 
-<InfoLayout title={pageTitle} description={pageDescription} type="article" lang="vi">
-    <section class="p-4 pb-20 sm:pt-8 sm:px-12 min-h-dvh">
-        <Prose>
-            <Content />
-        </Prose>
-
-        <p class="my-4 text-sm italic leading-7 text-zinc-300">
-            This entry is published as part of my selected readings library.
-            The original article is by {article.data.author}:
-            <a href={article.data.originalLink} target="_blank" rel="noopener noreferrer" class="ml-1 underline underline-offset-4 decoration-zinc-100 hover:decoration-white hover:text-white">
-                {article.data.title}
+<HudArchiveLayout
+    title={`LOG / ${article.data.slug}`}
+    kicker={`${article.data.category} transmission / ${publishedDate}`}
+    commandPrompt="sys_eng@log:~$"
+    commandPlaceholder="enter command (e.g. back, related, source)"
+    activeSection="blog"
+    pageTitle={pageTitle}
+    pageDescription={pageDescription}
+    lang="vi"
+    langSwitcher
+>
+    <article class="grid gap-8 xl:grid-cols-[minmax(0,1fr)_22rem]">
+        <div class="min-w-0">
+            <a href="/blog/vi" class="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-on-surface-variant transition-colors hover:text-primary">
+                <span class="material-symbols-outlined text-[16px]">keyboard_backspace</span>
+                Back to logs
             </a>
-            . Read the source for the full context, then come back here for the excerpt and notes.
-        </p>
 
-        {
-            relatedArticles.length > 0 && (
-                <div>
-                    <h2 class="mt-8 text-lg font-medium sm:mt-12 text-zinc-400">
-                        Related Articles
-                    </h2>
+            <header class="mt-6 border-b border-white/10 pb-6">
+                <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-secondary">
+                    {article.data.category} / {article.data.readingDuration} min read
+                </p>
+                <h2 class="mt-3 max-w-4xl text-headline-md font-bold tracking-tight text-on-surface text-glow md:text-headline-lg">
+                    {article.data.title}
+                </h2>
+                <p class="mt-4 max-w-3xl text-sm leading-7 text-on-surface-variant/80 sm:text-base">
+                    {article.data.snippet}
+                </p>
+            </header>
 
-                    <ul class="mt-2.5">
+            <div class="mt-8 max-w-3xl">
+                <Prose>
+                    <Content />
+                </Prose>
+            </div>
+        </div>
+
+        <aside class="xl:sticky xl:top-32 xl:self-start">
+            <div class="hud-tech-bracket border border-outline-variant bg-surface/60 p-5 backdrop-blur-xl">
+                <img
+                    src={article.data.cover.src}
+                    alt={article.data.coverAlt}
+                    class="aspect-[4/3] w-full object-cover"
+                />
+
+                <dl class="mt-5 space-y-4 text-sm">
+                    <div>
+                        <dt class="text-[11px] font-semibold uppercase tracking-[0.18em] text-on-surface-variant/60">Author</dt>
+                        <dd class="mt-1 text-on-surface">{article.data.author}</dd>
+                    </div>
+                    <div>
+                        <dt class="text-[11px] font-semibold uppercase tracking-[0.18em] text-on-surface-variant/60">Published</dt>
+                        <dd class="mt-1 text-on-surface">{publishedDate}</dd>
+                    </div>
+                    {article.data.updatedDate && (
+                        <div>
+                            <dt class="text-[11px] font-semibold uppercase tracking-[0.18em] text-on-surface-variant/60">Updated</dt>
+                            <dd class="mt-1 text-on-surface">{formatDate(article.data.updatedDate)}</dd>
+                        </div>
+                    )}
+                </dl>
+
+                <a
+                    href={article.data.originalLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="mt-6 inline-flex w-full items-center justify-center gap-2 border border-primary/40 bg-primary/10 px-4 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-primary transition-colors hover:border-primary hover:bg-primary/15"
+                >
+                    Source Signal
+                    <span class="material-symbols-outlined text-[16px]">open_in_new</span>
+                </a>
+            </div>
+
+            {relatedArticles.length > 0 && (
+                <div class="mt-6 border border-white/10 bg-white/[0.03] p-5">
+                    <h3 class="text-[11px] font-semibold uppercase tracking-[0.18em] text-secondary">Related Logs</h3>
+                    <ul class="mt-4 space-y-4">
                         {relatedArticles.map((article) => (
-                            <li class="group">
-                                <a href={`/blog/vi/${article.data.slug}`}>
-                                    <h3 class="text-xl underline text-zinc-50 group-hover:text-white underline-offset-2 decoration-transparent group-hover:decoration-zinc-500">
-                                        {article.data.title}
-                                    </h3>
-                                    <p class="mt-0.5 text-sm text-zinc-400">
-                                        {formatDate((article.data.pubDate))}
-                                        &middot; {article.data.author}
-                                    </p>
+                            <li>
+                                <a href={`/blog/vi/${article.data.slug}`} class="group block">
+                                    <span class="text-sm font-semibold text-on-surface transition-colors group-hover:text-primary">{article.data.title}</span>
+                                    <span class="mt-1 block text-xs text-on-surface-variant/60">{formatDate(article.data.pubDate)} / {article.data.author}</span>
                                 </a>
                             </li>
                         ))}
                     </ul>
                 </div>
-            )
-        }
-    </section>
-</InfoLayout>
+            )}
+        </aside>
+    </article>
+</HudArchiveLayout>

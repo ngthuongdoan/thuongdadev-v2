@@ -1,0 +1,50 @@
+<script>
+	import gsap from "gsap";
+	import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+	const setupHomeHudScrollOut = () => {
+		const windowWithHud = window as Window & {
+			homeHudScrollContext?: ReturnType<typeof gsap.context>;
+		};
+		const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+		const hero = document.querySelector<HTMLElement>("[data-home-hero]");
+		const hudHeader = document.querySelector<HTMLElement>("[data-hud-header]");
+		const hudStatus = document.querySelector<HTMLElement>("[data-hud-status]");
+		const hudFooter = document.querySelector<HTMLElement>("[data-hud-footer]");
+
+		windowWithHud.homeHudScrollContext?.revert();
+
+		if (prefersReducedMotion || !hero || !hudHeader || !hudStatus || !hudFooter) {
+			gsap.set([hudHeader, hudStatus, hudFooter].filter(Boolean), {
+				clearProps: "all",
+			});
+			return;
+		}
+
+		gsap.registerPlugin(ScrollTrigger);
+
+		windowWithHud.homeHudScrollContext = gsap.context(() => {
+			gsap.set([hudHeader, hudStatus, hudFooter], {
+				force3D: true,
+				willChange: "transform, opacity",
+			});
+
+			gsap.timeline({
+				defaults: { ease: "none" },
+				scrollTrigger: {
+					trigger: hero,
+					start: "top top",
+					end: "bottom top",
+					scrub: 0.75,
+					invalidateOnRefresh: true,
+				},
+			})
+				.to(hudHeader, { yPercent: -120, opacity: 0 }, 0)
+				.to(hudStatus, { x: () => Math.min(window.innerWidth * 0.14, 220), opacity: 0 }, 0)
+				.to(hudFooter, { yPercent: 120, opacity: 0 }, 0);
+		});
+	};
+
+	setupHomeHudScrollOut();
+	document.addEventListener("astro:page-load", setupHomeHudScrollOut);
+</script>

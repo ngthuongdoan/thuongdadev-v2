@@ -25,12 +25,12 @@ const {
 
 const resolvedLocale = locale ?? (lang === "vi" ? "vi_VN" : "en_US");
 
-// Default SEO strings emphasise AI‑augmented engineering and multi‑agent workflows.
-const defaultTitle = "Jasper Doan | AI‑Augmented Engineering";
+// Default SEO strings reflect the current CV-backed profile.
+const defaultTitle = "Ngọc Thưởng Đoàn | AI Engineer";
 const defaultDescription =
-        "Jasper Doan is an AI engineer building multi‑agent workflows, autonomous delivery systems and production‑grade software with human‑in‑the‑loop quality control.";
+        "Ngọc Thưởng Đoàn is an AI Engineer at Vincere, part of The Access Group, with frontend engineering experience across React, Vue, JavaScript, SEO, and AI-assisted delivery.";
 const defaultKeywords =
-        "AI engineer, multi‑agent workflows, autonomous software delivery, prompt engineering, AI‑augmented engineering, human‑in‑the‑loop";
+        "Ngọc Thưởng Đoàn, Jasper Doan, AI Engineer, Vincere, The Access Group, React, Vue, JavaScript, SEO, prompt engineering, frontend engineering";
 
 // Get the canonical URL
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -40,9 +40,17 @@ const siteUrl = "https://thuongda.dev";
 const personSchema = {
         "@context": "https://schema.org",
         "@type": "Person",
-        "name": "Jasper Doan",
+        "name": "Ngọc Thưởng Đoàn",
+        "alternateName": "Jasper Doan",
         "url": siteUrl,
         "image": `${siteUrl}/social-image.jpg`,
+        "email": "mailto:ngthuongdoan@gmail.com",
+        "telephone": "+84941635619",
+        "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Ho Chi Minh City",
+                "addressCountry": "Vietnam",
+        },
         "sameAs": [
                 "https://github.com/ngthuongdoan",
                 "https://www.linkedin.com/in/ngthuongdoan/",
@@ -50,18 +58,21 @@ const personSchema = {
         "jobTitle": "AI Engineer",
         "worksFor": {
                 "@type": "Organization",
-                "name": "Independent",
+                "name": "Vincere, part of The Access Group",
         },
         "description": defaultDescription,
-        // Focus the knowsAbout array on AI engineering and multi‑agent systems rather than frontend specifics.
         "knowsAbout": [
                 "AI Engineering",
-                "Autonomous Software Delivery",
-                "Multi‑Agent Systems",
                 "Prompt Engineering",
-                "Human‑In‑The‑Loop Workflows",
-                "System Design",
-                "Developer Productivity",
+                "Artificial Intelligence",
+                "React.js",
+                "Vue.js",
+                "JavaScript",
+                "SEO",
+                "Storybook",
+                "Google Analytics",
+                "Google Tag Manager",
+                "Frontend Engineering",
         ],
 };
 
@@ -69,12 +80,12 @@ const personSchema = {
 const websiteSchema = {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        "name": "Jasper Doan – AI‑Augmented Engineering",
+        "name": "Ngọc Thưởng Đoàn - AI Engineer",
         "url": siteUrl,
         "description": defaultDescription,
         "author": {
                 "@type": "Person",
-                "name": "Jasper Doan",
+                "name": "Ngọc Thưởng Đoàn",
         },
 };
 ---
@@ -93,7 +104,7 @@ const websiteSchema = {
                 <meta name="title" content={title ?? defaultTitle} />
                 <meta name="description" content={description ?? defaultDescription} />
                 <meta name="keywords" content={keywords ?? defaultKeywords} />
-                <meta name="author" content="Jasper Doan" />
+                <meta name="author" content="Ngọc Thưởng Đoàn" />
                 <meta name="robots" content="index, follow" />
                 <link rel="canonical" href={canonicalURL} />
 
@@ -108,7 +119,7 @@ const websiteSchema = {
                 <meta property="og:title" content={title ?? defaultTitle} />
                 <meta property="og:description" content={description ?? defaultDescription} />
                 <meta property="og:image" content={`${siteUrl}/social-image.jpg`} />
-                <meta property="og:site_name" content="Jasper Doan" />
+                <meta property="og:site_name" content="Ngọc Thưởng Đoàn" />
 
                 <!-- Twitter Meta Tags -->
                 <meta name="twitter:card" content="summary_large_image" />
@@ -119,13 +130,13 @@ const websiteSchema = {
                 <meta name="twitter:image" content={`${siteUrl}/social-image.jpg`} />
 
                 <!-- Theme Color -->
-                <meta name="theme-color" content="#09090b" />
+                <meta name="theme-color" content="#131314" />
 
                 <Font cssVariable="--font-geist" preload />
                 <LoadingIndicator color="#f4f4f5" height="2px" />
 
         </head>
-        <body class="min-h-screen font-sans bg-zinc-900">
+        <body class="min-h-screen bg-background font-sans text-on-background">
                 <slot />
         </body>
 </html>

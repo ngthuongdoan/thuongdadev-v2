@@ -1,0 +1,129 @@
+---
+import RootLayout from "../layouts/RootLayout.astro";
+
+interface NavItem {
+	label: string;
+	href: string;
+	icon: string;
+	active?: boolean;
+}
+
+interface Props {
+	title: string;
+	kicker: string;
+	commandPrompt: string;
+	commandPlaceholder: string;
+	activeSection?: "home" | "projects" | "blog";
+	langSwitcher?: boolean;
+	pageTitle?: string;
+	pageDescription?: string;
+	lang?: string;
+}
+
+const {
+	title,
+	kicker,
+	commandPrompt,
+	commandPlaceholder,
+	activeSection = "blog",
+	langSwitcher = false,
+	pageTitle,
+	pageDescription,
+	lang = "en",
+} = Astro.props;
+
+const navItems: NavItem[] = [
+	{ label: "Mission Control", href: "/projects#all-projects", icon: "rocket_launch", active: activeSection === "home" },
+	{ label: "Project Archives", href: "/projects", icon: "folder_special", active: activeSection === "projects" },
+	{ label: "System Logs", href: "/blog/vi", icon: "terminal", active: activeSection === "blog" },
+];
+---
+
+<RootLayout title={pageTitle ?? title} description={pageDescription} lang={lang}>
+<div class="hud-archive-shell min-h-screen overflow-x-hidden bg-background text-on-surface">
+	<nav class="fixed top-0 z-50 flex w-full flex-col items-center justify-between border-b border-primary/20 bg-surface/80 px-5 py-4 shadow-[0_0_20px_rgba(208,188,255,0.15)] backdrop-blur-xl md:flex-row md:px-16">
+		<a href="/" class="mb-4 flex w-full flex-col items-center md:mb-0 md:w-auto md:items-start" aria-label="Jasper Doan home">
+			<span class="text-headline-md font-bold tracking-tight text-primary text-glow">Jasper Doan</span>
+			<span class="mt-1 text-[10px] font-semibold uppercase tracking-[0.28em] text-secondary">AI_ENGINEER</span>
+		</a>
+
+		<div class="flex w-full flex-wrap justify-center gap-5 text-[11px] font-semibold uppercase tracking-[0.16em] md:w-auto md:justify-end md:gap-6">
+			{navItems.map((item) => (
+				<a
+					href={item.href}
+					class:list={[
+						"group flex items-center gap-2 transition-colors",
+						item.active
+							? "border-b-2 border-primary pb-1 text-primary text-glow"
+							: "text-on-surface-variant hover:text-primary",
+					]}
+					aria-current={item.active ? "page" : undefined}
+				>
+					<span class="material-symbols-outlined text-[16px] transition-all group-hover:text-primary">{item.icon}</span>
+					{item.label}
+				</a>
+			))}
+		</div>
+	</nav>
+
+	<div class="flex min-h-screen pt-36 md:pt-24">
+		<main class="relative mx-auto flex w-full max-w-[1440px] flex-1 flex-col px-5 py-8 md:px-16 md:py-12">
+			<div class="pointer-events-none fixed right-16 top-28 z-10 hidden text-right text-[11px] font-semibold uppercase tracking-[0.18em] text-on-surface-variant/50 xl:block">
+				<div>SYS.STATUS: <span class="text-secondary">ONLINE</span></div>
+				<div>ARCHIVE_MODE: {activeSection.toUpperCase()}</div>
+				<div>NET_LATENCY: 12ms</div>
+			</div>
+
+			<header class="relative mb-10 border-b border-white/10 pb-6">
+				<div class="absolute bottom-0 left-0 h-8 w-px bg-white/15"></div>
+				<div class="absolute bottom-0 left-0 h-px w-8 bg-white/15"></div>
+				<h1 class="text-headline-md font-bold tracking-tight text-primary text-glow md:text-headline-lg">{title}</h1>
+				<p class="mt-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-secondary">{kicker}</p>
+
+				{langSwitcher && (
+					<div class="mt-5 flex flex-wrap items-center gap-2 text-xs">
+						<span class="border border-secondary-container bg-secondary-container/20 px-3 py-1 font-semibold uppercase tracking-[0.16em] text-secondary">Vietnamese</span>
+						<span class="relative border border-white/10 bg-white/[0.03] px-3 py-1 font-semibold uppercase tracking-[0.16em] text-on-surface-variant/50">English / Pending</span>
+					</div>
+				)}
+			</header>
+
+			<div class="relative z-10 mb-24 flex-1">
+				<slot />
+			</div>
+		</main>
+	</div>
+
+	<form class="fixed inset-x-0 bottom-0 z-50 flex items-center border-t border-white/20 bg-surface-highest/90 p-4 backdrop-blur-xl" data-hud-command>
+		<label for="hud-command-input" class="mr-3 flex-shrink-0 text-[11px] font-bold uppercase tracking-[0.18em] text-primary">{commandPrompt}</label>
+		<input
+			id="hud-command-input"
+			class="w-full border-none bg-transparent text-[11px] font-semibold uppercase tracking-[0.16em] text-on-surface outline-none placeholder:text-on-surface-variant/50 focus:ring-0"
+			placeholder={commandPlaceholder}
+			type="text"
+		/>
+		<span class="hud-terminal-cursor ml-1 h-5 w-3 flex-shrink-0 bg-primary"></span>
+	</form>
+
+	<div class="pointer-events-none fixed -right-1/4 top-1/4 z-0 h-[800px] w-[800px] rounded-full bg-secondary-container/10 blur-[120px]"></div>
+	<div class="pointer-events-none fixed -bottom-1/4 -left-1/4 z-0 h-[600px] w-[600px] rounded-full bg-primary-container/5 blur-[100px]"></div>
+</div>
+
+<script>
+	const commandForm = document.querySelector("[data-hud-command]");
+	const commandInput = commandForm?.querySelector("input");
+
+	commandForm?.addEventListener("submit", (event) => {
+		event.preventDefault();
+		if (!(commandInput instanceof HTMLInputElement) || commandInput.value.trim() === "") {
+			return;
+		}
+
+		commandInput.value = "";
+		commandForm.classList.add("shadow-[0_0_20px_rgba(208,188,255,0.25)]");
+		window.setTimeout(() => {
+			commandForm.classList.remove("shadow-[0_0_20px_rgba(208,188,255,0.25)]");
+		}, 220);
+	});
+</script>
+</RootLayout>
