@@ -1,0 +1,56 @@
+---
+interface Tag {
+	label: string;
+}
+
+interface Props {
+	href: string;
+	logId: string;
+	dateLabel: string;
+	title: string;
+	description: string;
+	tags?: Tag[];
+	meta?: string;
+	image?: string;
+	imageAlt?: string;
+}
+
+const { href, logId, dateLabel, title, description, tags = [], meta, image, imageAlt = "" } = Astro.props;
+---
+
+<article class="hud-tech-bracket group relative border border-outline-variant bg-surface/60 p-5 backdrop-blur-2xl transition-colors duration-300 hover:border-primary/50 sm:p-6">
+	<div class="absolute right-2 top-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-on-surface-variant/40">{logId}</div>
+
+	<div class:list={["gap-5", image ? "grid md:grid-cols-[minmax(0,1fr)_13rem]" : ""]}>
+		<div>
+			<div class="mb-4 flex flex-col gap-2 pr-16 md:flex-row md:items-baseline md:gap-6">
+				<div class="w-32 shrink-0 text-[12px] font-semibold uppercase tracking-[0.16em] text-tertiary">[{dateLabel}]</div>
+				<h2 class="w-full text-lg font-bold text-on-surface transition-colors group-hover:text-primary">
+					<a href={href} class="focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">
+						&gt; {title}
+					</a>
+				</h2>
+			</div>
+
+			<div class="space-y-4 border-l border-white/10 pl-4 md:ml-36">
+				<p class="text-sm leading-relaxed text-on-surface-variant/80">{description}</p>
+
+				{meta && <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-outline">{meta}</p>}
+
+				{tags.length > 0 && (
+					<ul class="flex flex-wrap gap-2">
+						{tags.map((tag) => (
+							<li class="border border-secondary-container bg-secondary-container/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-secondary">{tag.label}</li>
+						))}
+					</ul>
+				)}
+			</div>
+		</div>
+
+		{image && (
+			<a href={href} class="mt-5 block overflow-hidden border border-white/10 bg-black/20 md:mt-0" aria-label={title}>
+				<img src={image} alt={imageAlt || title} class="aspect-[4/3] h-full w-full object-cover opacity-80 transition duration-300 group-hover:scale-105 group-hover:opacity-100" loading="lazy" />
+			</a>
+		)}
+	</div>
+</article>

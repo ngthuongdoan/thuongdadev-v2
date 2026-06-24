@@ -1,0 +1,100 @@
+<div class="home-cinematic-bg" aria-hidden="true"></div>
+<div class="home-cinematic-overlay" aria-hidden="true"></div>
+<canvas id="home-starfield" class="home-starfield" aria-hidden="true"></canvas>
+
+<script>
+	const canvas = document.getElementById("home-starfield") as HTMLCanvasElement | null;
+	const context = canvas?.getContext("2d");
+
+	if (canvas && context) {
+		const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+		const stars = Array.from({ length: 180 }, () => ({
+			x: Math.random(),
+			y: Math.random(),
+			radius: Math.random() * 1.5 + 0.35,
+			alpha: Math.random() * 0.55 + 0.2,
+			drift: Math.random() * 0.22 + 0.04,
+		}));
+
+		let width = 0;
+		let height = 0;
+		let animationFrame = 0;
+		let pointerX = 0;
+		let pointerY = 0;
+
+		const resize = () => {
+			const ratio = Math.min(window.devicePixelRatio || 1, 2);
+			width = window.innerWidth;
+			height = window.innerHeight;
+			canvas.width = Math.floor(width * ratio);
+			canvas.height = Math.floor(height * ratio);
+			canvas.style.width = `${width}px`;
+			canvas.style.height = `${height}px`;
+			context.setTransform(ratio, 0, 0, ratio, 0, 0);
+		};
+
+		const draw = (time = 0) => {
+			context.clearRect(0, 0, width, height);
+			const scrollDrift = window.scrollY * 0.015;
+
+			for (const star of stars) {
+				const twinkle = prefersReducedMotion ? 1 : Math.sin(time * 0.0012 + star.x * 9) * 0.22 + 0.78;
+				const x = star.x * width + pointerX * star.drift * 12;
+				const y = ((star.y * height + scrollDrift * star.drift * 28 + pointerY * star.drift * 8) % (height + 12)) - 6;
+
+				context.beginPath();
+				context.fillStyle = `rgba(208, 188, 255, ${star.alpha * twinkle})`;
+				context.arc(x, y, star.radius, 0, Math.PI * 2);
+				context.fill();
+			}
+
+			if (!prefersReducedMotion) {
+				animationFrame = window.requestAnimationFrame(draw);
+			}
+		};
+
+		window.addEventListener("resize", resize);
+		window.addEventListener("pointermove", (event) => {
+			pointerX = (event.clientX / window.innerWidth - 0.5) * 2;
+			pointerY = (event.clientY / window.innerHeight - 0.5) * 2;
+		});
+		window.addEventListener("scroll", () => {
+			if (prefersReducedMotion) draw();
+		}, { passive: true });
+
+		resize();
+		draw();
+
+		window.addEventListener("pagehide", () => window.cancelAnimationFrame(animationFrame), { once: true });
+	}
+</script>
+
+<style>
+	.home-cinematic-bg {
+		position: fixed;
+		inset: 0;
+		z-index: 0;
+		pointer-events: none;
+		background:
+			radial-gradient(circle at 50% 38%, rgb(208 188 255 / 0.08), transparent 26rem),
+			url("/images/bg.png") center / cover no-repeat;
+		transform: scale(1.04);
+	}
+
+	.home-cinematic-overlay {
+		position: fixed;
+		inset: 0;
+		z-index: 1;
+		pointer-events: none;
+		background:
+			radial-gradient(circle at center, rgb(19 19 20 / 0.18) 0%, rgb(14 14 15 / 0.76) 72%),
+			linear-gradient(180deg, rgb(10 10 11 / 0.28), rgb(10 10 11 / 0.9));
+	}
+
+	.home-starfield {
+		position: fixed;
+		inset: 0;
+		z-index: 2;
+		pointer-events: none;
+	}
+</style>

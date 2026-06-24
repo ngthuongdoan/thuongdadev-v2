@@ -1,72 +1,37 @@
 ---
-import H1 from "../components/h1.astro";
-import Link from "../components/link.astro";
-import Navigation from "../components/navigation.astro";
+import { getCollection } from "astro:content";
+import HomeAbout from "../components/home/HomeAbout.astro";
+import HomeBackground from "../components/home/HomeBackground.astro";
+import HomeHero from "../components/home/HomeHero.astro";
+import HomeHudFooter from "../components/home/HomeHudFooter.astro";
+import HomeHudHeader from "../components/home/HomeHudHeader.astro";
+import HomeHudScrollOut from "../components/home/HomeHudScrollOut.astro";
+import HomeHudStatus from "../components/home/HomeHudStatus.astro";
+import HomeProjects from "../components/home/HomeProjects.astro";
+import HomeTimeline from "../components/home/HomeTimeline.astro";
 import RootLayout from "../layouts/RootLayout.astro";
-import AvailableForWork from "../components/available.astro";
-import ShaderBackground from "../components/ShaderBackground.astro";
 
-// Page metadata emphasises the multi‑agent AI workflow narrative.
-const pageTitle = "Jasper Doan | AI‑Augmented Engineering";
+const pageTitle = "Mission Control | Ngọc Thưởng Đoàn";
 const pageDescription =
-        "AI engineer designing and shipping production systems with multi‑agent workflows, autonomous delivery and human‑in‑the‑loop control.";
+	"Ngọc Thưởng Đoàn's cinematic portfolio mission control for AI engineering at Vincere, frontend systems, React, Vue, JavaScript, SEO, and AI-assisted delivery.";
 
-const proofPoints = [
-        "Multi‑agent workflows for implementation, refactoring and documentation",
-        "Human‑in‑the‑loop architecture review and quality control",
-        "Production systems shipped quickly with maintainable, scalable code",
-];
+const projects = (await getCollection("projects")).sort(
+	(a, b) => (a.data.order ?? 0) - (b.data.order ?? 0),
+);
 ---
 
 <RootLayout title={pageTitle} description={pageDescription}>
-        <main>
-                <div class="relative flex items-center justify-center w-full group min-h-dvh">
-                        <div class="absolute inset-0 -z-20 bg-[radial-gradient(120%_90%_at_80%_10%,#52525b_0%,#27272a_35%,#09090b_72%)]" />
-                        <div class="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
-                                <ShaderBackground
-                                        color1="#09090b"
-                                        color2="#27272a"
-                                        color3="#52525b"
-                                        speed={0.6}
-                                        swirl={0.5}
-                                        swirlIterations={10}
-                                        shapeScale={0.3}
-                                        class="absolute inset-0"
-                                />
-                        </div>
-                        <div class="absolute z-10 flex flex-col justify-between w-full p-4 sm:p-8 h-dvh">
-                                <div>
-                                        <p class="mb-4 text-sm tracking-[0.3em] text-zinc-400">AI Engineer <b>|</b> Senior Software Engineer <b>|</b> Vibe Coder</p>
-                                        <H1 size="large">
-                                                Jasper <br /> Doan
-                                        </H1>
-                                        <div class="max-w-2xl mt-6 space-y-5">
-                                                <p class="text-lg leading-8 text-zinc-200 sm:text-xl sm:leading-9 text-balance">
-                                                        Designing and shipping with multi‑agent workflows.
-                                                </p>
+	<HomeBackground />
+	<HomeHudHeader />
+	<HomeHudStatus />
+	<HomeHudScrollOut />
 
-                                                <p class="max-w-2xl text-base leading-7 text-zinc-400 sm:text-lg text-balance">
-                                                        I design, architect and ship production systems using multi‑agent workflows—combining Codex,
-                                                        Devin, Copilot and custom prompt orchestrations—to accelerate delivery while maintaining
-                                                        architectural control, code quality and long‑term scalability.
-                                                </p>
-                                        </div>
-                                </div>
+	<main class="relative z-10 flex flex-col justify-center px-5 pb-24 pt-32 md:px-16">
+		<HomeHero />
+		<HomeTimeline />
+		<HomeProjects projects={projects} />
+		<HomeAbout />
+	</main>
 
-                                <div class="space-y-6">
-                                        <AvailableForWork className="py-4 mb-0" />
-                                        <div class="flex items-center justify-between mb-2 sm:mb-4">
-                                                <div class="flex items-center gap-4">
-                                                        <Link href="/contact">Book a call</Link>
-                                                        <Link href="/projects" variant="secondary">
-                                                                View selected work
-                                                        </Link>
-                                                </div>
-
-                                                <Navigation />
-                                        </div>
-                                </div>
-                        </div>
-                </div>
-        </main>
+	<HomeHudFooter />
 </RootLayout>
