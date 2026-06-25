@@ -45,7 +45,7 @@ order: 0
 ---
 The project focuses on the core experience of multiplayer canvas interaction: synchronized drawing, room-based collaboration, user presence, chat, and a minimal interface that keeps the canvas as the main workspace. Instead of adding heavy onboarding or unnecessary product layers, PixelCollab keeps the flow direct and lightweight.
 
-Overview
+## Overview
 
 PixelCollab is built around a simple collaboration flow:
 
@@ -58,19 +58,19 @@ Behind that simple flow, the project handles several product and engineering con
 
 The goal was not to build a design tool with every possible feature. The goal was to build a focused realtime collaboration experience and structure it in a way that can evolve beyond a demo.
 
-Core Features
+## Core Features
 
-- Realtime collaborative drawing
-- Room-based whiteboard sessions
-- Shareable room links
-- Canvas drawing tools
-- User presence and awareness
-- Realtime chat inside a room
-- Basic room lifecycle control
-- Backend payload and connection protection
-- Lightweight UI focused on the whiteboard experience
+* Realtime collaborative drawing
+* Room-based whiteboard sessions
+* Shareable room links
+* Canvas drawing tools
+* User presence and awareness
+* Realtime chat inside a room
+* Basic room lifecycle control
+* Backend payload and connection protection
+* Lightweight UI focused on the whiteboard experience
 
-Technical Approach
+## Technical Approach
 
 The application is split into two clear parts: a frontend whiteboard experience and a backend realtime transport layer.
 
@@ -80,7 +80,7 @@ The backend focuses on synchronization and room control. It is built with Node.j
 
 This separation keeps the system easier to reason about. The client can focus on the drawing experience, while the server handles the shared collaboration layer without becoming tightly coupled to every UI detail.
 
-Architecture
+## Architecture
 
 PixelCollab uses a room-based realtime model.
 
@@ -88,15 +88,15 @@ Each room acts as an isolated collaboration space. Users connected to the same r
 
 At a high level:
 
-- The client creates or joins a room.
-- The WebSocket connection is established for that room.
-- Drawing and awareness updates are synced between connected users.
-- Room-level limits and lifecycle rules are handled on the backend.
-- The frontend renders the latest shared state on the canvas.
+* The client creates or joins a room.
+* The WebSocket connection is established for that room.
+* Drawing and awareness updates are synced between connected users.
+* Room-level limits and lifecycle rules are handled on the backend.
+* The frontend renders the latest shared state on the canvas.
 
 This model keeps collaboration fast while leaving room for future improvements such as persistence, authentication, rate limiting, observability, and more advanced permission control.
 
-What This Project Demonstrates
+## What This Project Demonstrates
 
 PixelCollab demonstrates my approach to building interactive full-stack products: start from a simple user flow, define clear system boundaries, and choose the right technical model for the collaboration problem.
 
@@ -104,40 +104,40 @@ The project combines frontend interaction design with realtime backend architect
 
 The result is a focused realtime product that is easy to understand, practical to use, and structured enough to evolve beyond a demo.
 
-Tech Stack
+## Tech Stack
 
-Frontend
+### Frontend
 
-- Next.js
-- React
-- TypeScript
-- Canvas
-- Zustand
+* Next.js
+* React
+* TypeScript
+* Canvas
+* Zustand
 
-Backend
+### Backend
 
-- Node.js
-- TypeScript
-- Express
-- WebSocket
-- Yjs / CRDT
+* Node.js
+* TypeScript
+* Express
+* WebSocket
+* Yjs / CRDT
 
-Possible Improvements
+## Possible Improvements
 
 PixelCollab is intentionally scoped, but the architecture leaves a clear path for future improvements:
 
-- Persistent whiteboard sessions
-- Authentication and private rooms
-- Role-based permissions
-- Exporting canvas content
-- More drawing tools
-- Better undo/redo support
-- Room history
-- Rate limiting and abuse protection
-- Observability and production monitoring
-- Deployment hardening
+* Persistent whiteboard sessions
+* Authentication and private rooms
+* Role-based permissions
+* Exporting canvas content
+* More drawing tools
+* Better undo/redo support
+* Room history
+* Rate limiting and abuse protection
+* Observability and production monitoring
+* Deployment hardening
 
-Final Note
+## Final Note
 
 PixelCollab is a small product surface, but it touches several real engineering concerns: realtime communication, collaborative state synchronization, frontend interaction design, system boundaries, and production-minded backend constraints.
 
