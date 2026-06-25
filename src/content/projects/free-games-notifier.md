@@ -8,8 +8,8 @@ status: live
 role: Node.js automation engineer, GitHub Actions workflow designer, CI/CD and
   registration-flow architect
 period: "2026"
-thumbnail: /uploads/free-games-notifier-hud-placeholder.webp
-image: /uploads/free-games-notifier-hud-placeholder.webp
+thumbnail: /uploads/thumbnails/free-games-notifier-hud-placeholder.webp
+image: /uploads/chatgpt-image-apr-9-2026-10_23_28-pm.png
 links:
   - label: GitHub
     url: https://github.com/ngthuongdoan/free-games-notifier
