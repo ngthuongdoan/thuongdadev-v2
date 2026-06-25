@@ -1,12 +1,15 @@
 ---
 title: "Free Games Notifier: CI/CD-Driven Game Deal Automation"
-description: "A side project that turns free-game discovery into an automated notification pipeline: scheduled GitHub Actions, SMTP delivery, GitHub Pages registration, repository_dispatch, and PR-based subscriber updates."
+description: "A side project that turns free-game discovery into an automated
+  notification pipeline: scheduled GitHub Actions, SMTP delivery, GitHub Pages
+  registration, repository_dispatch, and PR-based subscriber updates."
 category: side
 status: live
-role: "Node.js automation engineer, GitHub Actions workflow designer, CI/CD and registration-flow architect"
+role: Node.js automation engineer, GitHub Actions workflow designer, CI/CD and
+  registration-flow architect
 period: "2026"
-thumbnail: /uploads/thumbnails/chatgpt-image-apr-9-2026-10_23_28-pm.png
-image: /uploads/chatgpt-image-apr-9-2026-10_23_28-pm.png
+thumbnail: /uploads/free-games-notifier-hud-placeholder.webp
+image: /uploads/free-games-notifier-hud-placeholder.webp
 links:
   - label: GitHub
     url: https://github.com/ngthuongdoan/free-games-notifier
@@ -22,13 +25,18 @@ stack:
   - repository_dispatch
   - Node test runner
 metrics:
-  - Scheduled notifier runs daily through GitHub Actions and can also be triggered manually
-  - Dev and production notification paths are separated through workflow_dispatch inputs and mailing-list overrides
-  - Subscriber registration is routed through repository_dispatch and converted into reviewable pull requests
+  - Scheduled notifier runs daily through GitHub Actions and can also be
+    triggered manually
+  - Dev and production notification paths are separated through
+    workflow_dispatch inputs and mailing-list overrides
+  - Subscriber registration is routed through repository_dispatch and converted
+    into reviewable pull requests
 highlights:
   - Uses GitHub Actions as the operational runtime, not just a build checker
-  - Keeps SMTP credentials in GitHub Secrets while subscriber lists remain reviewable repository data
-  - Includes GitHub Pages registration UI, Render-ready registration service, PR automation, retry handling, failure alerts, and focused tests
+  - Keeps SMTP credentials in GitHub Secrets while subscriber lists remain
+    reviewable repository data
+  - Includes GitHub Pages registration UI, Render-ready registration service, PR
+    automation, retry handling, failure alerts, and focused tests
 order: 3
 ---
 ## Why this is a side project
