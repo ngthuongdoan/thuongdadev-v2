@@ -1,9 +1,11 @@
 ---
-title: "PixelCollab: Realtime Whiteboard Có Vẽ Cùng Nhau Mà Không Đánh Nhau"
-description: "PixelCollab là realtime collaborative whiteboard để vẽ ý tưởng cùng nhau trên canvas đồng bộ trực tiếp. Project kết hợp Next.js, React, TypeScript, WebSocket, Yjs/CRDT, presence, chat và UX tối giản để biến một cái link thành phòng họp sáng tạo không cần nghi lễ."
+title: "PixelCollab: Realtime Whiteboard"
+description: PixelCollab is a realtime collaborative whiteboard where users can
+  create a room, share a link, and draw together instantly
 category: main
 status: live
-role: "Full-stack realtime product engineer: UI/UX, collaborative canvas, WebSocket transport, CRDT sync, presence, and interaction polish"
+role: "Full-stack realtime product engineer: UI/UX, collaborative canvas,
+  WebSocket transport, CRDT sync, presence, and interaction polish"
 period: "2026"
 thumbnail: /uploads/thumbnails/chatgpt-image-apr-12-2026-01_26_33-pm.webp
 image: /uploads/chatgpt-image-apr-9-2026-10_23_28-pm.png
@@ -26,57 +28,117 @@ stack:
   - Presence
   - Chat
 metrics:
-  - Room sharing bằng link giúp người dùng vào vẽ ngay, không cần một nghi thức đăng nhập dài như họp bàn quy trình
-  - WebSocket transport và Yjs/CRDT sync giữ nét vẽ, presence, chat và trạng thái canvas đi cùng một nhịp realtime
-  - UI được tiết chế để canvas vẫn là sân khấu chính, còn toolbar không có nhu cầu trở thành bảng điều khiển tàu vũ trụ
+  - Room sharing bằng link giúp người dùng vào vẽ ngay, không cần một nghi thức
+    đăng nhập dài như họp bàn quy trình
+  - WebSocket transport và Yjs/CRDT sync giữ nét vẽ, presence, chat và trạng
+    thái canvas đi cùng một nhịp realtime
+  - UI được tiết chế để canvas vẫn là sân khấu chính, còn toolbar không có nhu
+    cầu trở thành bảng điều khiển tàu vũ trụ
 highlights:
-  - Tách frontend whiteboard và backend transport để thể hiện rõ tư duy kiến trúc, không trộn hết mọi thứ vào một nơi rồi cầu may
-  - Backend Node.js/Express dùng ws, Yjs và y-protocols cho CRDT sync, awareness broadcast, room TTL và giới hạn payload
-  - Frontend Next.js/React tập trung vào canvas interaction, color tools, presence indicators, chat và luồng mọi người cùng vẽ thật mượt
+  - Tách frontend whiteboard và backend transport để thể hiện rõ tư duy kiến
+    trúc, không trộn hết mọi thứ vào một nơi rồi cầu may
+  - Backend Node.js/Express dùng ws, Yjs và y-protocols cho CRDT sync, awareness
+    broadcast, room TTL và giới hạn payload
+  - Frontend Next.js/React tập trung vào canvas interaction, color tools,
+    presence indicators, chat và luồng mọi người cùng vẽ thật mượt
 order: 0
 ---
-## Bài toán
+The project focuses on the core experience of multiplayer canvas interaction: synchronized drawing, room-based collaboration, user presence, chat, and a minimal interface that keeps the canvas as the main workspace. Instead of adding heavy onboarding or unnecessary product layers, PixelCollab keeps the flow direct and lightweight.
 
-Whiteboard online nghe thì đơn giản: một người vẽ, người kia thấy. Làm thật mới biết mỗi nét vẽ đều có đời sống nội tâm: đồng bộ ra sao, mất kết nối thì sao, ai đang ở trong phòng, có nên lưu tất cả hay chỉ truyền trạng thái, và làm sao để UI không biến thành bảng điều khiển máy giặt.
+Overview
 
-PixelCollab được xây như một realtime collaborative whiteboard có mục tiêu rất rõ: mở phòng, share link, vẽ chung. Không bắt người dùng đi qua 7 cửa onboarding chỉ để vẽ một cái hình tròn méo méo.
+PixelCollab is built around a simple collaboration flow:
 
-## Cách tôi thiết kế
+1. Create a room
+2. Share the room link
+3. Join from another browser or device
+4. Draw together in realtime
 
-Tôi tách project thành hai lớp:
+Behind that simple flow, the project handles several product and engineering concerns: realtime communication, collaborative state synchronization, drawing interaction, user awareness, room lifecycle, and basic backend protection.
 
-- Frontend Next.js/React xử lý canvas UI, tool vẽ, màu sắc, chat, presence và trải nghiệm phòng vẽ.
-- Backend Node.js/TypeScript/Express giữ vai trò realtime transport: tạo room, kiểm tra room, WebSocket endpoint, Yjs/CRDT sync và awareness.
+The goal was not to build a design tool with every possible feature. The goal was to build a focused realtime collaboration experience and structure it in a way that can evolve beyond a demo.
 
-Lý do tách ra không phải để repo trông có vẻ oai. Nó cho thấy cách tôi đặt ranh giới hệ thống: client tập trung vào interaction, server tập trung vào đồng bộ và kiểm soát phòng. Khi sản phẩm lớn lên, mình còn biết chỗ nào để thêm persistence, auth, rate limit, observability, thay vì mở file lên và nghe tiếng khó khăn của quá khứ.
+Core Features
 
-## Phần kỹ thuật đáng tiền khoe
+- Realtime collaborative drawing
+- Room-based whiteboard sessions
+- Shareable room links
+- Canvas drawing tools
+- User presence and awareness
+- Realtime chat inside a room
+- Basic room lifecycle control
+- Backend payload and connection protection
+- Lightweight UI focused on the whiteboard experience
 
-PixelCollab dùng WebSocket cho kênh realtime và Yjs/CRDT để nhiều client có thể đồng bộ trạng thái whiteboard mà không cần server hiểu từng ý nghĩa của mỗi nét vẽ. Backend chỉ làm transport layer, không diễn giải canvas semantics. Cách này giữ hệ thống gọn, dễ test, dễ thay đổi frontend, và giảm nguy cơ server trở thành "ông chủ phòng vẽ" biết quá nhiều chuyện.
+Technical Approach
 
-Backend cũng có những chi tiết nhỏ nhưng đáng giá:
+The application is split into two clear parts: a frontend whiteboard experience and a backend realtime transport layer.
 
-- `GET /healthz` để biết server còn thở.
-- `POST /rooms` và `GET /rooms/:roomId` cho flow tạo/tham gia phòng.
-- `WS /ws?roomId=<id>` cho sync realtime.
-- Room TTL, sweep interval, max room count và max payload để project không "vui quá hóa vỡ trận".
-- Optional auth token để có đường nâng cấp bảo vệ API/WebSocket.
+The frontend owns the user interaction model: drawing tools, canvas behavior, room UI, chat, presence indicators, and local interaction state. It is built with Next.js, React, TypeScript, Canvas, and Zustand.
 
-Ở frontend, điểm tối ưu không nằm ở việc nhét thật nhiều nút lên màn hình. Điểm khó là giữ canvas, chat, presence và controls cùng tồn tại mà không chen ép nhau. Người dùng vào để vẽ, không vào để giải mã một bài thi UI.
+The backend focuses on synchronization and room control. It is built with Node.js, TypeScript, Express, WebSocket, and Yjs/CRDT. It manages room creation, realtime updates, awareness events, lifecycle limits, and basic safety constraints.
 
-## SEO mà vẫn là người thật
+This separation keeps the system easier to reason about. The client can focus on the drawing experience, while the server handles the shared collaboration layer without becoming tightly coupled to every UI detail.
 
-Nếu cần gọi đúng tên cho Google và cho nhà tuyển dụng: đây là một realtime whiteboard app, collaborative canvas, WebSocket whiteboard, CRDT collaboration demo, Next.js whiteboard project và full-stack realtime collaboration system.
+Architecture
 
-Nếu gọi theo cách bình dân hơn: đây là project chứng minh tôi không chỉ biết kéo thả component cho đẹp. Tôi có thể thiết kế luồng sản phẩm, chia kiến trúc frontend/backend, xử lý đồng bộ realtime, giữ UX gọn gàng, và vẫn để lại đủ không gian để nâng cấp thành một case study nghiêm túc.
+PixelCollab uses a room-based realtime model.
 
-## Điều project này thể hiện về tôi
+Each room acts as an isolated collaboration space. Users connected to the same room can draw, chat, and see presence updates from each other. WebSocket is used for low-latency communication, while Yjs/CRDT helps keep collaborative state consistent across clients.
 
-PixelCollab cho thấy cách tôi làm product engineering:
+At a high level:
 
-- Bắt đầu từ hành vi người dùng thật: tạo phòng, gửi link, vẽ cùng nhau.
-- Chọn kiến trúc theo đúng bài toán: WebSocket cho realtime, CRDT cho sync, transport-only backend cho sự linh hoạt.
-- Thiết kế UI theo mục tiêu sử dụng, không trang trí cho vui tay.
-- Nhìn trước các điểm mở rộng như persistence, auth, payload limit, room lifecycle và deployment.
+- The client creates or joins a room.
+- The WebSocket connection is established for that room.
+- Drawing and awareness updates are synced between connected users.
+- Room-level limits and lifecycle rules are handled on the backend.
+- The frontend renders the latest shared state on the canvas.
 
-Nói ngắn gọn: đây là một cái bảng trắng, nhưng bên dưới không trắng. Bên dưới có realtime system, collaborative UX, và khả năng biến một ý tưởng nhỏ thành sản phẩm có cấu trúc đàng hoàng.
+This model keeps collaboration fast while leaving room for future improvements such as persistence, authentication, rate limiting, observability, and more advanced permission control.
+
+What This Project Demonstrates
+
+PixelCollab demonstrates my approach to building interactive full-stack products: start from a simple user flow, define clear system boundaries, and choose the right technical model for the collaboration problem.
+
+The project combines frontend interaction design with realtime backend architecture. It uses WebSocket for low-latency communication and Yjs/CRDT for collaborative state synchronization, while keeping the backend focused on transport, room lifecycle, and safety limits instead of tightly coupling it to canvas-specific UI logic.
+
+The result is a focused realtime product that is easy to understand, practical to use, and structured enough to evolve beyond a demo.
+
+Tech Stack
+
+Frontend
+
+- Next.js
+- React
+- TypeScript
+- Canvas
+- Zustand
+
+Backend
+
+- Node.js
+- TypeScript
+- Express
+- WebSocket
+- Yjs / CRDT
+
+Possible Improvements
+
+PixelCollab is intentionally scoped, but the architecture leaves a clear path for future improvements:
+
+- Persistent whiteboard sessions
+- Authentication and private rooms
+- Role-based permissions
+- Exporting canvas content
+- More drawing tools
+- Better undo/redo support
+- Room history
+- Rate limiting and abuse protection
+- Observability and production monitoring
+- Deployment hardening
+
+Final Note
+
+PixelCollab is a small product surface, but it touches several real engineering concerns: realtime communication, collaborative state synchronization, frontend interaction design, system boundaries, and production-minded backend constraints.
+
+It is a practical project for exploring how collaborative software works beyond static CRUD flows.
